@@ -11,7 +11,8 @@ const fs = require('fs');
 const INSTAGRAM_SESSION = process.env.IG_SESSIONID;
 const INSTAGRAM_CSRF    = process.env.IG_CSRFTOKEN || '';
 const LIGA_PRADO_ID     = '11659874891';
-const RESULTADOS_FILE   = './resultados.json';
+const path = require('path');
+const RESULTADOS_FILE   = path.join(__dirname, '..', 'resultados.json');
 
 // Mapping: "Fecha X" from caption → fecha index (1-based)
 // We detect from post caption text
