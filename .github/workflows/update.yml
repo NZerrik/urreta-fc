@@ -22,7 +22,10 @@ jobs:
         env:
           IG_SESSIONID: ${{ secrets.IG_SESSIONID }}
           IG_CSRFTOKEN: ${{ secrets.IG_CSRFTOKEN }}
-        run: node scripts/scraper.js
+        run: |
+          echo "CWD: $(pwd)"
+          ls -la resultados.json
+          node scripts/scraper.js
       - name: Commit y push si hay cambios
         run: |
           git config user.name "Urreta Bot"
