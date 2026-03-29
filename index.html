@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urreta Baby Fútbol — Liga Prado</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --naranja: #F07020;
+    --naranja-oscuro: #C85010;
+    --naranja-claro: #FFAA55;
+    --negro: #111111;
+    --gris-oscuro: #1E1E1E;
+    --gris-medio: #2A2A2A;
+    --gris-borde: #333333;
+    --blanco: #FFFFFF;
+    --blanco-suave: #F5F5F5;
+    --verde-gol: #22C55E;
+    --rojo-gol: #EF4444;
+    --amarillo: #FACC15;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #111 0%, #1a0a00 50%, #111 100%);
+    border-bottom: 3px solid var(--naranja);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: var(--naranja);
+    opacity: 0.06;
+    border-radius: 50%;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: var(--naranja);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .club-badge {
+    width: 72px; height: 72px;
+    background: var(--naranja);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 30px rgba(240,112,32,0.4);
+    animation: pulse-badge 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-badge {
+    0%, 100% { box-shadow: 0 0 20px rgba(240,112,32,0.3); }
+    50% { box-shadow: 0 0 40px rgba(240,112,32,0.6); }
+  }
+
+  .club-badge svg { width: 44px; height: 44px; }
+
+  .header-text h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--naranja);
+    letter-spacing: 2px;
+  }
+
+  .header-text p {
+    font-size: 0.85rem;
+    color: #aaa;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .liga-tag {
+    margin-left: auto;
+    background: var(--naranja);
+    color: var(--negro);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 4px;
+  }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar {
+    background: var(--gris-oscuro);
+    border-bottom: 1px solid var(--gris-borde);
+    padding: 0;
+  }
+
+  .stats-bar-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    divide: var(--gris-borde);
+  }
+
+  .stat-item {
+    padding: 16px 20px;
+    text-align: center;
+    border-right: 1px solid var(--gris-borde);
+    position: relative;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--naranja);
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  /* ===== MAIN LAYOUT ===== */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* ===== SECTION TITLES ===== */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--naranja);
+    text-transform: uppercase;
+    border-left: 4px solid var(--naranja);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+
+  /* ===== PROXIMO PARTIDO ===== */
+  .proximo-card {
+    background: linear-gradient(135deg, #1a0a00 0%, #1E1E1E 100%);
+    border: 1px solid var(--naranja-oscuro);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proximo-card::before {
+    content: 'PRÓXIMO PARTIDO';
+    position: absolute;
+    top: 14px; right: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--naranja);
+    font-weight: 700;
+  }
+
+  .proximo-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 12px 0;
+  }
+
+  .equipo-proximo {
+    text-align: center;
+    flex: 1;
+  }
+
+  .equipo-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .equipo-nombre.local { color: var(--naranja); }
+  .equipo-nombre.visitante { color: var(--blanco-suave); }
+
+  .vs-badge {
+    background: var(--naranja);
+    color: var(--negro);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .proximo-meta {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #aaa;
+  }
+
+  .meta-item span.icon {
+    font-size: 1rem;
+  }
+
+  .meta-item a {
+    color: var(--naranja-claro);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .meta-item a:hover { text-decoration: underline; }
+
+  .waze-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #05C8F7;
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 12px;
+    transition: all 0.2s;
+  }
+
+  .waze-btn:hover {
+    background: #07e0ff;
+    transform: translateY(-1px);
+  }
+
+  .countdown {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--amarillo);
+    letter-spacing: 2px;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .countdown-grid {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .countdown-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(250,204,21,0.08);
+    border: 1px solid rgba(250,204,21,0.25);
+    border-radius: 8px;
+    padding: 8px 14px;
+    min-width: 56px;
+  }
+
+  .countdown-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--amarillo);
+  }
+
+  .countdown-label {
+    font-size: 0.62rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .countdown-hoy {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--verde-gol);
+    letter-spacing: 3px;
+    text-align: center;
+    margin-top: 12px;
+    animation: pulse-badge 1.5s ease-in-out infinite;
+  }
+
+  /* ===== COUNTDOWN SECTION ===== */
+  #countdownSection {
+    background: linear-gradient(180deg, #1a0a00 0%, #111 100%);
+    border-bottom: 2px solid var(--naranja-oscuro);
+  }
+
+  .countdown-section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px;
+    text-align: center;
+  }
+
+  .countdown-titulo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 16px;
+  }
+
+  .countdown-subtitulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: #aaa;
+    margin-top: 14px;
+  }
+
+  .countdown-subtitulo span {
+    color: var(--naranja);
+  }
+
+  /* ===== TODOS LOS RESULTADOS (expansible) ===== */
+  .btn-ver-todos {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--gris-borde);
+    color: #666;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    text-align: left;
+  }
+
+  .btn-ver-todos:hover { color: var(--naranja); background: rgba(240,112,32,0.04); }
+
+  .btn-ver-todos .chevron {
+    margin-left: auto;
+    transition: transform 0.25s ease;
+    font-style: normal;
+  }
+
+  .btn-ver-todos.open .chevron { transform: rotate(180deg); }
+
+  .todos-resultados {
+    display: none;
+    border-top: 1px solid var(--gris-borde);
+    background: rgba(0,0,0,0.2);
+  }
+
+  .todos-resultados.open { display: block; }
+
+  .todos-titulo {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+    padding: 10px 16px 6px;
+  }
+
+  .partido-fecha-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 16px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    gap: 8px;
+  }
+
+  .partido-fecha-row.es-urreta {
+    background: rgba(240,112,32,0.06);
+    border-left: 3px solid var(--naranja);
+  }
+
+  .pf-equipos {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    min-width: 0;
+  }
+
+  .pf-local { font-weight: 600; color: var(--blanco-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pf-local.urreta-eq { color: var(--naranja); }
+  .pf-visitante { color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pf-visitante.urreta-eq { color: var(--naranja); }
+  .pf-vs { font-size: 0.7rem; color: #555; flex-shrink: 0; }
+
+  .pf-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--blanco);
+    background: var(--negro);
+    border: 1px solid var(--gris-borde);
+    border-radius: 4px;
+    padding: 2px 8px;
+    flex-shrink: 0;
+    letter-spacing: 1px;
+  }
+
+  .pf-score.pendiente { color: #444; font-family: 'Barlow', sans-serif; font-size: 0.75rem; padding: 3px 8px; }
+
+  /* ===== FIXTURE ===== */
+  .fixture-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .fecha-card {
+    background: var(--gris-oscuro);
+    border: 1px solid var(--gris-borde);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .fecha-card.activa {
+    border-color: var(--naranja);
+    box-shadow: 0 0 20px rgba(240,112,32,0.15);
+  }
+
+  .fecha-card.jugada {
+    border-color: var(--gris-borde);
+    opacity: 0.8;
+  }
+
+  .fecha-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--gris-medio);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .fecha-header:hover { background: #333; }
+
+  .fecha-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--naranja);
+  }
+
+  .fecha-date {
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: 500;
+  }
+
+  .fecha-status {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .status-pendiente { background: #333; color: #888; }
+  .status-proximo { background: rgba(240,112,32,0.2); color: var(--naranja); }
+  .status-jugado { background: rgba(34,197,94,0.2); color: var(--verde-gol); }
+  .status-libre { background: rgba(250,204,21,0.2); color: var(--amarillo); }
+
+  .fecha-partido {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--gris-borde);
+  }
+
+  .partido-equipos {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .partido-local { font-weight: 600; font-size: 0.95rem; }
+  .partido-local.urreta { color: var(--naranja); }
+  .partido-vs { font-size: 0.75rem; color: #666; }
+  .partido-visitante { font-size: 0.95rem; color: var(--blanco-suave); }
+
+  /* Resultado */
+  .resultado-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .resultado-display {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--negro);
+    border: 1px solid var(--gris-borde);
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+
+  .gol-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .gol-sep {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 700;
+    margin: 0 2px;
+  }
+
+  .btn-editar {
+    background: none;
+    border: 1px solid var(--gris-borde);
+    color: #888;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .btn-editar:hover { border-color: var(--naranja); color: var(--naranja); }
+
+  /* Resultado modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--gris-oscuro);
+    border: 1px solid var(--naranja);
+    border-radius: 14px;
+    padding: 28px;
+    width: 340px;
+    max-width: 95vw;
+    animation: modal-in 0.2s ease;
+  }
+
+  @keyframes modal-in {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--naranja);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .modal-partido-info {
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
+
+  .score-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .score-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .score-group label {
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .score-group label.label-urreta { color: var(--naranja); font-weight: 700; }
+
+  .score-input {
+    width: 72px; height: 72px;
+    background: var(--negro);
+    border: 2px solid var(--gris-borde);
+    border-radius: 8px;
+    color: var(--blanco);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .score-input:focus { border-color: var(--naranja); }
+  .score-sep-modal {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: #555;
+    margin-top: 24px;
+  }
+
+  .modal-btns {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-guardar {
+    flex: 1;
+    background: var(--naranja);
+    color: var(--negro);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-guardar:hover { background: var(--naranja-claro); }
+
+  .btn-cancelar {
+    background: var(--gris-medio);
+    color: #aaa;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-cancelar:hover { background: #333; }
+
+  /* Resultado badge */
+  .resultado-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-victoria { background: rgba(34,197,94,0.2); color: var(--verde-gol); }
+  .badge-derrota { background: rgba(239,68,68,0.2); color: var(--rojo-gol); }
+  .badge-empate { background: rgba(250,204,21,0.2); color: var(--amarillo); }
+
+  /* LIBRE row */
+  .fecha-libre-row {
+    padding: 14px 16px;
+    border-top: 1px solid var(--gris-borde);
+    font-size: 0.85rem;
+    color: #777;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ===== TABLA DE POSICIONES ===== */
+  .tabla-container {
+    background: var(--gris-oscuro);
+    border: 1px solid var(--gris-borde);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .tabla-header {
+    display: grid;
+    grid-template-columns: 30px 1fr 40px 40px 40px 40px 40px 50px;
+    padding: 10px 16px;
+    background: var(--gris-medio);
+    font-size: 0.7rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .tabla-row {
+    display: grid;
+    grid-template-columns: 30px 1fr 40px 40px 40px 40px 40px 50px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--gris-borde);
+    align-items: center;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+
+  .tabla-row:hover { background: #252525; }
+
+  .tabla-row.urreta-row {
+    background: rgba(240,112,32,0.08);
+    border-left: 3px solid var(--naranja);
+  }
+
+  .pos-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    color: #888;
+    font-size: 0.85rem;
+  }
+
+  .equipo-tabla {
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .equipo-tabla.urreta { color: var(--naranja); }
+
+  .tabla-pts {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--blanco);
+    text-align: center;
+  }
+
+  .tabla-num {
+    font-size: 0.85rem;
+    color: #aaa;
+    text-align: center;
+  }
+
+  .tabla-num.verde { color: var(--verde-gol); }
+  .tabla-num.rojo { color: var(--rojo-gol); }
+  .tabla-num.amarillo { color: var(--amarillo); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--gris-oscuro);
+    border-top: 1px solid var(--gris-borde);
+    padding: 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 32px;
+  }
+
+  footer span { color: var(--naranja); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .header-text h1 { font-size: 2rem; }
+    .liga-tag { display: none; }
+    .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
+    .stats-bar-inner .stat-item:nth-child(2) { border-right: none; }
+    .tabla-header,
+    .tabla-row { grid-template-columns: 24px 1fr 32px 32px 32px 32px 32px 40px; font-size: 0.78rem; }
+    .tabla-header span:nth-child(n+5):nth-child(-n+7) { display: none; }
+    .tabla-row > span:nth-child(n+5):nth-child(-n+7) { display: none; }
+  }
+
+  /* Animaciones de entrada */
+  .fade-in {
+    animation: fadeInUp 0.4s ease both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fecha-card:nth-child(1) { animation-delay: 0.05s; }
+  .fecha-card:nth-child(2) { animation-delay: 0.10s; }
+  .fecha-card:nth-child(3) { animation-delay: 0.15s; }
+  .fecha-card:nth-child(4) { animation-delay: 0.20s; }
+  .fecha-card:nth-child(5) { animation-delay: 0.25s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="club-badge" style="background:transparent;box-shadow:none;animation:none;">
+      <img src="data:image/png;base64,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" alt="Urreta FC" style="width:72px;height:72px;object-fit:contain;border-radius:50%;">
+    </div>
+    <div class="header-text">
+      <h1>Urreta FC</h1>
+      <p>Liga Prado · Baby Fútbol · Temporada 2026 · Categoría 2021</p>
+    </div>
+    <div class="liga-tag">⚽ Temporada 2026</div>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-inner" id="statsBar">
+    <div class="stat-item">
+      <div class="stat-num" id="statPJ">0</div>
+      <div class="stat-label">Jugados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="statG">0</div>
+      <div class="stat-label">Ganados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="statGF">0</div>
+      <div class="stat-label">Goles a favor</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="statPTS">0</div>
+      <div class="stat-label">Puntos</div>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTDOWN SECTION -->
+<div id="countdownSection" style="display:none">
+  <div class="countdown-section-inner">
+    <div class="countdown-titulo" id="countdownTitulo"></div>
+    <div id="countdownLive"></div>
+    <div class="countdown-subtitulo" id="countdownSubtitulo"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- PRÓXIMO PARTIDO -->
+  <div id="proximoSection"></div>
+
+  <!-- FIXTURE -->
+  <div>
+    <div class="section-title">⚽ Fixture Completo</div>
+    <div class="fixture-grid" id="fixtureGrid"></div>
+  </div>
+
+  <!-- TABLA DE POSICIONES -->
+  <div>
+    <div class="section-title">📊 Tabla de Posiciones</div>
+    <div class="tabla-container">
+      <div class="tabla-header">
+        <span>#</span>
+        <span>Club</span>
+        <span style="text-align:center">PJ</span>
+        <span style="text-align:center">G</span>
+        <span style="text-align:center">E</span>
+        <span style="text-align:center">P</span>
+        <span style="text-align:center">GD</span>
+        <span style="text-align:center">PTS</span>
+      </div>
+      <div id="tablaBody"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Hecho con ❤️ para el campeón de casa · <span>Urreta Baby Fútbol</span> · Categoría 2021 · Canstatt 2966, Montevideo
+  <div id="ultimaActualizacion" style="margin-top:6px;font-size:0.72rem;color:#444;"></div>
+</footer>
+
+<!-- MODAL CANCHA RIVAL -->
+<div class="modal-overlay" id="modalCancha">
+  <div class="modal">
+    <h3 id="canchaClubNombre">Club Rival</h3>
+    <div class="modal-partido-info" id="canchaDir" style="font-size:0.9rem;margin-bottom:16px;"></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a id="canchaGmaps" href="#" target="_blank" style="display:flex;align-items:center;gap:10px;background:#2a2a2a;border:1px solid #444;border-radius:8px;padding:12px 16px;color:white;text-decoration:none;font-weight:600;font-size:0.9rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#F07020"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Ver en Google Maps
+      </a>
+      <a id="canchaWaze" href="#" target="_blank" style="display:flex;align-items:center;gap:10px;background:#05C8F7;border-radius:8px;padding:12px 16px;color:#000;text-decoration:none;font-weight:700;font-size:0.9rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 8c0-4.4-3.8-8-8.5-8S3.5 3.6 3.5 8c0 3.2 1.9 6 4.7 7.4l-.2 2.1c0 .3.1.6.4.7.1.1.3.1.4.1.2 0 .3 0 .5-.1l2.3-1.3c.3 0 .6.1.9.1 4.7 0 8.5-3.6 8.5-8zM8 8.5c0-.8.7-1.5 1.5-1.5S11 7.7 11 8.5 10.3 10 9.5 10 8 9.3 8 8.5zm7 0c0-.8.7-1.5 1.5-1.5S18 7.7 18 8.5 17.3 10 16.5 10 15 9.3 15 8.5z"/></svg>
+        Abrir en Waze
+      </a>
+      <a id="canchaWhatsapp" href="#" target="_blank" style="display:flex;align-items:center;gap:10px;background:#25D366;border-radius:8px;padding:12px 16px;color:#000;text-decoration:none;font-weight:700;font-size:0.9rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Compartir por WhatsApp
+      </a>
+    </div>
+    <button class="btn-cancelar" onclick="cerrarModalCancha()" style="width:100%;margin-top:12px;">Cerrar</button>
+  </div>
+</div>
+
+<!-- MODAL RESULTADO -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Cargar Resultado</h3>
+    <div class="modal-partido-info" id="modalInfo"></div>
+    <div class="score-inputs">
+      <div class="score-group">
+        <label class="label-urreta" id="labelLocal">Urreta</label>
+        <input type="number" class="score-input" id="inputLocal" min="0" max="30" value="0">
+      </div>
+      <div class="score-sep-modal">—</div>
+      <div class="score-group">
+        <label id="labelVisitante">Rival</label>
+        <input type="number" class="score-input" id="inputVisitante" min="0" max="30" value="0">
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-guardar" onclick="guardarResultado()">Guardar ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ====== FECHAS ======
+// F1: 16/03/2025 (o fecha original) → W/O contra Bochas
+// F2: 22/03/2025 → Urreta 7-1 Malvín Alto
+// F3: 29/03/2025 → E. del Norte vs Urreta (mañana)
+// Domingo 05/04: no hay fútbol
+// F4: 12/04/2025
+// F5 en adelante: cada domingo desde 19/04
+
+const FECHAS = [
+  '16/03/2025', // F1 - Bochas W/O
+  '22/03/2025', // F2 - Malvín Alto
+  '29/03/2025', // F3 - E. del Norte
+  '12/04/2025', // F4
+  '19/04/2025', // F5
+  '26/04/2025', // F6
+  '03/05/2025', // F7
+  '10/05/2025', // F8
+  '17/05/2025', // F9
+  '24/05/2025', // F10
+  '31/05/2025', // F11
+  '07/06/2025', // F12
+  '14/06/2025', // F13
+  '21/06/2025', // F14
+  '28/06/2025', // F15
+];
+
+// Fixture COMPLETO de Urreta según imagen del fixture
+const FIXTURE = [
+  { rival: 'Bochas',        esLocal: false, fecha_txt: FECHAS[0],  woUrreta: true  }, // F1 W/O
+  { rival: 'Malvín Alto',   esLocal: true,  fecha_txt: FECHAS[1]  }, // F2
+  { rival: 'E. del Norte',  esLocal: false, fecha_txt: FECHAS[2]  }, // F3
+  { rival: 'Ombú Jrs.',     esLocal: true,  fecha_txt: FECHAS[3]  }, // F4
+  { rival: 'Pablan',        esLocal: false, fecha_txt: FECHAS[4]  }, // F5
+  { rival: 'Covicenova',    esLocal: true,  fecha_txt: FECHAS[5]  }, // F6
+  { rival: 'Av. Lezica',    esLocal: false, fecha_txt: FECHAS[6]  }, // F7
+  { rival: 'L. Washington', esLocal: true,  fecha_txt: FECHAS[7]  }, // F8
+  { rival: 'C. Corinto',    esLocal: false, fecha_txt: FECHAS[8]  }, // F9
+  { rival: '3 de Abril',    esLocal: true,  fecha_txt: FECHAS[9]  }, // F10
+  { rival: 'D. Uruguayo',   esLocal: false, fecha_txt: FECHAS[10] }, // F11
+  { rival: 'Las Flores',    esLocal: false, fecha_txt: FECHAS[11] }, // F12
+  { rival: 'Isidro Fynn',   esLocal: true,  fecha_txt: FECHAS[12] }, // F13
+  { rival: 'San Francisco', esLocal: false, fecha_txt: FECHAS[13] }, // F14
+  { rival: 'Yegros',        esLocal: true,  fecha_txt: FECHAS[14] }, // F15
+];
+
+// ====== TODOS LOS PARTIDOS POR FECHA (cat. 2021 según imagen) ======
+// gl/gv = goles local/visitante, null = sin resultado todavía
+const FIXTURE_FECHA = [
+  [ // F1
+    { local: 'San Francisco', visitante: 'Las Flores',    gl: 0,    gv: 3    },
+    { local: 'Yegros',        visitante: 'Isidro Fynn',   gl: 2,    gv: 2    },
+    { local: 'Bochas',        visitante: 'Urreta',        gl: 0,    gv: 3, wo: true },
+    { local: 'Malvín Alto',   visitante: 'D. Uruguayo',   gl: 3,    gv: 0    },
+    { local: 'E. del Norte',  visitante: '3 de Abril',    gl: 0,    gv: 8    },
+    { local: 'Ombú Jrs.',     visitante: 'C. Corinto',    gl: 2,    gv: 0    },
+    { local: 'Pablán',        visitante: 'L. Washington', gl: 3,    gv: 3    },
+    { local: 'Covicenova',    visitante: 'Av. Lezica',    gl: 0,    gv: 1    },
+  ],
+  [ // F2
+    { local: 'Las Flores',    visitante: 'Av. Lezica',    gl: 1,    gv: 2    },
+    { local: 'L. Washington', visitante: 'Covicenova',    gl: 0,    gv: 8    },
+    { local: 'C. Corinto',    visitante: 'Pablán',        gl: 0,    gv: 5    },
+    { local: '3 de Abril',    visitante: 'Ombú Jrs.',     gl: 7,    gv: 0    },
+    { local: 'D. Uruguayo',   visitante: 'E. del Norte',  gl: 0,    gv: 3, wo: true },
+    { local: 'Urreta',        visitante: 'Malvín Alto',   gl: 7,    gv: 1    },
+    { local: 'Isidro Fynn',   visitante: 'Bochas',        gl: 3,    gv: 0    },
+    { local: 'San Francisco', visitante: 'Yegros',        gl: 1,    gv: 3    },
+  ],
+  [ // F3
+    { local: 'Yegros',        visitante: 'Las Flores',    gl: null, gv: null },
+    { local: 'Bochas',        visitante: 'San Francisco', gl: null, gv: null },
+    { local: 'Malvín Alto',   visitante: 'Isidro Fynn',   gl: null, gv: null },
+    { local: 'E. del Norte',  visitante: 'Urreta',        gl: null, gv: null },
+    { local: 'Ombú Jrs.',     visitante: 'D. Uruguayo',   gl: null, gv: null },
+    { local: 'Pablán',        visitante: '3 de Abril',    gl: null, gv: null },
+    { local: 'Covicenova',    visitante: 'C. Corinto',    gl: null, gv: null },
+    { local: 'Av. Lezica',    visitante: 'L. Washington', gl: null, gv: null },
+  ],
+  [ // F4
+    { local: 'Las Flores',    visitante: 'L. Washington', gl: null, gv: null },
+    { local: 'C. Corinto',    visitante: 'Av. Lezica',    gl: null, gv: null },
+    { local: '3 de Abril',    visitante: 'Covicenova',    gl: null, gv: null },
+    { local: 'D. Uruguayo',   visitante: 'Pablán',        gl: null, gv: null },
+    { local: 'Urreta',        visitante: 'Ombú Jrs.',     gl: null, gv: null },
+    { local: 'Isidro Fynn',   visitante: 'E. del Norte',  gl: null, gv: null },
+    { local: 'San Francisco', visitante: 'Malvín Alto',   gl: null, gv: null },
+    { local: 'Yegros',        visitante: 'Bochas',        gl: null, gv: null },
+  ],
+  [ // F5
+    { local: 'Bochas',        visitante: 'Las Flores',    gl: null, gv: null },
+    { local: 'Malvín Alto',   visitante: 'Yegros',        gl: null, gv: null },
+    { local: 'E. del Norte',  visitante: 'San Francisco', gl: null, gv: null },
+    { local: 'Ombú Jrs.',     visitante: 'Isidro Fynn',   gl: null, gv: null },
+    { local: 'Pablán',        visitante: 'Urreta',        gl: null, gv: null },
+    { local: 'Covicenova',    visitante: 'D. Uruguayo',   gl: null, gv: null },
+    { local: 'Av. Lezica',    visitante: '3 de Abril',    gl: null, gv: null },
+    { local: 'L. Washington', visitante: 'C. Corinto',    gl: null, gv: null },
+  ],
+  [ // F6
+    { local: 'Las Flores',    visitante: 'C. Corinto',    gl: null, gv: null },
+    { local: '3 de Abril',    visitante: 'L. Washington', gl: null, gv: null },
+    { local: 'D. Uruguayo',   visitante: 'Av. Lezica',    gl: null, gv: null },
+    { local: 'Urreta',        visitante: 'Covicenova',    gl: null, gv: null },
+    { local: 'Isidro Fynn',   visitante: 'Pablán',        gl: null, gv: null },
+    { local: 'San Francisco', visitante: 'Ombú Jrs.',     gl: null, gv: null },
+    { local: 'Yegros',        visitante: 'E. del Norte',  gl: null, gv: null },
+    { local: 'Bochas',        visitante: 'Malvín Alto',   gl: null, gv: null },
+  ],
+  [ // F7
+    { local: 'Malvín Alto',   visitante: 'Las Flores',    gl: null, gv: null },
+    { local: 'E. del Norte',  visitante: 'Bochas',        gl: null, gv: null },
+    { local: 'Ombú Jrs.',     visitante: 'Yegros',        gl: null, gv: null },
+    { local: 'Pablán',        visitante: 'San Francisco', gl: null, gv: null },
+    { local: 'Covicenova',    visitante: 'Isidro Fynn',   gl: null, gv: null },
+    { local: 'Av. Lezica',    visitante: 'Urreta',        gl: null, gv: null },
+    { local: 'L. Washington', visitante: 'D. Uruguayo',   gl: null, gv: null },
+    { local: 'C. Corinto',    visitante: '3 de Abril',    gl: null, gv: null },
+  ],
+  [ // F8
+    { local: 'Las Flores',    visitante: '3 de Abril',    gl: null, gv: null },
+    { local: 'D. Uruguayo',   visitante: 'C. Corinto',    gl: null, gv: null },
+    { local: 'Urreta',        visitante: 'L. Washington', gl: null, gv: null },
+    { local: 'Isidro Fynn',   visitante: 'Av. Lezica',    gl: null, gv: null },
+    { local: 'San Francisco', visitante: 'Covicenova',    gl: null, gv: null },
+    { local: 'Yegros',        visitante: 'Pablán',        gl: null, gv: null },
+    { local: 'Bochas',        visitante: 'Ombú Jrs.',     gl: null, gv: null },
+    { local: 'Malvín Alto',   visitante: 'E. del Norte',  gl: null, gv: null },
+  ],
+  [ // F9
+    { local: 'E. del Norte',  visitante: 'Las Flores',    gl: null, gv: null },
+    { local: 'Ombú Jrs.',     visitante: 'Malvín Alto',   gl: null, gv: null },
+    { local: 'Pablán',        visitante: 'Bochas',        gl: null, gv: null },
+    { local: 'Covicenova',    visitante: 'Yegros',        gl: null, gv: null },
+    { local: 'Av. Lezica',    visitante: 'San Francisco', gl: null, gv: null },
+    { local: 'L. Washington', visitante: 'Isidro Fynn',   gl: null, gv: null },
+    { local: 'C. Corinto',    visitante: 'Urreta',        gl: null, gv: null },
+    { local: '3 de Abril',    visitante: 'D. Uruguayo',   gl: null, gv: null },
+  ],
+  [ // F10
+    { local: 'Las Flores',    visitante: 'D. Uruguayo',   gl: null, gv: null },
+    { local: 'Urreta',        visitante: '3 de Abril',    gl: null, gv: null },
+    { local: 'Isidro Fynn',   visitante: 'C. Corinto',    gl: null, gv: null },
+    { local: 'San Francisco', visitante: 'L. Washington', gl: null, gv: null },
+    { local: 'Yegros',        visitante: 'Av. Lezica',    gl: null, gv: null },
+    { local: 'Bochas',        visitante: 'Covicenova',    gl: null, gv: null },
+    { local: 'Malvín Alto',   visitante: 'Pablán',        gl: null, gv: null },
+    { local: 'E. del Norte',  visitante: 'Ombú Jrs.',     gl: null, gv: null },
+  ],
+  [ // F11
+    { local: 'Ombú Jrs.',     visitante: 'Las Flores',    gl: null, gv: null },
+    { local: 'Pablán',        visitante: 'E. del Norte',  gl: null, gv: null },
+    { local: 'Covicenova',    visitante: 'Malvín Alto',   gl: null, gv: null },
+    { local: 'Av. Lezica',    visitante: 'Bochas',        gl: null, gv: null },
+    { local: 'L. Washington', visitante: 'Yegros',        gl: null, gv: null },
+    { local: 'C. Corinto',    visitante: 'San Francisco', gl: null, gv: null },
+    { local: '3 de Abril',    visitante: 'Isidro Fynn',   gl: null, gv: null },
+    { local: 'D. Uruguayo',   visitante: 'Urreta',        gl: null, gv: null },
+  ],
+  [ // F12
+    { local: 'Las Flores',    visitante: 'Urreta',        gl: null, gv: null },
+    { local: 'Isidro Fynn',   visitante: 'D. Uruguayo',   gl: null, gv: null },
+    { local: 'San Francisco', visitante: '3 de Abril',    gl: null, gv: null },
+    { local: 'Yegros',        visitante: 'C. Corinto',    gl: null, gv: null },
+    { local: 'Bochas',        visitante: 'L. Washington', gl: null, gv: null },
+    { local: 'Malvín Alto',   visitante: 'Av. Lezica',    gl: null, gv: null },
+    { local: 'E. del Norte',  visitante: 'Covicenova',    gl: null, gv: null },
+    { local: 'Ombú Jrs.',     visitante: 'Pablán',        gl: null, gv: null },
+  ],
+  [ // F13
+    { local: 'Pablán',        visitante: 'Las Flores',    gl: null, gv: null },
+    { local: 'Covicenova',    visitante: 'Ombú Jrs.',     gl: null, gv: null },
+    { local: 'Av. Lezica',    visitante: 'E. del Norte',  gl: null, gv: null },
+    { local: 'L. Washington', visitante: 'Malvín Alto',   gl: null, gv: null },
+    { local: 'C. Corinto',    visitante: 'Bochas',        gl: null, gv: null },
+    { local: '3 de Abril',    visitante: 'Yegros',        gl: null, gv: null },
+    { local: 'D. Uruguayo',   visitante: 'San Francisco', gl: null, gv: null },
+    { local: 'Urreta',        visitante: 'Isidro Fynn',   gl: null, gv: null },
+  ],
+  [ // F14
+    { local: 'Las Flores',    visitante: 'Isidro Fynn',   gl: null, gv: null },
+    { local: 'San Francisco', visitante: 'Urreta',        gl: null, gv: null },
+    { local: 'Yegros',        visitante: 'D. Uruguayo',   gl: null, gv: null },
+    { local: 'Bochas',        visitante: '3 de Abril',    gl: null, gv: null },
+    { local: 'Malvín Alto',   visitante: 'C. Corinto',    gl: null, gv: null },
+    { local: 'E. del Norte',  visitante: 'L. Washington', gl: null, gv: null },
+    { local: 'Ombú Jrs.',     visitante: 'Av. Lezica',    gl: null, gv: null },
+    { local: 'Pablán',        visitante: 'Covicenova',    gl: null, gv: null },
+  ],
+  [ // F15
+    { local: 'Covicenova',    visitante: 'Las Flores',    gl: null, gv: null },
+    { local: 'Av. Lezica',    visitante: 'Pablán',        gl: null, gv: null },
+    { local: 'L. Washington', visitante: 'Ombú Jrs.',     gl: null, gv: null },
+    { local: 'C. Corinto',    visitante: 'E. del Norte',  gl: null, gv: null },
+    { local: '3 de Abril',    visitante: 'Malvín Alto',   gl: null, gv: null },
+    { local: 'D. Uruguayo',   visitante: 'Bochas',        gl: null, gv: null },
+    { local: 'Urreta',        visitante: 'Yegros',        gl: null, gv: null },
+    { local: 'Isidro Fynn',   visitante: 'San Francisco', gl: null, gv: null },
+  ],
+];
+
+// Resultados por defecto (F1 W/O y F2 ya jugados)
+const _DEFAULTS = {
+  '1': { golesUrreta: 3, golesRival: 0, wo: true },
+  '2': { golesUrreta: 7, golesRival: 1 },
+};
+let resultados = JSON.parse(localStorage.getItem('urreta_resultados') || 'null');
+if (!resultados) {
+  resultados = { ..._DEFAULTS };
+  localStorage.setItem('urreta_resultados', JSON.stringify(resultados));
+} else {
+  if (!resultados['1']) { resultados['1'] = _DEFAULTS['1']; localStorage.setItem('urreta_resultados', JSON.stringify(resultados)); }
+  if (!resultados['2']) { resultados['2'] = _DEFAULTS['2']; localStorage.setItem('urreta_resultados', JSON.stringify(resultados)); }
+}
+
+// Cargar desde resultados.json (fuente oficial, se actualiza con el bot)
+fetch('./resultados.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    // Fusionar: resultados.json tiene prioridad sobre localStorage
+    if (data.urreta) {
+      Object.assign(resultados, data.urreta);
+      localStorage.setItem('urreta_resultados', JSON.stringify(resultados));
+    }
+    // Actualizar FIXTURE_FECHA con datos del JSON si existen
+    if (data.fechas) {
+      Object.keys(data.fechas).forEach(fechaKey => {
+        const idx = parseInt(fechaKey) - 1;
+        if (FIXTURE_FECHA[idx]) {
+          data.fechas[fechaKey].forEach(p => {
+            const row = FIXTURE_FECHA[idx].find(r =>
+              r.local === p.local && r.visitante === p.visitante
+            );
+            if (row && p.gl !== null && p.gl !== undefined) {
+              row.gl = p.gl;
+              row.gv = p.gv;
+              if (p.wo) row.wo = true;
+            }
+          });
+        }
+      });
+    }
+    // Mostrar última actualización
+    if (data.ultima_actualizacion) {
+      const d = new Date(data.ultima_actualizacion);
+      const label = `Última actualización: ${d.toLocaleDateString('es-UY')} ${d.toLocaleTimeString('es-UY', {hour:'2-digit',minute:'2-digit'})}hs`;
+      const el = document.getElementById('ultimaActualizacion');
+      if (el) el.textContent = label;
+    }
+    renderAll();
+  })
+  .catch(() => {
+    // Si falla el fetch (ej: abierto como archivo local), usa lo que ya hay
+    renderAll();
+  });
+
+// Hora de los partidos (configurable). Cambiá acá si el horario es diferente.
+const HORA_PARTIDO = { horas: 10, minutos: 0 };
+
+let modalFechaIdx = null;
+let countdownInterval = null;
+
+// CANCHA DE URRETA
+const CANCHA_ADDR = 'Canstatt 2966, Montevideo';
+const CANCHA_WAZE = 'https://waze.com/ul?q=Urreta+Baby+Futbol+Canstatt+2966+Montevideo&navigate=yes';
+const CANCHA_GMAPS = 'https://www.google.com/maps/search/Canstatt+2966+Montevideo';
+
+// DIRECCIONES RIVALES (encontradas en babyfutbol.uy / yojuegofutbol.com)
+const CANCHAS_RIVALES = {
+  'Isidro Fynn':   { dir: 'Isidro Fynn y Cam. Manuel M. Fortet, Colón', query: 'Club+Isidro+Fynn+Baby+Futbol+Colon+Montevideo' },
+  'E. del Norte':  { dir: 'Cam. Ariel 4678 esq. Bell, Montevideo', query: 'Estrella+del+Norte+Baby+Futbol+Ariel+4678+Montevideo' },
+  'Malvín Alto':   { dir: 'Félix de Medina e Hipólito Irigoyen, Malvín Alto', query: 'Club+Malvin+Alto+Baby+Futbol+Felix+de+Medina+Montevideo' },
+  'Las Flores':    { dir: 'Cont. Austria y Cno. Cibils (detrás del Cementerio del Cerro)', query: 'Club+Las+Flores+Baby+Futbol+Austria+Cibils+Cerro+Montevideo' },
+  'D. Uruguayo':   { dir: 'Ricardo Cosio 2171 esq. Osvaldo Cruz, Maroñas', query: 'Club+Deportivo+Uruguayo+Baby+Futbol+Ricardo+Cosio+2171+Montevideo' },
+  'Yegros':        { dir: 'Iris esq. Formoso, Colón', query: 'Yegros+Baby+Futbol+Iris+Formoso+Colon+Montevideo' },
+  'Covicenova':    { dir: 'Cam. Buffa y Surinam, Cerro', query: 'Covicenova+Baby+Futbol+Camino+Buffa+Surinam+Cerro+Montevideo' },
+  'Ombú Jrs.':     { dir: 'Libia 3310 esq. Maldonado, Jardines del Hipódromo', query: 'Club+Ombu+Juniors+Baby+Futbol+Libia+3310+Montevideo' },
+  'Av. Lezica':    { dir: 'Montalvo y Luis Morandi, Villa Colón', query: 'Aviacion+Lezica+Baby+Futbol+Montalvo+Luis+Morandi+Colon+Montevideo' },
+  'L. Washington': { dir: 'Victoriano Álvarez 6150, Montevideo', query: 'Libertad+Washington+Baby+Futbol+Victoriano+Alvarez+6150+Montevideo' },
+  // Sin dirección confirmada — completar si se conoce
+  'Pablan':        { dir: null, query: 'Pablan+Baby+Futbol+Montevideo' },
+  '3 de Abril':    { dir: null, query: '3+de+Abril+Baby+Futbol+Montevideo' },
+  'C. Corinto':    { dir: null, query: 'Cosmos+Corinto+Baby+Futbol+Montevideo' },
+  'San Francisco': { dir: null, query: 'San+Francisco+Baby+Futbol+Montevideo' },
+  'Bochas':        { dir: 'Ciudad del Plata (desde San José)', query: 'Bochas+Delta+El+Tigre+Baby+Futbol+Ciudad+del+Plata' },
+};
+
+// ====== RENDER ======
+function parseDate(str) {
+  if(!str) return null;
+  const [d,m,y] = str.split('/').map(Number);
+  return new Date(y, m-1, d);
+}
+
+function isProximo(idx) {
+  const partido = FIXTURE[idx];
+  if(partido.libre) return false;
+  if(resultados[idx+1]) return false;
+  const hoy = new Date();
+  const fd = parseDate(partido.fecha_txt);
+  if(!fd) return false;
+  return fd >= new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+}
+
+function getStatus(idx) {
+  const p = FIXTURE[idx];
+  if(p.libre) return 'libre';
+  if(resultados[idx+1]) return 'jugado';
+  if(isProximo(idx)) return 'proximo';
+  return 'pendiente';
+}
+
+function getResultadoBadge(idx) {
+  const r = resultados[idx+1];
+  if(!r) return '';
+  if(r.wo) return '<span class="resultado-badge badge-victoria">W/O</span>';
+  const gu = r.golesUrreta, gr = r.golesRival;
+  if(gu > gr) return '<span class="resultado-badge badge-victoria">Victoria</span>';
+  if(gu < gr) return '<span class="resultado-badge badge-derrota">Derrota</span>';
+  return '<span class="resultado-badge badge-empate">Empate</span>';
+}
+
+function getCountdownHtml(fecha_txt) {
+  const [dd, mm, yy] = fecha_txt.split('/').map(Number);
+  const target = new Date(yy, mm - 1, dd, HORA_PARTIDO.horas, HORA_PARTIDO.minutos, 0);
+  const now = new Date();
+  const diff = target - now;
+
+  if (diff <= 0) {
+    // Mismo día o ya pasó la hora
+    const hoy = new Date();
+    const mismodia = hoy.getFullYear() === yy && hoy.getMonth() === mm - 1 && hoy.getDate() === dd;
+    if (mismodia) {
+      return `<div class="countdown-hoy">⚽ ¡HOY SE JUEGA!</div>`;
+    }
+    return '';
+  }
+
+  const dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const segs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const pad = n => String(n).padStart(2, '0');
+
+  return `<div class="countdown-grid">
+    <div class="countdown-block"><span class="countdown-num">${pad(dias)}</span><span class="countdown-label">días</span></div>
+    <div class="countdown-block"><span class="countdown-num">${pad(horas)}</span><span class="countdown-label">horas</span></div>
+    <div class="countdown-block"><span class="countdown-num">${pad(mins)}</span><span class="countdown-label">min</span></div>
+    <div class="countdown-block"><span class="countdown-num">${pad(segs)}</span><span class="countdown-label">seg</span></div>
+  </div>`;
+}
+
+function tickCountdown(fecha_txt) {
+  const el = document.getElementById('countdownLive');
+  if (!el) { clearInterval(countdownInterval); return; }
+  el.innerHTML = getCountdownHtml(fecha_txt);
+}
+
+function renderProximo() {
+  let proxIdx = -1;
+  for(let i=0;i<FIXTURE.length;i++){
+    if(isProximo(i)){ proxIdx=i; break; }
+  }
+  const sec = document.getElementById('proximoSection');
+  const secCd = document.getElementById('countdownSection');
+
+  if(proxIdx < 0){
+    sec.innerHTML='';
+    secCd.style.display='none';
+    clearInterval(countdownInterval);
+    return;
+  }
+
+  const p = FIXTURE[proxIdx];
+  const local = p.esLocal ? 'Urreta' : p.rival;
+  const visita = p.esLocal ? p.rival : 'Urreta';
+  const localClass = p.esLocal ? 'local' : 'visitante';
+  const visitaClass = p.esLocal ? 'visitante' : 'local';
+  const horaStr = `${HORA_PARTIDO.horas}:${String(HORA_PARTIDO.minutos).padStart(2,'0')}`;
+
+  // === COUNTDOWN SECTION (arriba de todo) ===
+  secCd.style.display = 'block';
+  document.getElementById('countdownTitulo').textContent = `Próximo partido · Fecha ${proxIdx + 1}`;
+  document.getElementById('countdownLive').innerHTML = getCountdownHtml(p.fecha_txt);
+  document.getElementById('countdownSubtitulo').innerHTML =
+    `Urreta vs <span>${p.rival}</span> · Domingo ${p.fecha_txt} · ${horaStr}hs`;
+
+  // Arrancar tick en tiempo real
+  clearInterval(countdownInterval);
+  countdownInterval = setInterval(() => tickCountdown(p.fecha_txt), 1000);
+
+  // === CARD PRÓXIMO PARTIDO (en main) ===
+  const canchaHref = p.esLocal ? CANCHA_GMAPS : (CANCHAS_RIVALES[p.rival]?.query
+    ? `https://www.google.com/maps/search/${CANCHAS_RIVALES[p.rival].query}` : '#');
+  const canchaLabel = p.esLocal ? CANCHA_ADDR : (CANCHAS_RIVALES[p.rival]?.dir || `Cancha de ${p.rival}`);
+  const wazeHref = p.esLocal ? CANCHA_WAZE : (CANCHAS_RIVALES[p.rival]?.query
+    ? `https://waze.com/ul?q=${CANCHAS_RIVALES[p.rival].query}&navigate=yes` : '#');
+
+  sec.innerHTML = `
+  <div class="proximo-card fade-in">
+    <div class="proximo-content">
+      <div class="equipo-proximo">
+        <div class="equipo-nombre ${localClass}">${local}</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:4px;">${p.esLocal?'Local':'Visitante'}</div>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="equipo-proximo">
+        <div class="equipo-nombre ${visitaClass}">${visita}</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:4px;">${!p.esLocal?'Local':'Visitante'}</div>
+      </div>
+    </div>
+    <div class="proximo-meta">
+      <div class="meta-item">
+        <span class="icon">📅</span>
+        <span>Domingo ${p.fecha_txt} · Fecha ${proxIdx+1} · ${horaStr}hs</span>
+      </div>
+      <div class="meta-item">
+        <span class="icon">📍</span>
+        <a href="${canchaHref}" target="_blank">${canchaLabel}</a>
+      </div>
+    </div>
+    <a class="waze-btn" href="${wazeHref}" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 8c0-4.4-3.8-8-8.5-8S3.5 3.6 3.5 8c0 3.2 1.9 6 4.7 7.4l-.2 2.1c0 .3.1.6.4.7.1.1.3.1.4.1.2 0 .3 0 .5-.1l2.3-1.3c.3 0 .6.1.9.1 4.7 0 8.5-3.6 8.5-8zM8 8.5c0-.8.7-1.5 1.5-1.5S11 7.7 11 8.5 10.3 10 9.5 10 8 9.3 8 8.5zm7 0c0-.8.7-1.5 1.5-1.5S18 7.7 18 8.5 17.3 10 16.5 10 15 9.3 15 8.5zm-6.1 3.2c-.3-.3-.3-.7 0-1 1.2-1.2 3-.2 3.1-.1.3.3.4.7.1 1-.3.3-.7.4-1 .1-.1 0-.7-.4-1.3 0-.1.1-.3.1-.4.1-.2 0-.4-.1-.5-.1z"/></svg>
+      Abrir en Waze
+    </a>
+  </div>`;
+}
+
+function renderTodosHtml(fechaIdx) {
+  const partidos = FIXTURE_FECHA[fechaIdx];
+  if (!partidos) return '';
+  const rows = partidos.map(p => {
+    const esU = p.local === 'Urreta' || p.visitante === 'Urreta';
+    const lClass = p.local === 'Urreta' ? 'urreta-eq' : '';
+    const vClass = p.visitante === 'Urreta' ? 'urreta-eq' : '';
+    let scoreHtml;
+    if (p.gl !== null && p.gv !== null) {
+      const label = p.wo ? ' <span style="font-size:0.6rem;color:#facc15">W/O</span>' : '';
+      scoreHtml = `<span class="pf-score">${p.gl}–${p.gv}${label}</span>`;
+    } else {
+      scoreHtml = `<span class="pf-score pendiente">—</span>`;
+    }
+    return `<div class="partido-fecha-row ${esU ? 'es-urreta' : ''}">
+      <div class="pf-equipos">
+        <span class="pf-local ${lClass}">${p.local}</span>
+        <span class="pf-vs">vs</span>
+        <span class="pf-visitante ${vClass}">${p.visitante}</span>
+      </div>
+      ${scoreHtml}
+    </div>`;
+  }).join('');
+  return `<div class="todos-titulo">Todos los partidos</div>${rows}`;
+}
+
+function toggleTodos(btn) {
+  btn.classList.toggle('open');
+  const panel = btn.nextElementSibling;
+  panel.classList.toggle('open');
+}
+
+function renderFixture() {
+  const grid = document.getElementById('fixtureGrid');
+  grid.innerHTML = '';
+  FIXTURE.forEach((p, idx) => {
+    const fechaNum = idx + 1;
+    const status = getStatus(idx);
+    const r = resultados[fechaNum];
+    const statusLabel = {
+      'jugado': 'Jugado', 'proximo': 'Próximo', 'pendiente': 'Pendiente', 'libre': 'Fecha libre'
+    }[status];
+    const statusClass = `status-${status}`;
+
+    let bodyHtml = '';
+    if(p.libre) {
+      bodyHtml = `<div class="fecha-libre-row">⚽ Fecha libre — sin partido programado</div>`;
+    } else {
+      const local = p.esLocal ? '<span class="partido-local urreta">Urreta</span>' : `<span class="partido-local" style="cursor:pointer;text-decoration:underline;text-decoration-color:#555;" onclick="abrirModalCancha('${p.rival}')" title="Ver cancha">${p.rival} 📍</span>`;
+      const visita = p.esLocal ? `<span class="partido-visitante" style="cursor:pointer;text-decoration:underline;text-decoration-color:#555;" onclick="abrirModalCancha('${p.rival}')" title="Ver cancha">${p.rival} 📍</span>` : '<span class="partido-visitante">Urreta</span>';
+
+      let scoreHtml = '';
+      if(r) {
+        const gu = p.esLocal ? r.golesUrreta : r.golesRival;
+        const gr = p.esLocal ? r.golesRival : r.golesUrreta;
+        const col1 = p.esLocal ? 'color:var(--naranja-claro)' : '';
+        const col2 = p.esLocal ? '' : 'color:var(--naranja-claro)';
+        scoreHtml = `<div class="resultado-area">
+          ${getResultadoBadge(idx)}
+          <div class="resultado-display">
+            <span class="gol-num" style="${col1}">${gu}</span>
+            <span class="gol-sep">:</span>
+            <span class="gol-num" style="${col2}">${gr}</span>
+          </div>
+          <button class="btn-editar" onclick="abrirModal(${idx})">✏</button>
+        </div>`;
+      } else {
+        scoreHtml = `<button class="btn-editar" onclick="abrirModal(${idx})" title="Cargar resultado">+ Resultado</button>`;
+      }
+
+      bodyHtml = `<div class="fecha-partido">
+        <div class="partido-equipos">
+          ${local}
+          <span class="partido-vs">vs</span>
+          ${visita}
+        </div>
+        ${scoreHtml}
+      </div>
+      <button class="btn-ver-todos" onclick="toggleTodos(this)">
+        ⚽ Ver todos los partidos
+        <span class="chevron">▾</span>
+      </button>
+      <div class="todos-resultados">${renderTodosHtml(idx)}</div>`;
+    }
+
+    const card = document.createElement('div');
+    card.className = `fecha-card fade-in ${status === 'jugado' ? 'jugada' : ''} ${status === 'proximo' ? 'activa' : ''}`;
+    card.innerHTML = `
+      <div class="fecha-header">
+        <span class="fecha-num">Fecha ${fechaNum}</span>
+        <span class="fecha-date">${p.fecha_txt || '—'}</span>
+        <span class="fecha-status ${statusClass}">${statusLabel}</span>
+      </div>
+      ${bodyHtml}`;
+    grid.appendChild(card);
+  });
+}
+
+function calcEstadisticas() {
+  let pj=0, g=0, e=0, pe=0, gf=0, gc=0, pts=0;
+  FIXTURE.forEach((p, idx) => {
+    if(p.libre) return;
+    const r = resultados[idx+1];
+    if(!r) return;
+    pj++;
+    gf += r.golesUrreta;
+    gc += r.golesRival;
+    if(r.golesUrreta > r.golesRival){ g++; pts+=3; }
+    else if(r.golesUrreta === r.golesRival){ e++; pts+=1; }
+    else pe++;
+  });
+  return { pj, g, e, pe, gf, gc, pts };
+}
+
+function renderStats() {
+  const s = calcEstadisticas();
+  document.getElementById('statPJ').textContent = s.pj;
+  document.getElementById('statG').textContent = s.g;
+  document.getElementById('statGF').textContent = s.gf;
+  document.getElementById('statPTS').textContent = s.pts;
+}
+
+// Tabla REAL categoría 2021 - actualizada con datos oficiales Liga Prado
+// Se actualizan los stats de Urreta desde los resultados cargados; el resto son datos reales del PDF
+function renderTabla() {
+  const s = calcEstadisticas();
+
+  const equipos = [
+    { nombre: '3 de Abril',       pj:2, g:2, e:0, pe:0, gf:15, gc:0  },
+    { nombre: 'Urreta',           pj:s.pj, g:s.g, e:s.e, pe:s.pe, gf:s.gf, gc:s.gc, esUrreta: true },
+    { nombre: 'Av. Lezica',       pj:2, g:2, e:0, pe:0, gf:3,  gc:1  },
+    { nombre: 'Pablán',           pj:2, g:1, e:1, pe:0, gf:8,  gc:3  },
+    { nombre: 'Yegros',           pj:2, g:1, e:1, pe:0, gf:6,  gc:3  },
+    { nombre: 'Isidro Fynn',      pj:2, g:1, e:1, pe:0, gf:5,  gc:2  },
+    { nombre: 'Covicenova',       pj:2, g:1, e:0, pe:1, gf:8,  gc:1  },
+    { nombre: 'Las Flores',       pj:2, g:1, e:0, pe:1, gf:4,  gc:2  },
+    { nombre: 'Malvín Alto',      pj:2, g:1, e:0, pe:1, gf:4,  gc:7  },
+    { nombre: 'E. del Norte',     pj:2, g:1, e:0, pe:1, gf:3,  gc:8  },
+    { nombre: 'Ombú Jrs.',        pj:2, g:1, e:0, pe:1, gf:2,  gc:7  },
+    { nombre: 'L. Washington',    pj:2, g:0, e:1, pe:1, gf:3,  gc:11 },
+    { nombre: 'San Francisco',    pj:2, g:0, e:0, pe:2, gf:1,  gc:7  },
+    { nombre: 'Bochas',           pj:2, g:0, e:0, pe:2, gf:0,  gc:6  },
+    { nombre: 'D. Uruguayo',      pj:2, g:0, e:0, pe:2, gf:0,  gc:6  },
+    { nombre: 'C. Corinto',       pj:2, g:0, e:0, pe:2, gf:0,  gc:7  },
+  ].map(e => {
+    e.pts = e.g * 3 + e.e;
+    e.gd  = e.gf - e.gc;
+    return e;
+  }).sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
+
+  const tbody = document.getElementById('tablaBody');
+  tbody.innerHTML = '';
+  equipos.forEach((eq, i) => {
+    const isU = eq.esUrreta;
+    tbody.innerHTML += `<div class="tabla-row ${isU ? 'urreta-row' : ''}">
+      <span class="pos-num">${i + 1}</span>
+      <span class="equipo-tabla ${isU ? 'urreta' : ''}">
+        ${isU ? '⚽ ' : ''}${eq.nombre}
+      </span>
+      <span class="tabla-num">${eq.pj}</span>
+      <span class="tabla-num verde">${eq.g}</span>
+      <span class="tabla-num amarillo">${eq.e}</span>
+      <span class="tabla-num rojo">${eq.pe}</span>
+      <span class="tabla-num ${eq.gd >= 0 ? 'verde' : 'rojo'}">${eq.gd > 0 ? '+' : ''}${eq.gd}</span>
+      <span class="tabla-pts">${eq.pts}</span>
+    </div>`;
+  });
+}
+
+// ====== MODAL ======
+function abrirModal(idx) {
+  const p = FIXTURE[idx];
+  if(p.libre) return;
+  modalFechaIdx = idx;
+  const r = resultados[idx+1] || { golesUrreta: 0, golesRival: 0 };
+  document.getElementById('modalInfo').textContent = `Fecha ${idx+1} · Urreta vs ${p.rival} (${p.fecha_txt})`;
+  document.getElementById('labelLocal').textContent = 'Urreta';
+  document.getElementById('labelVisitante').textContent = p.rival;
+  document.getElementById('inputLocal').value = r.golesUrreta;
+  document.getElementById('inputVisitante').value = r.golesRival;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function cerrarModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  modalFechaIdx = null;
+}
+
+function guardarResultado() {
+  const gu = parseInt(document.getElementById('inputLocal').value) || 0;
+  const gr = parseInt(document.getElementById('inputVisitante').value) || 0;
+  resultados[modalFechaIdx+1] = { golesUrreta: gu, golesRival: gr };
+  localStorage.setItem('urreta_resultados', JSON.stringify(resultados));
+  cerrarModal();
+  renderAll();
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if(e.target === this) cerrarModal();
+});
+document.getElementById('modalCancha').addEventListener('click', function(e) {
+  if(e.target === this) cerrarModalCancha();
+});
+
+function abrirModalCancha(nombreRival) {
+  const info = CANCHAS_RIVALES[nombreRival];
+  document.getElementById('canchaClubNombre').textContent = nombreRival;
+  if(info && info.dir) {
+    document.getElementById('canchaDir').innerHTML = `<strong style="color:#F07020">📍 Cancha:</strong> ${info.dir}`;
+    const gmapsUrl = `https://www.google.com/maps/search/${info.query}`;
+    const wazeUrl = `https://waze.com/ul?q=${info.query}&navigate=yes`;
+    const waText = encodeURIComponent(`Cancha de ${nombreRival} - ${info.dir}`);
+    document.getElementById('canchaGmaps').href = gmapsUrl;
+    document.getElementById('canchaWaze').href = wazeUrl;
+    document.getElementById('canchaWhatsapp').href = `https://wa.me/?text=${waText}`;
+  } else {
+    document.getElementById('canchaDir').innerHTML = `<span style="color:#888;font-style:italic">Dirección no confirmada. Buscá en Google Maps:</span>`;
+    const gmapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(nombreRival + ' baby futbol Montevideo')}`;
+    const wazeUrl = `https://waze.com/ul?q=${encodeURIComponent(nombreRival + ' baby futbol Montevideo')}&navigate=yes`;
+    const waText = encodeURIComponent(`Buscar cancha de ${nombreRival} baby futbol Montevideo`);
+    document.getElementById('canchaGmaps').href = gmapsUrl;
+    document.getElementById('canchaWaze').href = wazeUrl;
+    document.getElementById('canchaWhatsapp').href = `https://wa.me/?text=${waText}`;
+  }
+  document.getElementById('modalCancha').classList.add('active');
+}
+
+function cerrarModalCancha() {
+  document.getElementById('modalCancha').classList.remove('active');
+}
+
+function renderAll() {
+  renderStats();
+  renderProximo();
+  renderFixture();
+  renderTabla();
+}
+
+// renderAll() es invocado por el fetch de resultados.json
+// Si el fetch falla, el .catch() lo llama igual como fallback
+</script>
+</body>
+</html>
