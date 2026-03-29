@@ -2,8 +2,9 @@ name: Actualizar Resultados
 
 on:
   schedule:
-    - cron: '0 23 * * 0'
-    - cron: '0 23 * * 1'
+    - cron: '0 23 * * 0'        # Domingos 20:00 UY
+    - cron: '0 23 * * 1'        # Lunes 20:00 UY
+    - cron: '0 12 * * 1,2,3,4,5' # Lun-Vie 09:00 UY (detectar horario/suspensión)
   workflow_dispatch:
 
 jobs:
@@ -11,24 +12,34 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Correr scraper
+
+      - name: Instalar puppeteer
+        run: npm install puppeteer
+
+      - name: Leer WhatsApp y actualizar hora
+        env:
+          WA_SESSION: ${{ secrets.WA_SESSION }}
+        run: node scripts/wa-scraper.js
+
+      - name: Actualizar resultados de Instagram
         env:
           IG_SESSIONID: ${{ secrets.IG_SESSIONID }}
           IG_CSRFTOKEN: ${{ secrets.IG_CSRFTOKEN }}
-        run: |
-          cat resultados.json | head -c 50
-          node scripts/scraper.js
+        run: node scripts/scraper.js
+
       - name: Commit y push si hay cambios
         run: |
           git config user.name "Urreta Bot"
           git config user.email "bot@urreta.fc"
           git add resultados.json
-          git diff --staged --quiet || git commit -m "🤖 Resultados actualizados $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git diff --staged --quiet || git commit -m "🤖 Actualizado $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
