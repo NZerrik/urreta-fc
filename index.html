@@ -1572,10 +1572,12 @@ function renderFixture() {
     const card = document.createElement('div');
     card.className = `fecha-card fade-in ${status === 'jugado' ? 'jugada' : ''} ${status === 'proximo' ? 'activa' : ''}`;
     const climaId = `clima-fecha-${fechaNum}`;
+    const horaFecha = HORAS_PARTIDO[fechaNum];
+    const horaLabel = horaFecha ? `· ${horaFecha}:00hs` : '';
     card.innerHTML = `
       <div class="fecha-header">
         <span class="fecha-num">Fecha ${fechaNum}</span>
-        <span class="fecha-date">${p.fecha_txt || '—'}</span>
+        <span class="fecha-date">${p.fecha_txt || '—'} ${horaLabel}</span>
         <span id="${climaId}"></span>
         <span class="fecha-status ${statusClass}">${statusLabel}</span>
       </div>
