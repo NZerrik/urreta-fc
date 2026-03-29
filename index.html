@@ -1,86 +1,166 @@
-# Urreta FC — Campeonato Apertura 2026
+#!/usr/bin/env node
+/**
+ * scraper.js — Liga Prado Instagram results scraper
+ * Runs via GitHub Actions daily at 20:00 UY (23:00 UTC)
+ * Reads resultados.json, fetches new results from Instagram, updates file.
+ */
 
-Página web del campeonato de baby fútbol de Urreta FC en Liga Prado, categoría 2021.
+const https = require('https');
+const fs = require('fs');
 
-## 🚀 Setup en 10 minutos
+const INSTAGRAM_SESSION = process.env.IG_SESSIONID;
+const INSTAGRAM_CSRF    = process.env.IG_CSRFTOKEN || '';
+const LIGA_PRADO_ID     = '11659874891';
+const RESULTADOS_FILE   = './resultados.json';
 
-### 1. Crear repositorio en GitHub
+// Mapping: "Fecha X" from caption → fecha index (1-based)
+// We detect from post caption text
 
-1. Ir a [github.com/new](https://github.com/new)
-2. Nombre: `urreta-campeonato`
-3. Marcar **Public**
-4. Click **Create repository**
+function fetchJson(url, headers) {
+  return new Promise((resolve, reject) => {
+    const opts = { headers: { 'User-Agent': 'Mozilla/5.0', ...headers } };
+    https.get(url, opts, res => {
+      let data = '';
+      res.on('data', d => data += d);
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)); }
+        catch(e) { reject(new Error('JSON parse error: ' + data.substring(0, 200))); }
+      });
+    }).on('error', reject);
+  });
+}
 
-### 2. Subir los archivos
+function parseFechaNum(caption) {
+  const m = caption.match(/Fecha\s+(\d+)/i);
+  return m ? parseInt(m[1]) : null;
+}
 
-En la terminal (o GitHub Desktop):
+function parsePartidosCat2021(caption) {
+  const partidos = [];
+  const lines = caption.split('\n');
+  for (const line of lines) {
+    if (!line.includes('2021')) continue;
+    // Formato: "Cat. 2021 | Local X vs Visitante Y"  o "Cat. 2021 | Local X vs Visitante Y (W/O)"
+    const m = line.match(/2021\s*\|\s*(.+?)\s+(\d+)\s+vs\s+(.+?)\s+(\d+)/);
+    if (m) {
+      partidos.push({ local: m[1].trim(), gl: parseInt(m[2]), visitante: m[3].trim(), gv: parseInt(m[4]) });
+    }
+  }
+  return partidos;
+}
 
-```bash
-cd urreta-site
-git init
-git add .
-git commit -m "🚀 Inicial"
-git branch -M main
-git remote add origin https://github.com/TU_USUARIO/urreta-campeonato.git
-git push -u origin main
-```
+function normalizarNombre(n) {
+  // Normaliza abreviaturas del Instagram al nombre canónico
+  const MAP = {
+    'L. W.': 'L. Washington', 'LW': 'L. Washington', 'Libertad': 'L. Washington',
+    'Covi': 'Covicenova', 'Depor': 'D. Uruguayo', 'Depor.': 'D. Uruguayo',
+    'E. Del Norte': 'E. del Norte', 'E.del Norte': 'E. del Norte',
+    'Sanfra': 'San Francisco', 'Av. Lezica': 'Av. Lezica', 'Aviación': 'Av. Lezica',
+    'Ombú': 'Ombú Jrs.', 'Malvin Alto': 'Malvín Alto', 'Malvín': 'Malvín Alto',
+    'Cosmos': 'C. Corinto', 'Isidro F.': 'Isidro Fynn',
+    '3 de Abril': '3 de Abril', 'Pablan': 'Pablán',
+    'Bochas': 'Bochas', 'Las Flores': 'Las Flores', 'Yegros': 'Yegros',
+    'Urreta': 'Urreta',
+  };
+  for (const [abbr, full] of Object.entries(MAP)) {
+    if (n.toLowerCase().includes(abbr.toLowerCase())) return full;
+  }
+  return n;
+}
 
-### 3. Activar GitHub Pages
+async function main() {
+  if (!INSTAGRAM_SESSION) {
+    console.error('❌ IG_SESSIONID not set');
+    process.exit(1);
+  }
 
-1. En el repo → **Settings** → **Pages**
-2. Source: **Deploy from branch**
-3. Branch: `main` / `/ (root)`
-4. **Save**
+  const resultados = JSON.parse(fs.readFileSync(RESULTADOS_FILE, 'utf8'));
+  let updated = false;
 
-Tu URL será: `https://TU_USUARIO.github.io/urreta-campeonato`
+  const headers = {
+    'Cookie': `sessionid=${INSTAGRAM_SESSION}; csrftoken=${INSTAGRAM_CSRF}`,
+    'X-IG-App-ID': '936619743392459',
+  };
 
-### 4. Agregar el secreto de Instagram (para el bot)
+  console.log('📡 Fetching Liga Prado posts...');
 
-El bot necesita tu `sessionid` de Instagram para leer los posts de Liga Prado.
+  // Fetch last 24 posts
+  let url = `https://www.instagram.com/api/v1/feed/user/${LIGA_PRADO_ID}/?count=24`;
+  let allItems = [];
 
-**Cómo obtener el sessionid:**
-1. Abrí Chrome y logueate en Instagram
-2. F12 → Application → Cookies → `https://www.instagram.com`
-3. Buscá la cookie `sessionid` y copiá su valor
+  for (let page = 0; page < 3; page++) {
+    const data = await fetchJson(url, headers).catch(e => null);
+    if (!data || !data.items) break;
+    allItems = allItems.concat(data.items);
+    if (!data.more_available || !data.next_max_id) break;
+    url = `https://www.instagram.com/api/v1/feed/user/${LIGA_PRADO_ID}/?count=24&max_id=${data.next_max_id}`;
+    await new Promise(r => setTimeout(r, 1500));
+  }
 
-**Dónde guardarlo:**
-1. En tu repo → **Settings** → **Secrets and variables** → **Actions**
-2. **New repository secret**
-3. Name: `IG_SESSIONID`, Value: (el valor que copiaste)
-4. Repetir para `IG_CSRFTOKEN` (la cookie `csrftoken`)
+  console.log(`📦 Got ${allItems.length} posts`);
 
-### 5. Verificar que funciona
+  for (const item of allItems) {
+    if (!item.caption) continue;
+    const caption = item.caption.text;
 
-1. En el repo → **Actions** → **Actualizar Resultados**
-2. Click **Run workflow** → **Run workflow**
-3. Verificar que el job pasa en verde
+    // Solo posts del Apertura con resultado
+    if (!caption.includes('Torneo Apertura') || !caption.includes('Fecha')) continue;
 
-## 🤖 Actualización automática
+    const fechaNum = parseFechaNum(caption);
+    if (!fechaNum) continue;
 
-El bot corre automáticamente:
-- **Domingos a las 20:00 UY** (día de partido)
-- **Lunes a las 20:00 UY** (por si publican tarde)
+    const partidos2021 = parsePartidosCat2021(caption);
+    if (partidos2021.length === 0) continue;
 
-También podés correrlo manualmente desde **Actions → Run workflow**.
+    console.log(`📅 Fecha ${fechaNum}: encontrados ${partidos2021.length} partidos cat. 2021`);
 
-## 📁 Estructura
+    const fechaKey = String(fechaNum);
+    if (!resultados.fechas[fechaKey]) resultados.fechas[fechaKey] = [];
 
-```
-urreta-site/
-├── index.html          ← La página web
-├── resultados.json     ← Datos de resultados (actualizado por el bot)
-├── scripts/
-│   └── scraper.js      ← Bot de scraping de Instagram
-└── .github/
-    └── workflows/
-        └── update.yml  ← Configuración del cron job
-```
+    for (const p of partidos2021) {
+      const local = normalizarNombre(p.local);
+      const visitante = normalizarNombre(p.visitante);
 
-## ✏️ Actualizar resultados manualmente
+      // Buscar el partido en la fecha y actualizar
+      const existing = resultados.fechas[fechaKey];
+      const idx = existing.findIndex(e =>
+        normalizarNombre(e.local) === local && normalizarNombre(e.visitante) === visitante
+      );
 
-Si el bot no captura un resultado, podés:
-1. Abrir la página web
-2. Click en **+ Resultado** en la fecha correspondiente
-3. Ingresar el marcador
+      if (idx >= 0) {
+        if (existing[idx].gl !== p.gl || existing[idx].gv !== p.gv) {
+          existing[idx].gl = p.gl;
+          existing[idx].gv = p.gv;
+          console.log(`  ✅ ${local} ${p.gl}–${p.gv} ${visitante}`);
+          updated = true;
+        }
+      } else {
+        existing.push({ local, visitante, gl: p.gl, gv: p.gv });
+        console.log(`  ➕ ${local} ${p.gl}–${p.gv} ${visitante} (nuevo)`);
+        updated = true;
+      }
 
-Los resultados manuales se guardan en `localStorage` del browser.
+      // Actualizar resultado de Urreta si aplica
+      const esUrretaLocal = local === 'Urreta';
+      const esUrretaVisita = visitante === 'Urreta';
+      if ((esUrretaLocal || esUrretaVisita) && !resultados.urreta[fechaKey]) {
+        resultados.urreta[fechaKey] = {
+          golesUrreta: esUrretaLocal ? p.gl : p.gv,
+          golesRival:  esUrretaLocal ? p.gv : p.gl,
+        };
+        console.log(`  🟠 Resultado Urreta F${fechaNum} guardado`);
+        updated = true;
+      }
+    }
+  }
+
+  if (updated) {
+    resultados.ultima_actualizacion = new Date().toISOString();
+    fs.writeFileSync(RESULTADOS_FILE, JSON.stringify(resultados, null, 2));
+    console.log('💾 resultados.json actualizado');
+  } else {
+    console.log('ℹ️  Sin cambios nuevos');
+  }
+}
+
+main().catch(e => { console.error('💥', e); process.exit(1); });
