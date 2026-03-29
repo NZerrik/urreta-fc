@@ -568,6 +568,7 @@
   .status-proximo { background: rgba(240,112,32,0.2); color: var(--naranja); }
   .status-jugado { background: rgba(34,197,94,0.2); color: var(--verde-gol); }
   .status-libre { background: rgba(250,204,21,0.2); color: var(--amarillo); }
+  .status-suspendido { background: rgba(239,68,68,0.2); color: var(--rojo-gol); }
 
   .fecha-partido {
     display: flex;
@@ -1059,7 +1060,7 @@ const FECHAS = [
 const FIXTURE = [
   { rival: 'Bochas',        esLocal: false, fecha_txt: FECHAS[0],  woUrreta: true  }, // F1 W/O
   { rival: 'Malvín Alto',   esLocal: true,  fecha_txt: FECHAS[1]  }, // F2
-  { rival: 'E. del Norte',  esLocal: false, fecha_txt: FECHAS[2]  }, // F3
+  { rival: 'E. del Norte',  esLocal: false, fecha_txt: 'A confirmar', suspendido: true }, // F3 - suspendida, fecha a confirmar
   { rival: 'Ombú Jrs.',     esLocal: true,  fecha_txt: FECHAS[3]  }, // F4
   { rival: 'Pablan',        esLocal: false, fecha_txt: FECHAS[4]  }, // F5
   { rival: 'Covicenova',    esLocal: true,  fecha_txt: FECHAS[5]  }, // F6
@@ -1347,6 +1348,8 @@ function isProximo(idx) {
   const partido = FIXTURE[idx];
   if(partido.libre) return false;
   if(resultados[idx+1]) return false;
+  // Si está suspendido y sin resultado, es el próximo
+  if(partido.suspendido) return true;
   const hoy = new Date();
   const fd = parseDate(partido.fecha_txt);
   if(!fd) return false;
@@ -1372,6 +1375,14 @@ function getResultadoBadge(idx) {
 }
 
 function getCountdownHtml(fecha_txt, hora) {
+  if (!fecha_txt || fecha_txt === 'A confirmar') {
+    return `<div class="countdown-grid">
+      <div class="countdown-block"><span class="countdown-num">00</span><span class="countdown-label">días</span></div>
+      <div class="countdown-block"><span class="countdown-num">00</span><span class="countdown-label">horas</span></div>
+      <div class="countdown-block"><span class="countdown-num">00</span><span class="countdown-label">min</span></div>
+      <div class="countdown-block"><span class="countdown-num">00</span><span class="countdown-label">seg</span></div>
+    </div>`;
+  }
   const [dd, mm, yy] = fecha_txt.split('/').map(Number);
   const h = hora ?? 10;
   const target = new Date(yy, mm - 1, dd, h, 0, 0);
@@ -1435,9 +1446,20 @@ function renderProximo() {
   // === COUNTDOWN SECTION (arriba de todo) ===
   secCd.style.display = 'block';
   document.getElementById('countdownTitulo').textContent = `Próximo partido · Fecha ${proxIdx + 1}`;
-  document.getElementById('countdownLive').innerHTML = getCountdownHtml(p.fecha_txt, horaRaw);
+
+  if (p.suspendido) {
+    document.getElementById('countdownLive').innerHTML = `<div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#EF4444;letter-spacing:3px;text-align:center;margin-top:8px;">⚠️ SUSPENDIDO — FECHA A CONFIRMAR</div>`;
+    clearInterval(countdownInterval);
+  } else {
+    document.getElementById('countdownLive').innerHTML = getCountdownHtml(p.fecha_txt, horaRaw);
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => tickCountdown(p.fecha_txt, horaRaw), 1000);
+  }
+
   document.getElementById('countdownSubtitulo').innerHTML =
-    `Urreta vs <span>${p.rival}</span> · Domingo ${p.fecha_txt}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}`;
+    p.suspendido
+      ? `Urreta vs <span>${p.rival}</span> · Fecha suspendida · Nueva fecha a definir`
+      : `Urreta vs <span>${p.rival}</span> · ${p.fecha_txt === 'A confirmar' ? '' : 'Domingo '}${p.fecha_txt}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}`;
 
   // Arrancar tick en tiempo real
   clearInterval(countdownInterval);
@@ -1466,7 +1488,7 @@ function renderProximo() {
     <div class="proximo-meta">
       <div class="meta-item">
         <span class="icon">📅</span>
-        <span>Domingo ${p.fecha_txt} · Fecha ${proxIdx+1}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}</span>
+        <span>${p.fecha_txt === 'A confirmar' ? 'Fecha' : 'Domingo'} ${p.fecha_txt} · Fecha ${proxIdx+1}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}</span>
       </div>
       <div class="meta-item">
         <span class="icon">📍</span>
@@ -1480,8 +1502,8 @@ function renderProximo() {
     </a>
   </div>`;
 
-  // Cargar clima del próximo partido
-  injectClima('clima-proximo', p.fecha_txt, 'proximo');
+  // Cargar clima del próximo partido (solo si tiene fecha)
+  if (!p.suspendido) injectClima('clima-proximo', p.fecha_txt, 'proximo');
 }
 
 function renderTodosHtml(fechaIdx) {
@@ -1524,9 +1546,9 @@ function renderFixture() {
     const status = getStatus(idx);
     const r = resultados[fechaNum];
     const statusLabel = {
-      'jugado': 'Jugado', 'proximo': 'Próximo', 'pendiente': 'Pendiente', 'libre': 'Fecha libre'
+      'jugado': 'Jugado', 'proximo': p.suspendido ? 'Suspendido' : 'Próximo', 'pendiente': 'Pendiente', 'libre': 'Fecha libre'
     }[status];
-    const statusClass = `status-${status}`;
+    const statusClass = p.suspendido ? 'status-suspendido' : `status-${status}`;
 
     let bodyHtml = '';
     if(p.libre) {
@@ -1573,7 +1595,7 @@ function renderFixture() {
     card.className = `fecha-card fade-in ${status === 'jugado' ? 'jugada' : ''} ${status === 'proximo' ? 'activa' : ''}`;
     const climaId = `clima-fecha-${fechaNum}`;
     const horaFecha = HORAS_PARTIDO[fechaNum];
-    const horaLabel = horaFecha ? `· ${horaFecha}:00hs` : '';
+    const horaLabel = (!p.suspendido && horaFecha) ? `· ${horaFecha}:00hs` : '';
     card.innerHTML = `
       <div class="fecha-header">
         <span class="fecha-num">Fecha ${fechaNum}</span>
