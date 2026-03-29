@@ -1030,11 +1030,11 @@
 
 <script>
 // ====== FECHAS ======
-// F1: 16/03/2025 (o fecha original) → W/O contra Bochas
-// F2: 22/03/2025 → Urreta 7-1 Malvín Alto
-// F3: 29/03/2025 → E. del Norte vs Urreta (mañana)
+// F1: 16/03/2026 → W/O contra Bochas
+// F2: 22/03/2026 → Urreta 7-1 Malvín Alto
+// F3: 29/03/2026 → E. del Norte vs Urreta
 // Domingo 05/04: no hay fútbol
-// F4: 12/04/2025
+// F4: 12/04/2026
 // F5 en adelante: cada domingo desde 19/04
 
 const FECHAS = [
@@ -1790,8 +1790,33 @@ async function injectClima(elementId, fecha_txt, modo) {
   el.innerHTML = modo === 'proximo' ? climaProximoHtml(clima) : climaBadgeHtml(clima);
 }
 
-// renderAll() es invocado por el fetch de resultados.json
-// Si el fetch falla, el .catch() lo llama igual como fallback
+// Arrancar la app — primero renderiza con datos locales,
+// luego intenta cargar resultados.json del servidor y re-renderiza
+renderAll();
+
+fetch('./resultados.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    if (data.urreta) Object.assign(resultados, data.urreta);
+    if (data.fechas) {
+      Object.keys(data.fechas).forEach(fechaKey => {
+        const idx = parseInt(fechaKey) - 1;
+        if (FIXTURE_FECHA[idx]) {
+          data.fechas[fechaKey].forEach(p => {
+            const row = FIXTURE_FECHA[idx].find(r => r.local === p.local && r.visitante === p.visitante);
+            if (row && p.gl !== null && p.gl !== undefined) { row.gl = p.gl; row.gv = p.gv; if (p.wo) row.wo = true; }
+          });
+        }
+      });
+    }
+    if (data.ultima_actualizacion) {
+      const d = new Date(data.ultima_actualizacion);
+      const el = document.getElementById('ultimaActualizacion');
+      if (el) el.textContent = `Actualizado: ${d.toLocaleDateString('es-UY')} ${d.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}hs`;
+    }
+    renderAll();
+  })
+  .catch(() => { /* archivo local o sin conexión — ya renderizó arriba */ });
 
 </script>
 </body>
