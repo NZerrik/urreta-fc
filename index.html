@@ -1284,8 +1284,29 @@ fetch('./resultados.json?t=' + Date.now())
     renderAll();
   });
 
-// Hora de los partidos (configurable). Cambiá acá si el horario es diferente.
-const HORA_PARTIDO = { horas: 10, minutos: 0 };
+// Hora de cada partido. null = sin confirmar
+const HORAS_PARTIDO = {
+  1:  null,  // W/O
+  2:  14,    // 14:00hs
+  3:  16,    // 16:00hs
+  4:  null,
+  5:  null,
+  6:  null,
+  7:  null,
+  8:  null,
+  9:  null,
+  10: null,
+  11: null,
+  12: null,
+  13: null,
+  14: null,
+  15: null,
+};
+
+function getHoraPartido(fechaNum) {
+  const h = HORAS_PARTIDO[fechaNum];
+  return h !== null && h !== undefined ? `${h}:00hs` : null;
+}
 
 let modalFechaIdx = null;
 let countdownInterval = null;
@@ -1350,9 +1371,10 @@ function getResultadoBadge(idx) {
   return '<span class="resultado-badge badge-empate">Empate</span>';
 }
 
-function getCountdownHtml(fecha_txt) {
+function getCountdownHtml(fecha_txt, hora) {
   const [dd, mm, yy] = fecha_txt.split('/').map(Number);
-  const target = new Date(yy, mm - 1, dd, HORA_PARTIDO.horas, HORA_PARTIDO.minutos, 0);
+  const h = hora ?? 10;
+  const target = new Date(yy, mm - 1, dd, h, 0, 0);
   const now = new Date();
   const diff = target - now;
 
@@ -1381,10 +1403,10 @@ function getCountdownHtml(fecha_txt) {
   </div>`;
 }
 
-function tickCountdown(fecha_txt) {
+function tickCountdown(fecha_txt, hora) {
   const el = document.getElementById('countdownLive');
   if (!el) { clearInterval(countdownInterval); return; }
-  el.innerHTML = getCountdownHtml(fecha_txt);
+  el.innerHTML = getCountdownHtml(fecha_txt, hora);
 }
 
 function renderProximo() {
@@ -1407,18 +1429,19 @@ function renderProximo() {
   const visita = p.esLocal ? p.rival : 'Urreta';
   const localClass = p.esLocal ? 'local' : 'visitante';
   const visitaClass = p.esLocal ? 'visitante' : 'local';
-  const horaStr = `${HORA_PARTIDO.horas}:${String(HORA_PARTIDO.minutos).padStart(2,'0')}`;
+  const horaRaw = HORAS_PARTIDO[proxIdx + 1];
+  const horaStr = horaRaw !== null && horaRaw !== undefined ? `${horaRaw}:00` : null;
 
   // === COUNTDOWN SECTION (arriba de todo) ===
   secCd.style.display = 'block';
   document.getElementById('countdownTitulo').textContent = `Próximo partido · Fecha ${proxIdx + 1}`;
-  document.getElementById('countdownLive').innerHTML = getCountdownHtml(p.fecha_txt);
+  document.getElementById('countdownLive').innerHTML = getCountdownHtml(p.fecha_txt, horaRaw);
   document.getElementById('countdownSubtitulo').innerHTML =
-    `Urreta vs <span>${p.rival}</span> · Domingo ${p.fecha_txt} · ${horaStr}hs`;
+    `Urreta vs <span>${p.rival}</span> · Domingo ${p.fecha_txt}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}`;
 
   // Arrancar tick en tiempo real
   clearInterval(countdownInterval);
-  countdownInterval = setInterval(() => tickCountdown(p.fecha_txt), 1000);
+  countdownInterval = setInterval(() => tickCountdown(p.fecha_txt, horaRaw), 1000);
 
   // === CARD PRÓXIMO PARTIDO (en main) ===
   const canchaHref = p.esLocal ? CANCHA_GMAPS : (CANCHAS_RIVALES[p.rival]?.query
@@ -1443,7 +1466,7 @@ function renderProximo() {
     <div class="proximo-meta">
       <div class="meta-item">
         <span class="icon">📅</span>
-        <span>Domingo ${p.fecha_txt} · Fecha ${proxIdx+1} · ${horaStr}hs</span>
+        <span>Domingo ${p.fecha_txt} · Fecha ${proxIdx+1}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}</span>
       </div>
       <div class="meta-item">
         <span class="icon">📍</span>
