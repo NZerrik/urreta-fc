@@ -22,7 +22,7 @@ jobs:
         env:
           IG_SESSIONID: ${{ secrets.IG_SESSIONID }}
           IG_CSRFTOKEN: ${{ secrets.IG_CSRFTOKEN }}
-       run: |
+        run: |
           cat resultados.json | head -c 50
           node scripts/scraper.js
       - name: Commit y push si hay cambios
