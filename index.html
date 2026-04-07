@@ -1459,7 +1459,7 @@ function renderProximo() {
   document.getElementById('countdownSubtitulo').innerHTML =
     p.suspendido
       ? `Urreta vs <span>${p.rival}</span> · Fecha suspendida · Nueva fecha a definir`
-      : `Urreta vs <span>${p.rival}</span> · ${p.fecha_txt === 'A confirmar' ? '' : 'Domingo '}${p.fecha_txt}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}`;
+      : `Urreta vs <span>${p.rival}</span> · ${p.fecha_txt === 'A confirmar' ? '' : 'Viernes '}${p.fecha_txt}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}`;
 
   // Arrancar tick en tiempo real
   clearInterval(countdownInterval);
