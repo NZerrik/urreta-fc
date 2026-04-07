@@ -1033,7 +1033,7 @@
 // ====== FECHAS ======
 // F1: 16/03/2026 → W/O contra Bochas
 // F2: 22/03/2026 → Urreta 7-1 Malvín Alto
-// F3: 29/03/2026 → E. del Norte vs Urreta
+// F3: 10/04/2026 (viernes) → E. del Norte vs Urreta
 // Domingo 05/04: no hay fútbol
 // F4: 12/04/2026
 // F5 en adelante: cada domingo desde 19/04
@@ -1060,7 +1060,7 @@ const FECHAS = [
 const FIXTURE = [
   { rival: 'Bochas',        esLocal: false, fecha_txt: FECHAS[0],  woUrreta: true  }, // F1 W/O
   { rival: 'Malvín Alto',   esLocal: true,  fecha_txt: FECHAS[1]  }, // F2
-  { rival: 'E. del Norte',  esLocal: false, fecha_txt: 'A confirmar', suspendido: true }, // F3 - suspendida, fecha a confirmar
+  { rival: 'E. del Norte',  esLocal: false, fecha_txt: '10/04/2026' }, // F3 - viernes
   { rival: 'Ombú Jrs.',     esLocal: true,  fecha_txt: FECHAS[3]  }, // F4
   { rival: 'Pablan',        esLocal: false, fecha_txt: FECHAS[4]  }, // F5
   { rival: 'Covicenova',    esLocal: true,  fecha_txt: FECHAS[5]  }, // F6
@@ -1289,7 +1289,7 @@ fetch('./resultados.json?t=' + Date.now())
 const HORAS_PARTIDO = {
   1:  null,  // W/O
   2:  14,    // 14:00hs
-  3:  16,    // 16:00hs
+  3:  19,    // 19:00hs
   4:  null,
   5:  null,
   6:  null,
