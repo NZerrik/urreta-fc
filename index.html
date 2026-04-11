@@ -3,3 +3,702 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urreta Baby Fútbol — Liga Prado</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --naranja: #F07020;
+    --naranja-oscuro: #C85010;
+    --naranja-claro: #FFAA55;
+    --negro: #111111;
+    --gris-oscuro: #1E1E1E;
+    --gris-medio: #2A2A2A;
+    --gris-borde: #333333;
+    --blanco: #FFFFFF;
+    --blanco-suave: #F5F5F5;
+    --verde-gol: #22C55E;
+    --rojo-gol: #EF4444;
+    --amarillo: #FACC15;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #111 0%, #1a0a00 50%, #111 100%);
+    border-bottom: 3px solid var(--naranja);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: var(--naranja);
+    opacity: 0.06;
+    border-radius: 50%;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: var(--naranja);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .club-badge {
+    width: 72px; height: 72px;
+    background: var(--naranja);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 30px rgba(240,112,32,0.4);
+    animation: pulse-badge 3s ease-in-out infinite;
+  }
+
+  .club-badge-icon { font-size: 36px; }
+
+  @keyframes pulse-badge {
+    0%, 100% { box-shadow: 0 0 30px rgba(240,112,32,0.4); }
+    50% { box-shadow: 0 0 50px rgba(240,112,32,0.7); }
+  }
+
+  .header-content {
+    flex: 1;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0;
+    color: var(--naranja);
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+
+  h1 small {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--blanco-suave);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    margin-top: 4px;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    background: linear-gradient(180deg, rgba(17,17,17,0.95) 0%, rgba(17,17,17,0.9) 100%);
+    border-bottom: 2px solid var(--naranja);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+
+  nav ul {
+    list-style: none;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  nav li {
+    flex: 1;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  nav button {
+    background: none;
+    border: none;
+    color: var(--blanco);
+    padding: 14px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  nav button:hover {
+    background: var(--naranja);
+    color: var(--negro);
+  }
+
+  nav button.active {
+    background: var(--naranja);
+    color: var(--negro);
+    border-bottom: 3px solid var(--amarillo);
+  }
+
+  /* ===== MAIN ===== */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+
+  /* ===== FORM ===== */
+  .form-container {
+    background: var(--gris-oscuro);
+    border: 2px solid var(--naranja);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(240,112,32,0.15);
+  }
+
+  .form-container h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    color: var(--naranja);
+    text-transform: uppercase;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  input, select {
+    background: var(--gris-medio);
+    border: 1px solid var(--gris-borde);
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: var(--blanco);
+    font-size: 14px;
+    width: 100%;
+    transition: border-color 0.3s ease;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--naranja);
+    box-shadow: 0 0 8px rgba(240,112,32,0.3);
+  }
+
+  .btn {
+    background: var(--naranja);
+    border: none;
+    color: var(--negro);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+  }
+
+  .btn:hover {
+    background: var(--naranja-claro);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(240,112,32,0.3);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  /* ===== STATS ===== */
+  .stats-container {
+    background: var(--gris-oscuro);
+    border: 2px solid var(--naranja);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(240,112,32,0.15);
+  }
+
+  .stats-container h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    color: var(--naranja);
+    text-transform: uppercase;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+
+  .stat-box {
+    background: var(--gris-medio);
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-box label {
+    display: block;
+    font-size: 12px;
+    color: var(--blanco-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .stat-box span {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--naranja);
+  }
+
+  /* ===== TABLE ===== */
+  .table-container {
+    background: var(--gris-oscuro);
+    border: 2px solid var(--naranja);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(240,112,32,0.15);
+    overflow-x: auto;
+  }
+
+  .table-container h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    color: var(--naranja);
+    text-transform: uppercase;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  thead {
+    background: var(--gris-medio);
+    border-top: 2px solid var(--naranja);
+    border-bottom: 2px solid var(--naranja);
+  }
+
+  thead th {
+    padding: 12px;
+    text-align: left;
+    color: var(--naranja);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--gris-borde);
+    transition: background-color 0.2s ease;
+  }
+
+  tbody tr:hover {
+    background: var(--gris-medio);
+  }
+
+  tbody td {
+    padding: 12px;
+    color: var(--blanco);
+  }
+
+  tbody td.won { color: var(--verde-gol); font-weight: 600; }
+  tbody td.lost { color: var(--rojo-gol); font-weight: 600; }
+
+  tbody td.name { font-weight: 600; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--gris-oscuro);
+    border-top: 2px solid var(--naranja);
+    padding: 20px;
+    margin-top: 40px;
+    text-align: center;
+    color: var(--blanco-suave);
+    font-size: 13px;
+  }
+
+  footer a {
+    color: var(--naranja);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  footer a:hover {
+    color: var(--naranja-claro);
+    text-decoration: underline;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Header con logo y título -->
+<header>
+  <div class="header-inner">
+    <div class="club-badge">⚽</div>
+    <div class="header-content">
+      <h1>Urreta Baby<small>Liga Prado</small></h1>
+    </div>
+  </div>
+</header>
+
+<!-- Navegación -->
+<nav>
+  <ul>
+    <li><button class="nav-btn active" data-section="stats">📊 Estadísticas</button></li>
+    <li><button class="nav-btn" data-section="table">🏆 Tabla</button></li>
+    <li><button class="nav-btn" data-section="admin">⚙️ Administración</button></li>
+  </ul>
+</nav>
+
+<!-- Contenido principal -->
+<main>
+  <!-- SECCIÓN: ESTADÍSTICAS -->
+  <section id="stats" class="section active">
+    <div class="stats-container">
+      <h2>📊 Estadísticas</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <label>Fecha Actual</label>
+          <span id="fechaActual">–</span>
+        </div>
+        <div class="stat-box">
+          <label>Partidos</label>
+          <span id="totalPartidos">–</span>
+        </div>
+        <div class="stat-box">
+          <label>Equipos</label>
+          <span id="totalEquipos">–</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <h2>Tabla de Posiciones</h2>
+      <table id="tabla">
+        <thead>
+          <tr>
+            <th style="width: 5%;">#</th>
+            <th style="width: 35%;">Equipo</th>
+            <th style="width: 10%;">PJ</th>
+            <th style="width: 10%;">G</th>
+            <th style="width: 10%;">E</th>
+            <th style="width: 10%;">P</th>
+            <th style="width: 10%;">Pts</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body">
+          <tr><td colspan="7" style="text-align: center; color: #999;">Cargando datos...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: TABLA DE POSICIONES -->
+  <section id="table" class="section">
+    <div class="table-container">
+      <h2>🏆 Tabla de Posiciones (Vista Completa)</h2>
+      <table id="tablaCompleta">
+        <thead>
+          <tr>
+            <th style="width: 5%;">#</th>
+            <th style="width: 30%;">Equipo</th>
+            <th style="width: 8%;">PJ</th>
+            <th style="width: 8%;">G</th>
+            <th style="width: 8%;">E</th>
+            <th style="width: 8%;">P</th>
+            <th style="width: 8%;">Pts</th>
+            <th style="width: 8%;">Fecha</th>
+            <th style="width: 12%;">Resultado</th>
+          </tr>
+        </thead>
+        <tbody id="tablaCompleta-body">
+          <tr><td colspan="9" style="text-align: center; color: #999;">Cargando datos...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: ADMINISTRACIÓN -->
+  <section id="admin" class="section">
+    <div class="form-container">
+      <h2>Agregar Resultado</h2>
+      <div class="form-row">
+        <input type="number" id="fecha" placeholder="Fecha (ej: 3)" min="1">
+        <input type="text" id="equipo1" placeholder="Equipo 1">
+      </div>
+      <div class="form-row">
+        <input type="text" id="equipo2" placeholder="Equipo 2">
+        <input type="number" id="goles1" placeholder="Goles Equipo 1" min="0">
+      </div>
+      <div class="form-row">
+        <input type="number" id="goles2" placeholder="Goles Equipo 2" min="0">
+        <button class="btn" onclick="agregarResultado()">Agregar Resultado</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  <p>Urreta Baby Fútbol — Liga Prado <span id="ultimaActualizacion"></span></p>
+</footer>
+
+<!-- Script para gestionar datos -->
+<script>
+  const API_URL = './datos.json';
+  let datos = {
+    fecha_actual: 1,
+    ultima_actualizacion: null,
+    partidos: [
+      { fecha: 1, equipo1: 'Rojo', equipo2: 'Azul', goles1: 2, goles2: 1 }
+    ]
+  };
+
+  // Funciones de utilidad
+  function renderAll() {
+    renderTabla();
+    renderTablaCompleta();
+    updateStats();
+  }
+
+  function updateStats() {
+    const fecha = datos.fecha_actual;
+    document.getElementById('fechaActual').textContent = fecha;
+    document.getElementById('totalPartidos').textContent = datos.partidos.length;
+
+    const equipos = new Set();
+    datos.partidos.forEach(p => {
+      equipos.add(p.equipo1);
+      equipos.add(p.equipo2);
+    });
+    document.getElementById('totalEquipos').textContent = equipos.size;
+  }
+
+  function calcularTabla() {
+    const equipos = {};
+
+    datos.partidos.forEach(p => {
+      if (!equipos[p.equipo1]) {
+        equipos[p.equipo1] = { nombre: p.equipo1, pj: 0, g: 0, e: 0, p: 0, pts: 0, fecha: 0, resultado: '' };
+      }
+      if (!equipos[p.equipo2]) {
+        equipos[p.equipo2] = { nombre: p.equipo2, pj: 0, g: 0, e: 0, p: 0, pts: 0, fecha: 0, resultado: '' };
+      }
+
+      equipos[p.equipo1].pj++;
+      equipos[p.equipo2].pj++;
+      equipos[p.equipo1].fecha = p.fecha;
+      equipos[p.equipo2].fecha = p.fecha;
+
+      if (p.goles1 > p.goles2) {
+        equipos[p.equipo1].g++;
+        equipos[p.equipo1].pts += 3;
+        equipos[p.equipo2].p++;
+        equipos[p.equipo1].resultado = '✓';
+        equipos[p.equipo2].resultado = '✗';
+      } else if (p.goles1 < p.goles2) {
+        equipos[p.equipo2].g++;
+        equipos[p.equipo2].pts += 3;
+        equipos[p.equipo1].p++;
+        equipos[p.equipo2].resultado = '✓';
+        equipos[p.equipo1].resultado = '✗';
+      } else {
+        equipos[p.equipo1].e++;
+        equipos[p.equipo1].pts += 1;
+        equipos[p.equipo2].e++;
+        equipos[p.equipo2].pts += 1;
+        equipos[p.equipo1].resultado = '=';
+        equipos[p.equipo2].resultado = '=';
+      }
+    });
+
+    return Object.values(equipos)
+      .sort((a, b) => b.pts - a.pts || b.g - a.g)
+      .map((e, i) => ({ ...e, posicion: i + 1 }));
+  }
+
+  function renderTabla() {
+    const tabla = calcularTabla();
+    const body = document.getElementById('tabla-body');
+    body.innerHTML = tabla.map(eq => `
+      <tr>
+        <td>${eq.posicion}</td>
+        <td class="name">${eq.nombre}</td>
+        <td>${eq.pj}</td>
+        <td class="won">${eq.g}</td>
+        <td>${eq.e}</td>
+        <td class="lost">${eq.p}</td>
+        <td>${eq.pts}</td>
+      </tr>
+    `).join('');
+  }
+
+  function renderTablaCompleta() {
+    const tabla = calcularTabla();
+    const body = document.getElementById('tablaCompleta-body');
+    body.innerHTML = tabla.map(eq => `
+      <tr>
+        <td>${eq.posicion}</td>
+        <td class="name">${eq.nombre}</td>
+        <td>${eq.pj}</td>
+        <td class="won">${eq.g}</td>
+        <td>${eq.e}</td>
+        <td class="lost">${eq.p}</td>
+        <td>${eq.pts}</td>
+        <td>${eq.fecha}</td>
+        <td>${eq.resultado}</td>
+      </tr>
+    `).join('');
+  }
+
+  // Navegación
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const section = this.getAttribute('data-section');
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.getElementById(section).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Agregar resultado
+  function agregarResultado() {
+    const fecha = parseInt(document.getElementById('fecha').value);
+    const equipo1 = document.getElementById('equipo1').value;
+    const equipo2 = document.getElementById('equipo2').value;
+    const goles1 = parseInt(document.getElementById('goles1').value);
+    const goles2 = parseInt(document.getElementById('goles2').value);
+
+    if (!fecha || !equipo1 || !equipo2 || isNaN(goles1) || isNaN(goles2)) {
+      alert('Por favor, completa todos los campos');
+      return;
+    }
+
+    datos.partidos.push({
+      fecha: fecha,
+      equipo1: equipo1,
+      equipo2: equipo2,
+      goles1: goles1,
+      goles2: goles2
+    });
+
+    // Actualizar fecha actual
+    const todasLasFechas = datos.partidos.map(p => p.fecha);
+    datos.fecha_actual = Math.max(...todasLasFechas);
+    datos.ultima_actualizacion = new Date().toISOString();
+
+    // Limpiar formulario
+    document.getElementById('fecha').value = '';
+    document.getElementById('equipo1').value = '';
+    document.getElementById('equipo2').value = '';
+    document.getElementById('goles1').value = '';
+    document.getElementById('goles2').value = '';
+
+    renderAll();
+
+    // Guardar datos (aquí va el fetch)
+    fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    }).catch(() => { /* error local o sin conexión */ });
+  }
+
+  // Cargar datos del servidor
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      datos = data;
+      // Si tiene otros equipos en datos, solo procesamos partidos hasta la fecha actual
+      if (data.partidos) {
+        const hasta = Math.max(...data.partidos.map(p => p.fecha), 0);
+        datos.fecha_actual = hasta;
+      }
+      // Generar tabla: para cada equipo, marcar si ganó/perdió/empató en la fecha actual
+      const fechaMax = Math.max(...datos.partidos.map(p => p.fecha), 0);
+      datos.partidos.forEach(p => {
+        if (p.fecha < fechaMax) return; // solo mostrar la fecha máxima
+        // Si existe campo .wo, mantenerlo; si no, calcular resultado
+        if (!p.wo) {
+          if (p.goles1 > p.goles2) p.wo = false;
+          else if (p.goles1 < p.goles2) p.wo = false;
+          else p.wo = false;
+        }
+      });
+      // Marcar equipos que ganaron en ultima fecha
+      const partidos_ultima_fecha = datos.partidos.filter(p => p.fecha === fechaMax);
+      partidos_ultima_fecha.forEach(p => {
+        if (p.goles1 > p.goles2) {
+          const eq = datos.partidos.find(row => row.equipo1 === p.equipo1 && row.fecha === fechaMax && row.wo);
+          if (eq) eq.wo = false;
+        } else if (p.goles2 > p.goles1) {
+          const eq = datos.partidos.find(row => row.equipo2 === p.equipo2 && row.fecha === fechaMax && row.wo);
+          if (eq) eq.wo = false;
+        }
+      });
+      // Marcar walkover en tabla
+      datos.partidos.forEach(p => {
+        if (p.fecha === fechaMax && p.wo) {
+          const idx = datos.partidos.indexOf(p);
+          if (idx >= 0) datos.partidos[idx].wo = true;
+        }
+      });
+    })
+    .catch(() => { /* archivo local o sin conexión — ya renderizó arriba */ });
+
+</script>
+</body>
+</html>
