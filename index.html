@@ -1466,11 +1466,12 @@ function renderProximo() {
   countdownInterval = setInterval(() => tickCountdown(p.fecha_txt, horaRaw), 1000);
 
   // === CARD PRÓXIMO PARTIDO (en main) ===
-  const canchaHref = p.esLocal ? CANCHA_GMAPS : (CANCHAS_RIVALES[p.rival]?.query
-    ? `https://www.google.com/maps/search/${CANCHAS_RIVALES[p.rival].query}` : '#');
-  const canchaLabel = p.esLocal ? CANCHA_ADDR : (CANCHAS_RIVALES[p.rival]?.dir || `Cancha de ${p.rival}`);
-  const wazeHref = p.esLocal ? CANCHA_WAZE : (CANCHAS_RIVALES[p.rival]?.query
-    ? `https://waze.com/ul?q=${CANCHAS_RIVALES[p.rival].query}&navigate=yes` : '#');
+// Siempre se juega en cancha del rival (cancha de Urreta no habilitada actualmente)
+const canchaHref = CANCHAS_RIVALES[p.rival]?.query
+  ? `https://www.google.com/maps/search/${CANCHAS_RIVALES[p.rival].query}` : '#';
+const canchaLabel = CANCHAS_RIVALES[p.rival]?.dir || `Cancha de ${p.rival}`;
+const wazeHref = CANCHAS_RIVALES[p.rival]?.query
+  ? `https://waze.com/ul?q=${CANCHAS_RIVALES[p.rival].query}&navigate=yes` : '#';
 
   sec.innerHTML = `
   <div class="proximo-card fade-in">
