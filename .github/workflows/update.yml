@@ -22,24 +22,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Instalar puppeteer
-        run: npm install puppeteer
-
-      - name: Leer WhatsApp y actualizar hora
-        continue-on-error: true
-        env:
-          WA_SESSION: ${{ secrets.WA_SESSION }}
-        run: node scripts/wa-scraper.js
-
       - name: Actualizar resultados de Instagram
-        if: always()
         env:
           IG_SESSIONID: ${{ secrets.IG_SESSIONID }}
           IG_CSRFTOKEN: ${{ secrets.IG_CSRFTOKEN }}
         run: node scripts/scraper.js
 
       - name: Commit y push si hay cambios
-        if: always()
         run: |
           git config user.name "Urreta Bot"
           git config user.email "bot@urreta.fc"
