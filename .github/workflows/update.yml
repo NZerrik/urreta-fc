@@ -32,12 +32,14 @@ jobs:
         run: node scripts/wa-scraper.js
 
       - name: Actualizar resultados de Instagram
+        if: always()
         env:
           IG_SESSIONID: ${{ secrets.IG_SESSIONID }}
           IG_CSRFTOKEN: ${{ secrets.IG_CSRFTOKEN }}
         run: node scripts/scraper.js
 
       - name: Commit y push si hay cambios
+        if: always()
         run: |
           git config user.name "Urreta Bot"
           git config user.email "bot@urreta.fc"
