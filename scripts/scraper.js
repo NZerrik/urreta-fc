@@ -10,8 +10,8 @@ const fs    = require('fs');
 const path  = require('path');
 const RESULTADOS_FILE = path.join(__dirname, '..', 'resultados.json');
 
-const INSTAGRAM_SESSION = process.env.IG_SESSIONID;
-const INSTAGRAM_CSRF    = process.env.IG_CSRFTOKEN || '';
+const INSTAGRAM_SESSION = decodeURIComponent(process.env.IG_SESSIONID || '');
+const INSTAGRAM_CSRF    = decodeURIComponent(process.env.IG_CSRFTOKEN || '');
 const LIGA_PRADO_ID     = '11659874891';
 
 // Mapping: "Fecha X" from caption → fecha index (1-based)
@@ -19,13 +19,14 @@ const LIGA_PRADO_ID     = '11659874891';
 
 function fetchJson(url, headers) {
   return new Promise((resolve, reject) => {
-    const opts = { headers: { 'User-Agent': 'Mozilla/5.0', ...headers } };
+    const opts = { headers: { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1', ...headers } };
     https.get(url, opts, res => {
+      console.log(`  HTTP ${res.statusCode} for ${url.substring(0, 80)}`);
       let data = '';
       res.on('data', d => data += d);
       res.on('end', () => {
         try { resolve(JSON.parse(data)); }
-        catch(e) { reject(new Error('JSON parse error: ' + data.substring(0, 200))); }
+        catch(e) { reject(new Error('JSON parse error: ' + data.substring(0, 300))); }
       });
     }).on('error', reject);
   });
