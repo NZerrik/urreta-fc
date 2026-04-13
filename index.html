@@ -1644,21 +1644,21 @@ function renderTabla() {
   const s = calcEstadisticas();
 
   const equipos = [
-    { nombre: '3 de Abril',       pj:3, g:3, e:0, pe:0, gf:22, gc:1  },
+    { nombre: '3 de Abril',       pj:4, g:4, e:0, pe:0, gf:25, gc:2  },
     { nombre: 'Urreta',           pj:s.pj, g:s.g, e:s.e, pe:s.pe, gf:s.gf, gc:s.gc, esUrreta: true },
     { nombre: 'Av. Lezica',       pj:2, g:2, e:0, pe:0, gf:3,  gc:1  },
-    { nombre: 'Pablán',           pj:3, g:1, e:1, pe:1, gf:9,  gc:10 },
-    { nombre: 'Yegros',           pj:3, g:1, e:1, pe:1, gf:8,  gc:6  },
+    { nombre: 'Pablán',           pj:4, g:2, e:1, pe:1, gf:12, gc:10 },
+    { nombre: 'Yegros',           pj:4, g:2, e:1, pe:1, gf:11, gc:6  },
     { nombre: 'Isidro Fynn',      pj:2, g:1, e:1, pe:0, gf:5,  gc:2  },
-    { nombre: 'Covicenova',       pj:3, g:2, e:0, pe:1, gf:14, gc:2  },
+    { nombre: 'Covicenova',       pj:4, g:2, e:0, pe:2, gf:15, gc:5  },
     { nombre: 'Las Flores',       pj:3, g:2, e:0, pe:1, gf:7,  gc:4  },
-    { nombre: 'Malvín Alto',      pj:2, g:1, e:0, pe:1, gf:4,  gc:7  },
+    { nombre: 'Malvín Alto',      pj:3, g:2, e:0, pe:1, gf:7,  gc:7  },
     { nombre: 'E. del Norte',     pj:3, g:1, e:0, pe:2, gf:4,  gc:14 },
-    { nombre: 'Ombú Jrs.',        pj:3, g:2, e:0, pe:1, gf:5,  gc:7  },
+    { nombre: 'Ombú Jrs.',        pj:4, g:2, e:0, pe:2, gf:5,  gc:10 },
     { nombre: 'L. Washington',    pj:2, g:0, e:1, pe:1, gf:3,  gc:11 },
-    { nombre: 'San Francisco',    pj:3, g:1, e:0, pe:2, gf:4,  gc:7  },
-    { nombre: 'Bochas',           pj:3, g:0, e:0, pe:3, gf:0,  gc:9  },
-    { nombre: 'D. Uruguayo',      pj:3, g:0, e:0, pe:3, gf:0,  gc:9  },
+    { nombre: 'San Francisco',    pj:4, g:1, e:0, pe:3, gf:4,  gc:10 },
+    { nombre: 'Bochas',           pj:4, g:0, e:0, pe:4, gf:0,  gc:12 },
+    { nombre: 'D. Uruguayo',      pj:4, g:0, e:0, pe:4, gf:0,  gc:12 },
     { nombre: 'C. Corinto',       pj:3, g:0, e:0, pe:3, gf:1,  gc:13 },
   ].map(e => {
     e.pts = e.g * 3 + e.e;
