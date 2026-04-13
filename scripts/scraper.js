@@ -91,8 +91,9 @@ async function main() {
   let allItems = [];
 
   for (let page = 0; page < 3; page++) {
-    const data = await fetchJson(url, headers).catch(e => null);
-    if (!data || !data.items) break;
+    const data = await fetchJson(url, headers).catch(e => { console.error('  ❌ Fetch error:', e.message); return null; });
+    if (!data) { console.log('  ⚠️ No data received'); break; }
+    if (!data.items) { console.log('  ⚠️ Response keys:', Object.keys(data).join(', ')); break; }
     allItems = allItems.concat(data.items);
     if (!data.more_available || !data.next_max_id) break;
     url = `https://www.instagram.com/api/v1/feed/user/${LIGA_PRADO_ID}/?count=24&max_id=${data.next_max_id}`;
