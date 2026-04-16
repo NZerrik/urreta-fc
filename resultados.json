@@ -152,8 +152,8 @@
       {
         "local": "Bochas",
         "visitante": "San Francisco",
-        "gl": 0,
-        "gv": 3,
+        "gl": 3,
+        "gv": 0,
         "wo": true
       },
       {
@@ -162,6 +162,12 @@
         "gl": 3,
         "gv": 0,
         "wo": true
+      },
+      {
+        "local": "Av. Lezica",
+        "visitante": "L. Washington",
+        "gl": 6,
+        "gv": 0
       }
     ],
     "4": [
