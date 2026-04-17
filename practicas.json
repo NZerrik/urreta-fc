@@ -3,6 +3,7 @@
     {
       "dia": "Lunes",
       "hora": "18:30",
+      "hora_fin": "20:00",
       "lugar": "Cuartel de Artillería N°5",
       "maps": "https://www.google.com/maps?q=-34.8488083,-56.1776733",
       "waze": "https://waze.com/ul?ll=-34.8488083,-56.1776733&navigate=yes"
@@ -10,6 +11,7 @@
     {
       "dia": "Viernes",
       "hora": "19:00",
+      "hora_fin": "20:00",
       "lugar": "Campo Grande (Fútbol 5)",
       "maps": "https://www.google.com/maps/search/Campo+Grande+futbol+5+Montevideo",
       "waze": "https://waze.com/ul?q=Campo+Grande+futbol+5+Montevideo&navigate=yes"

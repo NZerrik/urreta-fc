@@ -2078,6 +2078,7 @@ const PRACTICAS_DEFAULT = [
   {
     dia: 'Lunes',
     hora: '18:30',
+    hora_fin: '20:00',
     lugar: 'Cuartel de Artillería N°5',
     maps: 'https://www.google.com/maps?q=-34.8488083,-56.1776733',
     waze: 'https://waze.com/ul?ll=-34.8488083,-56.1776733&navigate=yes'
@@ -2085,6 +2086,7 @@ const PRACTICAS_DEFAULT = [
   {
     dia: 'Viernes',
     hora: '19:00',
+    hora_fin: '20:00',
     lugar: 'Campo Grande (Fútbol 5)',
     maps: 'https://www.google.com/maps/search/Campo+Grande+futbol+5+Montevideo',
     waze: 'https://waze.com/ul?q=Campo+Grande+futbol+5+Montevideo&navigate=yes'
@@ -2098,7 +2100,7 @@ function renderPracticas(data) {
   grid.innerHTML = data.map(p => `
     <div class="practica-card">
       <div class="practica-dia">${p.dia}</div>
-      <div class="practica-hora">🕐 ${p.hora}hs</div>
+      <div class="practica-hora">🕐 ${p.hora}${p.hora_fin ? ' – ' + p.hora_fin : ''}hs</div>
       <div class="practica-lugar">📍 ${p.lugar}</div>
       <div class="practica-btns">
         <a class="practica-btn maps" href="${p.maps}" target="_blank">
@@ -2146,8 +2148,10 @@ function abrirAdminPracticas() {
       <strong style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;">${p.dia}</strong>
       <label>Día</label>
       <input id="ap_dia_${i}" value="${p.dia}">
-      <label>Hora</label>
+      <label>Hora inicio</label>
       <input id="ap_hora_${i}" value="${p.hora}" placeholder="18:30">
+      <label>Hora fin</label>
+      <input id="ap_hora_fin_${i}" value="${p.hora_fin || ''}" placeholder="20:00">
       <label>Lugar</label>
       <input id="ap_lugar_${i}" value="${p.lugar}">
       <label>Link Google Maps</label>
@@ -2174,9 +2178,10 @@ async function guardarPracticas() {
   if (!token) { status.textContent = '⚠️ Ingresá el GitHub Token para guardar.'; return; }
   status.textContent = 'Guardando...';
   const nuevas = practicasData.map((_, i) => ({
-    dia:   document.getElementById(`ap_dia_${i}`).value.trim(),
-    hora:  document.getElementById(`ap_hora_${i}`).value.trim(),
-    lugar: document.getElementById(`ap_lugar_${i}`).value.trim(),
+    dia:      document.getElementById(`ap_dia_${i}`).value.trim(),
+    hora:     document.getElementById(`ap_hora_${i}`).value.trim(),
+    hora_fin: document.getElementById(`ap_hora_fin_${i}`).value.trim(),
+    lugar:    document.getElementById(`ap_lugar_${i}`).value.trim(),
     maps:  document.getElementById(`ap_maps_${i}`).value.trim(),
     waze:  document.getElementById(`ap_waze_${i}`).value.trim()
   }));
