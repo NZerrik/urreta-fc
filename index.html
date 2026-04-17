@@ -281,6 +281,162 @@
     transform: translateY(-1px);
   }
 
+  /* === PRÁCTICAS === */
+  .practicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .practica-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .practica-dia {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: #FFD700;
+  }
+  .practica-hora {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .practica-lugar {
+    font-size: 0.85rem;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .practica-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .practica-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .practica-btn.maps { background: #34A853; color: #fff; }
+  .practica-btn.maps:hover { background: #2d9147; }
+  .practica-btn.waze { background: #05C8F7; color: #000; }
+  .practica-btn.waze:hover { background: #07e0ff; }
+  .edit-practicas-btn {
+    background: none;
+    border: 1px solid #444;
+    color: #888;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.2s;
+  }
+  .edit-practicas-btn:hover { border-color: #FFD700; color: #FFD700; }
+
+  /* === MODAL EDICIÓN === */
+  .admin-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+  .admin-overlay.visible { display: flex; }
+  .admin-modal {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 14px;
+    padding: 28px;
+    width: min(480px, 95vw);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .admin-modal h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: #FFD700;
+    margin: 0 0 20px;
+  }
+  .admin-practica-block {
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+  .admin-practica-block label {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 4px;
+    margin-top: 10px;
+  }
+  .admin-practica-block label:first-child { margin-top: 0; }
+  .admin-practica-block input {
+    width: 100%;
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+  .admin-practica-block input:focus { outline: none; border-color: #FFD700; }
+  .admin-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+  }
+  .admin-save-btn {
+    background: #FFD700;
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    padding: 9px 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .admin-save-btn:hover { background: #ffe033; }
+  .admin-cancel-btn {
+    background: #333;
+    color: #aaa;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .admin-status { font-size: 0.82rem; color: #aaa; margin-top: 10px; text-align: center; }
+
   .countdown {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1rem;
@@ -976,7 +1132,31 @@
     </div>
   </div>
 
+  <!-- PRÁCTICAS -->
+  <div>
+    <div class="section-title" style="display:flex;align-items:center;">
+      🏃 Prácticas
+      <button class="edit-practicas-btn" id="editPracticasBtn" style="display:none" onclick="abrirAdminPracticas()">✏️ Editar</button>
+    </div>
+    <div class="practicas-grid" id="practicasGrid">
+      <div style="color:#666;font-size:0.9rem;">Cargando...</div>
+    </div>
+  </div>
+
 </main>
+
+<!-- MODAL EDICIÓN PRÁCTICAS -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-modal">
+    <h3>✏️ Editar Prácticas</h3>
+    <div id="adminPracticasForm"></div>
+    <div class="admin-btns">
+      <button class="admin-cancel-btn" onclick="cerrarAdminPracticas()">Cancelar</button>
+      <button class="admin-save-btn" onclick="guardarPracticas()">Guardar</button>
+    </div>
+    <div class="admin-status" id="adminStatus"></div>
+  </div>
+</div>
 
 <footer>
   Hecho con ❤️ para el campeón de casa · <span>Urreta Baby Fútbol</span> · Categoría 2021 · Canstatt 2966, Montevideo
@@ -1892,6 +2072,141 @@ fetch('./resultados.json?t=' + Date.now())
     renderAll();
   })
   .catch(() => { /* archivo local o sin conexión — ya renderizó arriba */ });
+
+// ====== PRÁCTICAS ======
+const PRACTICAS_DEFAULT = [
+  {
+    dia: 'Lunes',
+    hora: '18:30',
+    lugar: 'Cuartel de Artillería N°5',
+    maps: 'https://www.google.com/maps/search/Cuartel+de+Artilleria+N5+Montevideo',
+    waze: 'https://waze.com/ul?q=Cuartel+Artilleria+5+Montevideo&navigate=yes'
+  },
+  {
+    dia: 'Viernes',
+    hora: '19:00',
+    lugar: 'Campo Grande (Fútbol 5)',
+    maps: 'https://www.google.com/maps/search/Campo+Grande+futbol+5+Montevideo',
+    waze: 'https://waze.com/ul?q=Campo+Grande+futbol+5+Montevideo&navigate=yes'
+  }
+];
+let practicasData = PRACTICAS_DEFAULT;
+
+function renderPracticas(data) {
+  const grid = document.getElementById('practicasGrid');
+  if (!grid) return;
+  grid.innerHTML = data.map(p => `
+    <div class="practica-card">
+      <div class="practica-dia">${p.dia}</div>
+      <div class="practica-hora">🕐 ${p.hora}hs</div>
+      <div class="practica-lugar">📍 ${p.lugar}</div>
+      <div class="practica-btns">
+        <a class="practica-btn maps" href="${p.maps}" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Maps
+        </a>
+        <a class="practica-btn waze" href="${p.waze}" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 8c0-4.4-3.8-8-8.5-8S3.5 3.6 3.5 8c0 3.2 1.9 6 4.7 7.4l-.2 2.1c0 .3.1.6.4.7.1.1.3.1.4.1.2 0 .3 0 .5-.1l2.3-1.3c.3 0 .6.1.9.1 4.7 0 8.5-3.6 8.5-8z"/></svg>
+          Waze
+        </a>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Cargar practicas.json del servidor
+fetch('./practicas.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    if (data.practicas && data.practicas.length) {
+      practicasData = data.practicas;
+      renderPracticas(practicasData);
+    }
+  })
+  .catch(() => {});
+
+renderPracticas(practicasData);
+
+// Mostrar botón editar si URL tiene #admin
+if (window.location.hash === '#admin') {
+  const btn = document.getElementById('editPracticasBtn');
+  if (btn) btn.style.display = 'inline-block';
+}
+window.addEventListener('hashchange', () => {
+  const btn = document.getElementById('editPracticasBtn');
+  if (btn) btn.style.display = window.location.hash === '#admin' ? 'inline-block' : 'none';
+});
+
+function abrirAdminPracticas() {
+  const pw = prompt('Contraseña:');
+  if (pw !== 'urreta2021') { alert('Contraseña incorrecta'); return; }
+  const form = document.getElementById('adminPracticasForm');
+  form.innerHTML = practicasData.map((p, i) => `
+    <div class="admin-practica-block">
+      <strong style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;">${p.dia}</strong>
+      <label>Día</label>
+      <input id="ap_dia_${i}" value="${p.dia}">
+      <label>Hora</label>
+      <input id="ap_hora_${i}" value="${p.hora}" placeholder="18:30">
+      <label>Lugar</label>
+      <input id="ap_lugar_${i}" value="${p.lugar}">
+      <label>Link Google Maps</label>
+      <input id="ap_maps_${i}" value="${p.maps}">
+      <label>Link Waze</label>
+      <input id="ap_waze_${i}" value="${p.waze}">
+    </div>
+  `).join('') + `
+    <div class="admin-practica-block" style="margin-top:6px;">
+      <label>GitHub Token (para guardar)</label>
+      <input id="ap_token" type="password" placeholder="ghp_...">
+    </div>`;
+  document.getElementById('adminOverlay').classList.add('visible');
+  document.getElementById('adminStatus').textContent = '';
+}
+
+function cerrarAdminPracticas() {
+  document.getElementById('adminOverlay').classList.remove('visible');
+}
+
+async function guardarPracticas() {
+  const status = document.getElementById('adminStatus');
+  const token = document.getElementById('ap_token').value.trim();
+  if (!token) { status.textContent = '⚠️ Ingresá el GitHub Token para guardar.'; return; }
+  status.textContent = 'Guardando...';
+  const nuevas = practicasData.map((_, i) => ({
+    dia:   document.getElementById(`ap_dia_${i}`).value.trim(),
+    hora:  document.getElementById(`ap_hora_${i}`).value.trim(),
+    lugar: document.getElementById(`ap_lugar_${i}`).value.trim(),
+    maps:  document.getElementById(`ap_maps_${i}`).value.trim(),
+    waze:  document.getElementById(`ap_waze_${i}`).value.trim()
+  }));
+  const contenido = JSON.stringify({ practicas: nuevas }, null, 2);
+  const b64 = btoa(unescape(encodeURIComponent(contenido)));
+  try {
+    const getResp = await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/practicas.json', {
+      headers: { 'Authorization': 'token ' + token }
+    });
+    let sha = null;
+    if (getResp.ok) { const gd = await getResp.json(); sha = gd.sha; }
+    const body = { message: 'Actualizar prácticas desde web', content: b64 };
+    if (sha) body.sha = sha;
+    const putResp = await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/practicas.json', {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (putResp.ok) {
+      practicasData = nuevas;
+      renderPracticas(practicasData);
+      status.textContent = '✅ Guardado. Los cambios se verán en unos segundos.';
+      setTimeout(cerrarAdminPracticas, 2000);
+    } else {
+      status.textContent = '❌ Error al guardar. Revisá el token.';
+    }
+  } catch(e) {
+    status.textContent = '❌ Error de conexión: ' + e.message;
+  }
+}
 
 </script>
 </body>

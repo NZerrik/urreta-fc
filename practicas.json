@@ -1,0 +1,18 @@
+{
+  "practicas": [
+    {
+      "dia": "Lunes",
+      "hora": "18:30",
+      "lugar": "Cuartel de Artillería N°5",
+      "maps": "https://www.google.com/maps/search/Cuartel+de+Artilleria+N5+Montevideo",
+      "waze": "https://waze.com/ul?q=Cuartel+Artilleria+5+Montevideo&navigate=yes"
+    },
+    {
+      "dia": "Viernes",
+      "hora": "19:00",
+      "lugar": "Campo Grande (Fútbol 5)",
+      "maps": "https://www.google.com/maps/search/Campo+Grande+futbol+5+Montevideo",
+      "waze": "https://waze.com/ul?q=Campo+Grande+futbol+5+Montevideo&navigate=yes"
+    }
+  ]
+}
