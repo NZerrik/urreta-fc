@@ -23,6 +23,7 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
   body {
     background: var(--negro);
     color: var(--blanco);
@@ -280,6 +281,34 @@
     background: #07e0ff;
     transform: translateY(-1px);
   }
+
+  /* === NAV BAR === */
+  .nav-bar {
+    background: #111;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 9px 16px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .nav-bar a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    color: #bbb;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .nav-bar a:hover { border-color: #FF6B00; color: #FF6B00; background: #1f0d00; }
 
   /* === PRÁCTICAS === */
   .practicas-grid {
@@ -1071,6 +1100,13 @@
   </div>
 </header>
 
+<!-- NAV BAR -->
+<nav class="nav-bar">
+  <a href="#fixture">⚽ Fixture</a>
+  <a href="#tabla">📊 Tabla de posiciones</a>
+  <a href="#practicas">🏃 Prácticas</a>
+</nav>
+
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stats-bar-inner" id="statsBar">
@@ -1109,13 +1145,13 @@
   <div id="proximoSection"></div>
 
   <!-- FIXTURE -->
-  <div>
+  <div id="fixture">
     <div class="section-title">⚽ Fixture Completo</div>
     <div class="fixture-grid" id="fixtureGrid"></div>
   </div>
 
   <!-- TABLA DE POSICIONES -->
-  <div>
+  <div id="tabla">
     <div class="section-title">📊 Tabla de Posiciones</div>
     <div class="tabla-container">
       <div class="tabla-header">
@@ -1133,7 +1169,7 @@
   </div>
 
   <!-- PRÁCTICAS -->
-  <div>
+  <div id="practicas">
     <div class="section-title" style="display:flex;align-items:center;">
       🏃 Prácticas
       <button class="edit-practicas-btn" id="editPracticasBtn" style="display:none" onclick="abrirAdminPracticas()">✏️ Editar</button>
