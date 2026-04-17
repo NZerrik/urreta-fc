@@ -4,8 +4,8 @@
       "dia": "Lunes",
       "hora": "18:30",
       "lugar": "Cuartel de Artillería N°5",
-      "maps": "https://www.google.com/maps/search/Cuartel+de+Artilleria+N5+Montevideo",
-      "waze": "https://waze.com/ul?q=Cuartel+Artilleria+5+Montevideo&navigate=yes"
+      "maps": "https://www.google.com/maps?q=-34.8488083,-56.1776733",
+      "waze": "https://waze.com/ul?ll=-34.8488083,-56.1776733&navigate=yes"
     },
     {
       "dia": "Viernes",
