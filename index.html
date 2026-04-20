@@ -187,6 +187,7 @@
     padding: 24px;
     position: relative;
     overflow: hidden;
+    min-height: 220px;
   }
 
   .proximo-card::before {
@@ -667,27 +668,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 18px;
     margin-top: 10px;
     flex-wrap: wrap;
   }
 
   .clima-proximo-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 2px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px;
-    padding: 8px 14px;
-    min-width: 64px;
-    text-align: center;
+    gap: 5px;
   }
 
-  .clima-proximo-item .ci-icon { font-size: 1.4rem; }
-  .clima-proximo-item .ci-valor { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--blanco); }
-  .clima-proximo-item .ci-label { font-size: 0.62rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+  .clima-proximo-item .ci-icon { font-size: 1.1rem; }
+  .clima-proximo-item .ci-valor { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--blanco); }
+  .clima-proximo-item .ci-label { display: none; }
 
   .clima-loading { color: #555; font-size: 0.75rem; font-style: italic; }
 
