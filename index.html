@@ -1892,22 +1892,22 @@ function renderTabla() {
   const s = calcEstadisticas();
 
   const equipos = [
-    { nombre: '3 de Abril',       pj:4, g:4, e:0, pe:0, gf:25, gc:2  },
     { nombre: 'Urreta',           pj:s.pj, g:s.g, e:s.e, pe:s.pe, gf:s.gf, gc:s.gc, esUrreta: true },
-    { nombre: 'Av. Lezica',       pj:4, g:4, e:0, pe:0, gf:17, gc:1  },
-    { nombre: 'Las Flores',       pj:4, g:3, e:0, pe:1, gf:12, gc:7  },
-    { nombre: 'Malvín Alto',      pj:4, g:3, e:0, pe:1, gf:10, gc:7  },
-    { nombre: 'Yegros',           pj:4, g:2, e:1, pe:1, gf:10, gc:6  },
-    { nombre: 'Pablán',           pj:4, g:2, e:1, pe:1, gf:12, gc:10 },
-    { nombre: 'Covicenova',       pj:4, g:2, e:0, pe:2, gf:15, gc:5  },
-    { nombre: 'E. del Norte',     pj:4, g:2, e:0, pe:2, gf:12, gc:14 },
-    { nombre: 'Ombú Jrs.',        pj:4, g:2, e:0, pe:2, gf:5,  gc:10 },
-    { nombre: 'Isidro Fynn',      pj:4, g:1, e:1, pe:2, gf:5,  gc:13 },
-    { nombre: 'Bochas',           pj:4, g:1, e:0, pe:3, gf:3,  gc:9  },
-    { nombre: 'L. Washington',    pj:4, g:0, e:1, pe:3, gf:6,  gc:22 },
-    { nombre: 'San Francisco',    pj:4, g:0, e:0, pe:4, gf:1,  gc:12 },
-    { nombre: 'D. Uruguayo',      pj:4, g:0, e:0, pe:4, gf:0,  gc:12 },
-    { nombre: 'C. Corinto',       pj:4, g:0, e:0, pe:4, gf:1,  gc:21 },
+    { nombre: 'Av. Lezica',       pj:5, g:5, e:0, pe:0, gf:18, gc:1  },
+    { nombre: '3 de Abril',       pj:5, g:4, e:0, pe:1, gf:25, gc:3  },
+    { nombre: 'Las Flores',       pj:5, g:4, e:0, pe:1, gf:15, gc:7  },
+    { nombre: 'Yegros',           pj:5, g:3, e:1, pe:1, gf:18, gc:6  },
+    { nombre: 'Covicenova',       pj:5, g:3, e:0, pe:2, gf:18, gc:5  },
+    { nombre: 'E. del Norte',     pj:5, g:3, e:0, pe:2, gf:15, gc:14 },
+    { nombre: 'Ombú Jrs.',        pj:5, g:3, e:0, pe:2, gf:8,  gc:10 },
+    { nombre: 'Malvín Alto',      pj:5, g:3, e:0, pe:2, gf:10, gc:15 },
+    { nombre: 'Pablán',           pj:5, g:2, e:1, pe:2, gf:12, gc:18 },
+    { nombre: 'L. Washington',    pj:5, g:1, e:1, pe:3, gf:14, gc:22 },
+    { nombre: 'Isidro Fynn',      pj:5, g:1, e:1, pe:3, gf:5,  gc:16 },
+    { nombre: 'Bochas',           pj:5, g:1, e:0, pe:4, gf:3,  gc:12 },
+    { nombre: 'San Francisco',    pj:5, g:0, e:0, pe:5, gf:1,  gc:15 },
+    { nombre: 'D. Uruguayo',      pj:5, g:0, e:0, pe:5, gf:0,  gc:15 },
+    { nombre: 'C. Corinto',       pj:5, g:0, e:0, pe:5, gf:1,  gc:29 },
   ].map(e => {
     e.pts = e.g * 3 + e.e;
     e.gd  = e.gf - e.gc;
