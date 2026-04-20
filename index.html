@@ -1739,7 +1739,7 @@ const wazeHref = CANCHAS_RIVALES[p.rival]?.query
       </div>
     </div>
     <div id="clima-proximo" class="clima-loading">Cargando clima...</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;background:rgba(15,8,2,0.92);padding:14px;border-radius:10px;margin-top:10px;">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
     ${(() => { const gcUrl = getGoogleCalendarUrl(p.fecha_txt, horaRaw, local, visita, canchaLabel); return gcUrl ? `<a class="waze-btn" href="${gcUrl}" target="_blank" style="background:#4285F4;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
       Agregar al calendario</a>` : ''; })()}
