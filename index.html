@@ -268,10 +268,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.35);
     color: #fff;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
@@ -285,7 +283,8 @@
   }
 
   .waze-btn:hover {
-    background: rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.6);
     transform: translateY(-1px);
   }
 
@@ -1738,7 +1737,7 @@ const wazeHref = CANCHAS_RIVALES[p.rival]?.query
       </div>
     </div>
     <div id="clima-proximo" class="clima-loading">Cargando clima...</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;padding:10px 16px;border-radius:10px;background:rgba(0,0,0,0.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;">
     ${(() => { const gcUrl = getGoogleCalendarUrl(p.fecha_txt, horaRaw, local, visita, canchaLabel); return gcUrl ? `<a class="waze-btn" href="${gcUrl}" target="_blank">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
       Agregar al calendario</a>` : ''; })()}
