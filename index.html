@@ -188,6 +188,8 @@
     position: relative;
     overflow: hidden;
     min-height: 300px;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .proximo-card::before {
@@ -266,10 +268,11 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(5, 200, 247, 0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: #000;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
     font-size: 0.85rem;
@@ -282,7 +285,7 @@
   }
 
   .waze-btn:hover {
-    background: #07e0ff;
+    background: rgba(255,255,255,0.22);
     transform: translateY(-1px);
   }
 
@@ -1736,7 +1739,7 @@ const wazeHref = CANCHAS_RIVALES[p.rival]?.query
     </div>
     <div id="clima-proximo" class="clima-loading">Cargando clima...</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;">
-    ${(() => { const gcUrl = getGoogleCalendarUrl(p.fecha_txt, horaRaw, local, visita, canchaLabel); return gcUrl ? `<a class="waze-btn" href="${gcUrl}" target="_blank" style="background:#4285F4;">
+    ${(() => { const gcUrl = getGoogleCalendarUrl(p.fecha_txt, horaRaw, local, visita, canchaLabel); return gcUrl ? `<a class="waze-btn" href="${gcUrl}" target="_blank">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
       Agregar al calendario</a>` : ''; })()}
     <a class="waze-btn" href="${wazeHref}" target="_blank">
