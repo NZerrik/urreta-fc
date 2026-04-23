@@ -192,17 +192,7 @@
     width: 100%;
   }
 
-  .proximo-card::before {
-    content: 'PRÓXIMO PARTIDO';
-    position: absolute;
-    top: 14px; right: 16px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--naranja);
-    font-weight: 700;
-     z-index: 2;
-  }
+  /* PRÓXIMO PARTIDO badge moved to JS */
 
   .proximo-content {
     display: flex;
@@ -1081,6 +1071,15 @@
   .fecha-card:nth-child(3) { animation-delay: 0.15s; }
   .fecha-card:nth-child(4) { animation-delay: 0.20s; }
   .fecha-card:nth-child(5) { animation-delay: 0.25s; }
+
+  /* ===== TORNEO TABS ===== */
+  .torneo-tabs { display: flex; border-radius: 10px; overflow: hidden; border: 1px solid var(--gris-borde); background: var(--gris-oscuro); }
+  .tab-btn { flex: 1; background: transparent; border: none; border-bottom: 3px solid transparent; color: #777; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.92rem; letter-spacing: 2px; text-transform: uppercase; padding: 13px 16px; cursor: pointer; transition: all 0.2s; }
+  .tab-btn:hover { color: #aaa; background: rgba(255,255,255,0.03); }
+  .tab-btn.active { color: var(--naranja); background: rgba(240,112,32,0.08); border-bottom-color: var(--naranja); }
+  .tab-content { display: none; }
+  .tab-content.active { display: flex; flex-direction: column; gap: 24px; }
+
 </style>
 </head>
 <body>
@@ -1101,8 +1100,9 @@
 
 <!-- NAV BAR -->
 <nav class="nav-bar">
-  <a href="#fixture">⚽ Fixture</a>
-  <a href="#tabla">📊 Tabla de posiciones</a>
+  <a href="#fixture" onclick="switchTab('prado')">⚽ Liga Prado</a>
+  <a href="#fixture-metro" onclick="switchTab('metro')">🏅 Metro</a>
+  <a href="#tabla" onclick="switchTab('prado')">📊 Tabla</a>
   <a href="#practicas">🏃 Prácticas</a>
 </nav>
 
@@ -1140,38 +1140,53 @@
 <!-- MAIN -->
 <main>
 
-  <!-- PRÓXIMO PARTIDO -->
+  <!-- PRÓXIMO PARTIDO (siempre visible, cualquier torneo) -->
   <div id="proximoSection"></div>
 
-  <!-- FIXTURE -->
-  <div id="fixture">
-    <div class="section-title">⚽ Fixture Completo</div>
-    <div class="fixture-grid" id="fixtureGrid"></div>
+  <!-- TABS DE TORNEO -->
+  <div class="torneo-tabs">
+    <button class="tab-btn active" id="tab-prado-btn" onclick="switchTab('prado')">&#127942; Liga Prado</button>
+    <button class="tab-btn" id="tab-metro-btn" onclick="switchTab('metro')">&#127941; Metropolitano</button>
   </div>
 
-  <!-- TABLA DE POSICIONES -->
-  <div id="tabla">
-    <div class="section-title">📊 Tabla de Posiciones</div>
-    <div class="tabla-container">
-      <div class="tabla-header">
-        <span>#</span>
-        <span>Club</span>
-        <span style="text-align:center">PJ</span>
-        <span style="text-align:center">G</span>
-        <span style="text-align:center">E</span>
-        <span style="text-align:center">P</span>
-        <span style="text-align:center">GD</span>
-        <span style="text-align:center">PTS</span>
+  <!-- LIGA PRADO -->
+  <div id="tab-prado" class="tab-content active">
+    <div id="fixture">
+      <div class="section-title">&#9917; Fixture Liga Prado</div>
+      <div class="fixture-grid" id="fixtureGrid"></div>
+    </div>
+
+    <div id="tabla">
+      <div class="section-title">&#128202; Tabla de Posiciones</div>
+      <div class="tabla-container">
+        <div class="tabla-header">
+          <span>#</span>
+          <span>Club</span>
+          <span style="text-align:center">PJ</span>
+          <span style="text-align:center">G</span>
+          <span style="text-align:center">E</span>
+          <span style="text-align:center">P</span>
+          <span style="text-align:center">GD</span>
+          <span style="text-align:center">PTS</span>
+        </div>
+        <div id="tablaBody"></div>
       </div>
-      <div id="tablaBody"></div>
     </div>
   </div>
 
-  <!-- PRÁCTICAS -->
+  <!-- METROPOLITANO -->
+  <div id="tab-metro" class="tab-content">
+    <div id="fixture-metro">
+      <div class="section-title">&#127941; Fixture Metropolitano</div>
+      <div class="fixture-grid" id="fixtureGridMetro"></div>
+    </div>
+  </div>
+
+  <!-- PRACTICAS (siempre visible) -->
   <div id="practicas">
     <div class="section-title" style="display:flex;align-items:center;">
-      🏃 Prácticas
-      <button class="edit-practicas-btn" id="editPracticasBtn" style="display:none" onclick="abrirAdminPracticas()">✏️ Editar</button>
+      &#127939; Prácticas
+      <button class="edit-practicas-btn" id="editPracticasBtn" style="display:none" onclick="abrirAdminPracticas()">&#9999;&#65039; Editar</button>
     </div>
     <div class="practicas-grid" id="practicasGrid">
       <div style="color:#666;font-size:0.9rem;">Cargando...</div>
@@ -1657,21 +1672,31 @@ function tickCountdown(fecha_txt, hora) {
   el.innerHTML = getCountdownHtml(fecha_txt, hora);
 }
 
-function renderProximo() {
-  let proxIdx = -1;
-  for(let i=0;i<FIXTURE.length;i++){
-    if(isProximo(i)){ proxIdx=i; break; }
-  }
-  const sec = document.getElementById('proximoSection');
-  const secCd = document.getElementById('countdownSection');
+// ====== METROPOLITANO ======
+let metroFechas = [];
 
-  if(proxIdx < 0){
-    sec.innerHTML='';
-    secCd.style.display='none';
-    clearInterval(countdownInterval);
-    return;
+function getProximoMetroIdx() {
+  const hoy = new Date();
+  const hoyD = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+  for(let i=0; i<metroFechas.length; i++){
+    const p = metroFechas[i];
+    if(p.golesUrreta !== null) continue;
+    const fd = parseDate(p.fecha_txt);
+    if(fd && fd >= hoyD) return i;
   }
+  return -1;
+}
 
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  const btn = document.getElementById('tab-' + tab + '-btn');
+  const content = document.getElementById('tab-' + tab);
+  if(btn) btn.classList.add('active');
+  if(content) content.classList.add('active');
+}
+
+function renderProximoPrado(proxIdx, sec, secCd) {
   const p = FIXTURE[proxIdx];
   const local = p.esLocal ? 'Urreta' : p.rival;
   const visita = p.esLocal ? p.rival : 'Urreta';
@@ -1680,7 +1705,6 @@ function renderProximo() {
   const horaRaw = HORAS_PARTIDO[proxIdx + 1];
   const horaStr = horaRaw !== null && horaRaw !== undefined ? `${horaRaw}:00` : null;
 
-  // === COUNTDOWN SECTION (arriba de todo) ===
   secCd.style.display = 'block';
   document.getElementById('countdownTitulo').textContent = `Próximo partido · Fecha ${proxIdx + 1}`;
 
@@ -1698,23 +1722,21 @@ function renderProximo() {
       ? `Urreta vs <span>${p.rival}</span> · Fecha suspendida · Nueva fecha a definir`
       : `Urreta vs <span>${p.rival}</span> · ${p.fecha_txt === 'A confirmar' ? '' : getDiaSemana(p.fecha_txt) + ' '}${p.fecha_txt}${horaStr ? ' · ' + horaStr + 'hs' : ' · Hora a confirmar'}`;
 
-  // Arrancar tick en tiempo real
   clearInterval(countdownInterval);
   countdownInterval = setInterval(() => tickCountdown(p.fecha_txt, horaRaw), 1000);
 
-  // === CARD PRÓXIMO PARTIDO (en main) ===
-// Siempre se juega en cancha del rival (cancha de Urreta no habilitada actualmente)
-const canchaHref = CANCHAS_RIVALES[p.rival]?.query
-  ? `https://www.google.com/maps/search/${CANCHAS_RIVALES[p.rival].query}` : '#';
-const canchaLabel = CANCHAS_RIVALES[p.rival]?.dir || `Cancha de ${p.rival}`;
-const wazeHref = CANCHAS_RIVALES[p.rival]?.query
-  ? `https://waze.com/ul?q=${CANCHAS_RIVALES[p.rival].query}&navigate=yes` : '#';
+  const canchaHref = CANCHAS_RIVALES[p.rival]?.query
+    ? `https://www.google.com/maps/search/${CANCHAS_RIVALES[p.rival].query}` : '#';
+  const canchaLabel = CANCHAS_RIVALES[p.rival]?.dir || `Cancha de ${p.rival}`;
+  const wazeHref = CANCHAS_RIVALES[p.rival]?.query
+    ? `https://waze.com/ul?q=${CANCHAS_RIVALES[p.rival].query}&navigate=yes` : '#';
 
   sec.innerHTML = `
   <div class="proximo-card fade-in">
    <img src="./team-photo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.5;filter:saturate(0.7);" alt="" />
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,10,0,0.2) 0%,rgba(26,10,0,0.75) 60%,rgba(26,10,0,0.88) 100%);pointer-events:none;"></div>
     <div style="position:relative;z-index:1;">
+    <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:var(--naranja);background:rgba(240,112,32,0.15);padding:3px 8px;border-radius:3px;">🏆 LIGA PRADO</div>
     <div class="proximo-content">
       <div class="equipo-proximo">
         <div class="equipo-nombre ${localClass}">${local}</div>
@@ -1742,16 +1764,108 @@ const wazeHref = CANCHAS_RIVALES[p.rival]?.query
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
       Agregar al calendario</a>` : ''; })()}
     <a class="waze-btn" href="${wazeHref}" target="_blank">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 8c0-4.4-3.8-8-8.5-8S3.5 3.6 3.5 8c0 3.2 1.9 6 4.7 7.4l-.2 2.1c0 .3.1.6.4.7.1.1.3.1.4.1.2 0 .3 0 .5-.1l2.3-1.3c.3 0 .6.1.9.1 4.7 0 8.5-3.6 8.5-8zM8 8.5c0-.8.7-1.5 1.5-1.5S11 7.7 11 8.5 10.3 10 9.5 10 8 9.3 8 8.5zm7 0c0-.8.7-1.5 1.5-1.5S18 7.7 18 8.5 17.3 10 16.5 10 15 9.3 15 8.5zm-6.1 3.2c-.3-.3-.3-.7 0-1 1.2-1.2 3-.2 3.1-.1.3.3.4.7.1 1-.3.3-.7.4-1 .1-.1 0-.7-.4-1.3 0-.1.1-.3.1-.4.1-.2 0-.4-.1-.5-.1z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 8c0-4.4-3.8-8-8.5-8S3.5 3.6 3.5 8c0 3.2 1.9 6 4.7 7.4l-.2 2.1c0 .3.1.6.4.7.1.1.3.1.4.1.2 0 .3 0 .5-.1l2.3-1.3c.3 0 .6.1.9.1 4.7 0 8.5-3.6 8.5-8z"/></svg>
       Abrir en Waze
     </a>
     </div>
+    </div></div>`;
+
+  if (!p.suspendido) injectClima('clima-proximo', p.fecha_txt, 'proximo');
+}
+
+function renderProximoMetro(idx, sec, secCd) {
+  const p = metroFechas[idx];
+  const local = p.esLocal ? 'Urreta' : p.rival;
+  const visita = p.esLocal ? p.rival : 'Urreta';
+  const localClass = p.esLocal ? 'local' : 'visitante';
+  const visitaClass = p.esLocal ? 'visitante' : 'local';
+  const horaRaw = p.hora;
+  const horaStr = horaRaw ? `${horaRaw}:00` : null;
+
+  secCd.style.display = 'block';
+  document.getElementById('countdownTitulo').textContent = `Próximo partido · Metro Fecha ${p.fecha}`;
+  document.getElementById('countdownLive').innerHTML = getCountdownHtml(p.fecha_txt, horaRaw);
+  clearInterval(countdownInterval);
+  countdownInterval = setInterval(() => tickCountdown(p.fecha_txt, horaRaw), 1000);
+  document.getElementById('countdownSubtitulo').innerHTML =
+    `Urreta vs <span>${p.rival}</span> · ${getDiaSemana(p.fecha_txt)} ${p.fecha_txt}${horaStr ? ' · ' + horaStr + 'hs' : ''}`;
+
+  const gcUrl = getGoogleCalendarUrl(p.fecha_txt, horaRaw, local, visita, p.cancha);
+
+  sec.innerHTML = `
+  <div class="proximo-card fade-in">
+    <img src="./team-photo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.5;filter:saturate(0.7);" alt="" />
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,10,26,0.2) 0%,rgba(0,10,26,0.75) 60%,rgba(0,10,26,0.88) 100%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;">
+      <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:#60a5fa;background:rgba(37,99,235,0.15);padding:3px 8px;border-radius:3px;">🏅 METROPOLITANO</div>
+      <div class="proximo-content">
+        <div class="equipo-proximo">
+          <div class="equipo-nombre ${localClass}">${local}</div>
+          <div style="font-size:0.75rem;color:#666;margin-top:4px;">Local</div>
+        </div>
+        <div class="vs-badge" style="background:#3b82f6;">VS</div>
+        <div class="equipo-proximo">
+          <div class="equipo-nombre ${visitaClass}">${visita}</div>
+          <div style="font-size:0.75rem;color:#666;margin-top:4px;">Visitante</div>
+        </div>
+      </div>
+      <div class="proximo-meta">
+        <div class="meta-item">
+          <span class="icon">📅</span>
+          <span>${getDiaSemana(p.fecha_txt)} ${p.fecha_txt} · Metro F${p.fecha}${horaStr ? ' · ' + horaStr + 'hs' : ''}</span>
+        </div>
+        <div class="meta-item">
+          <span class="icon">📍</span>
+          <a href="${p.cancha_maps}" target="_blank">${p.cancha}</a>
+        </div>
+      </div>
+      <div id="clima-proximo" class="clima-loading">Cargando clima...</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;">
+        ${gcUrl ? `<a class="waze-btn" href="${gcUrl}" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+          Agregar al calendario</a>` : ''}
+        <a class="waze-btn" href="${p.cancha_waze}" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 8c0-4.4-3.8-8-8.5-8S3.5 3.6 3.5 8c0 3.2 1.9 6 4.7 7.4l-.2 2.1c0 .3.1.6.4.7.1.1.3.1.4.1.2 0 .3 0 .5-.1l2.3-1.3c.3 0 .6.1.9.1 4.7 0 8.5-3.6 8.5-8z"/></svg>
+          Abrir en Waze
+        </a>
+      </div>
     </div>
   </div>`;
 
-  // Cargar clima del próximo partido (solo si tiene fecha)
-  if (!p.suspendido) injectClima('clima-proximo', p.fecha_txt, 'proximo');
+  injectClima('clima-proximo', p.fecha_txt, 'proximo');
 }
+
+function renderProximo() {
+  let proxPradoIdx = -1;
+  for(let i=0;i<FIXTURE.length;i++){
+    if(isProximo(i)){ proxPradoIdx=i; break; }
+  }
+  const proxMetroIdx = getProximoMetroIdx();
+
+  const sec = document.getElementById('proximoSection');
+  const secCd = document.getElementById('countdownSection');
+
+  if(proxPradoIdx < 0 && proxMetroIdx < 0){
+    sec.innerHTML='';
+    secCd.style.display='none';
+    clearInterval(countdownInterval);
+    return;
+  }
+
+  const pradoDate = proxPradoIdx >= 0 ? parseDate(FIXTURE[proxPradoIdx].fecha_txt) : null;
+  const metroDate = proxMetroIdx >= 0 ? parseDate(metroFechas[proxMetroIdx].fecha_txt) : null;
+
+  let useMetro = false;
+  if(!pradoDate && metroDate) useMetro = true;
+  else if(pradoDate && metroDate && metroDate < pradoDate) useMetro = true;
+
+  if(useMetro) {
+    renderProximoMetro(proxMetroIdx, sec, secCd);
+  } else {
+    renderProximoPrado(proxPradoIdx, sec, secCd);
+  }
+}
+
 
 function renderTodosHtml(fechaIdx) {
   const partidos = FIXTURE_FECHA[fechaIdx];
@@ -1993,11 +2107,60 @@ function cerrarModalCancha() {
   document.getElementById('modalCancha').classList.remove('active');
 }
 
+function renderFixtureMetro() {
+  const grid = document.getElementById('fixtureGridMetro');
+  if(!grid) return;
+  grid.innerHTML = '';
+  if(!metroFechas.length) {
+    grid.innerHTML = '<div style="color:#666;text-align:center;padding:32px;font-size:0.9rem;">Fixture pr\u00f3ximamente</div>';
+    return;
+  }
+  const hoy = new Date();
+  const hoyD = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+  metroFechas.forEach(p => {
+    const esJugado = p.golesUrreta !== null;
+    const fd = parseDate(p.fecha_txt);
+    const esProximo = !esJugado && fd && fd >= hoyD;
+    const local = p.esLocal ? 'Urreta' : p.rival;
+    const visita = p.esLocal ? p.rival : 'Urreta';
+    let scoreHtml = '';
+    if(esJugado) {
+      const gu = p.esLocal ? p.golesUrreta : p.golesRival;
+      const gr = p.esLocal ? p.golesRival : p.golesUrreta;
+      const badgeText = gu > gr ? 'Victoria' : gu < gr ? 'Derrota' : 'Empate';
+      const badgeClass = gu > gr ? 'badge-victoria' : gu < gr ? 'badge-derrota' : 'badge-empate';
+      scoreHtml = `<div class="resultado-area"><span class="resultado-badge ${badgeClass}">${badgeText}</span><div class="resultado-display"><span class="gol-num">${gu}</span><span class="gol-sep">:</span><span class="gol-num">${gr}</span></div></div>`;
+    }
+    const horaLabel = p.hora ? ` \u00b7 ${p.hora}:00hs` : '';
+    const statusLabel = esJugado ? 'Jugado' : esProximo ? 'Pr\u00f3ximo' : 'Pendiente';
+    const statusClass = esJugado ? 'status-jugado' : esProximo ? 'status-proximo' : 'status-pendiente';
+    const card = document.createElement('div');
+    card.className = `fecha-card fade-in ${esJugado ? 'jugada' : ''} ${esProximo ? 'activa' : ''}`;
+    card.innerHTML = `
+      <div class="fecha-header">
+        <span class="fecha-num">Fecha ${p.fecha}</span>
+        <span class="fecha-date">${p.fecha_txt || '&mdash;'}${horaLabel}</span>
+        <span class="fecha-status ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="fecha-partido">
+        <div class="partido-equipos">
+          <span class="partido-local${p.esLocal ? ' urreta' : ''}">${local}</span>
+          <span class="partido-vs">vs</span>
+          <span class="partido-visitante${!p.esLocal ? ' urreta' : ''}">${visita}</span>
+        </div>
+        ${scoreHtml}
+      </div>
+      ${p.cancha ? `<div style="font-size:0.8rem;color:#777;padding:6px 16px 12px;">&#128205; ${p.cancha}</div>` : ''}`;
+    grid.appendChild(card);
+  });
+}
+
 function renderAll() {
   renderStats();
   renderProximo();
   renderFixture();
   renderTabla();
+  renderFixtureMetro();
 }
 
 // ====== CLIMA (Open-Meteo — gratis, sin API key) ======
@@ -2154,6 +2317,16 @@ function renderPracticas(data) {
     </div>
   `).join('');
 }
+
+// Cargar metro.json
+fetch('./metro.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    metroFechas = data.fixture || [];
+    renderProximo();
+    renderFixtureMetro();
+  })
+  .catch(() => {});
 
 // Cargar practicas.json del servidor
 fetch('./practicas.json?t=' + Date.now())

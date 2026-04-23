@@ -1,0 +1,17 @@
+{
+  "ultima_actualizacion": "2026-04-23T00:00:00",
+  "fixture": [
+    {
+      "fecha": 1,
+      "fecha_txt": "26/04/2026",
+      "hora": 13,
+      "rival": "Enrique López",
+      "esLocal": false,
+      "cancha": "La Rinconada Baby Fútbol",
+      "cancha_maps": "https://www.google.com/maps/search/La+Rinconada+Baby+Futbol+Montevideo",
+      "cancha_waze": "https://waze.com/ul?q=La+Rinconada+Baby+Futbol+Montevideo&navigate=yes",
+      "golesUrreta": null,
+      "golesRival": null
+    }
+  ]
+}
