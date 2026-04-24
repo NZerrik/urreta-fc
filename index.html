@@ -2150,7 +2150,7 @@ function renderFixtureMetro() {
         </div>
         ${scoreHtml}
       </div>
-      ${p.cancha ? `<div style="font-size:0.8rem;color:#777;padding:6px 16px 12px;">&#128205; ${p.cancha}</div>` : ''}`;
+      ${p.cancha ? `<div style="font-size:0.8rem;color:#aaa;padding:6px 16px 12px;">&#128205; <a href="${p.cancha_maps}" target="_blank" style="color:var(--naranja-claro);text-decoration:none;font-weight:600;">${p.cancha}</a></div>` : ''}`;
     grid.appendChild(card);
   });
 }
