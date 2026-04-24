@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-04-19T20:00:00",
+  "ultima_actualizacion": "2026-04-23T20:00:00",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -20,6 +20,10 @@
     },
     "5": {
       "golesUrreta": 8,
+      "golesRival": 0
+    },
+    "6": {
+      "golesUrreta": 6,
       "golesRival": 0
     }
   },
