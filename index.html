@@ -1196,7 +1196,6 @@
   <div class="torneo-tabs">
     <button class="tab-btn active" id="tab-prado-btn" onclick="switchTab('prado')">&#127942; Liga Prado</button>
     <button class="tab-btn" id="tab-metro-btn" onclick="switchTab('metro')">&#127941; Metropolitano</button>
-    <button class="tab-btn" id="tab-canchas-btn" onclick="switchTab('canchas')">&#128205; Canchas</button>
   </div>
 
   <!-- LIGA PRADO -->
@@ -1206,20 +1205,40 @@
       <div class="fixture-grid" id="fixtureGrid"></div>
     </div>
 
-    <div id="tabla">
-      <div class="section-title" style="display:flex;align-items:center;">&#128202; Tabla de Posiciones<button class="edit-practicas-btn" id="editResultadosBtn" style="display:none" onclick="abrirAdminResultados()">&#9999;&#65039; Resultados</button></div>
-      <div class="tabla-container">
-        <div class="tabla-header">
-          <span>#</span>
-          <span>Club</span>
-          <span style="text-align:center">PJ</span>
-          <span style="text-align:center">G</span>
-          <span style="text-align:center">E</span>
-          <span style="text-align:center">P</span>
-          <span style="text-align:center">GD</span>
-          <span style="text-align:center">PTS</span>
+    <!-- MINI TABS: Tabla | Canchas -->
+    <div class="torneo-tabs" style="margin-top:8px;">
+      <button class="tab-btn active" id="subtab-tabla-btn" onclick="switchSubTab('tabla')">&#128202; Tabla</button>
+      <button class="tab-btn" id="subtab-canchas-btn" onclick="switchSubTab('canchas')">&#128205; Canchas</button>
+    </div>
+
+    <div id="subtab-tabla" class="tab-content active">
+      <div id="tabla">
+        <div class="section-title" style="display:flex;align-items:center;">&#128202; Tabla de Posiciones<button class="edit-practicas-btn" id="editResultadosBtn" style="display:none" onclick="abrirAdminResultados()">&#9999;&#65039; Resultados</button></div>
+        <div class="tabla-container">
+          <div class="tabla-header">
+            <span>#</span>
+            <span>Club</span>
+            <span style="text-align:center">PJ</span>
+            <span style="text-align:center">G</span>
+            <span style="text-align:center">E</span>
+            <span style="text-align:center">P</span>
+            <span style="text-align:center">GD</span>
+            <span style="text-align:center">PTS</span>
+          </div>
+          <div id="tablaBody"></div>
         </div>
-        <div id="tablaBody"></div>
+      </div>
+    </div>
+
+    <div id="subtab-canchas" class="tab-content">
+      <div id="canchasSection">
+        <div class="section-title" style="display:flex;align-items:center;">
+          &#128205; Canchas
+          <span id="editCanchasBtn" class="edit-practicas-btn" style="display:none;cursor:pointer;" onclick="toggleAdminCanchas()">&#9999;&#65039; Tips</span>
+        </div>
+        <div class="cancha-lista" id="canchaLista">
+          <div style="color:#666;font-size:0.9rem;">Cargando...</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1233,18 +1252,6 @@
   </div>
 
 
-  <!-- CANCHAS TAB -->
-  <div id="tab-canchas" class="tab-content">
-    <div id="canchasSection">
-      <div class="section-title" style="display:flex;align-items:center;">
-        &#128205; Canchas
-        <span id="editCanchasBtn" class="edit-practicas-btn" style="display:none;cursor:pointer;" onclick="toggleAdminCanchas()">&#9999;&#65039; Tips</span>
-      </div>
-      <div class="cancha-lista" id="canchaLista">
-        <div style="color:#666;font-size:0.9rem;">Cargando...</div>
-      </div>
-    </div>
-  </div>
 
   <!-- PRACTICAS (siempre visible) -->
   <div id="practicas">
@@ -1758,6 +1765,15 @@ function switchTab(tab) {
   const content = document.getElementById('tab-' + tab);
   if(btn) btn.classList.add('active');
   if(content) content.classList.add('active');
+}
+
+function switchSubTab(tab) {
+  ['tabla','canchas'].forEach(t => {
+    const btn = document.getElementById('subtab-' + t + '-btn');
+    const content = document.getElementById('subtab-' + t);
+    if(btn) btn.classList.toggle('active', t === tab);
+    if(content) content.classList.toggle('active', t === tab);
+  });
 }
 
 function renderProximoPrado(proxIdx, sec, secCd) {
