@@ -1080,6 +1080,24 @@
   .tab-content { display: none; }
   .tab-content.active { display: flex; flex-direction: column; gap: 24px; }
 
+
+  /* ===== ADMIN RESULTADOS ===== */
+  .admin-resultados-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; overflow-y:auto; }
+  .admin-resultados-overlay.visible { display:block; }
+  .admin-resultados-modal { background:#1a1a1a; border:1px solid #333; border-radius:14px; max-width:700px; margin:24px auto; padding:24px; }
+  .admin-resultados-modal h3 { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:3px; color:var(--naranja); margin-bottom:20px; }
+  .admin-fecha-block { margin-bottom:20px; background:#111; border-radius:10px; overflow:hidden; }
+  .admin-fecha-titulo { background:#1f0d00; color:var(--naranja); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:2px; padding:8px 14px; }
+  .admin-partido-row { display:flex; align-items:center; gap:8px; padding:7px 14px; border-top:1px solid #1e1e1e; font-size:0.85rem; }
+  .admin-partido-row:hover { background:#161616; }
+  .admin-eq { flex:1; color:#ccc; }
+  .admin-eq.local { text-align:right; }
+  .admin-score-input { width:38px; text-align:center; background:#2a2a2a; border:1px solid #444; border-radius:5px; color:#fff; font-size:0.9rem; font-weight:700; padding:4px 0; }
+  .admin-score-input:focus { outline:none; border-color:var(--naranja); }
+  .admin-sep { color:#555; font-size:0.9rem; }
+  .admin-wo-label { font-size:0.72rem; color:#888; display:flex; align-items:center; gap:4px; cursor:pointer; }
+  .admin-resultados-btns { display:flex; gap:10px; margin-top:20px; }
+
 </style>
 </head>
 <body>
@@ -1157,7 +1175,7 @@
     </div>
 
     <div id="tabla">
-      <div class="section-title">&#128202; Tabla de Posiciones</div>
+      <div class="section-title" style="display:flex;align-items:center;">&#128202; Tabla de Posiciones<button class="edit-practicas-btn" id="editResultadosBtn" style="display:none" onclick="abrirAdminResultados()">&#9999;&#65039; Resultados</button></div>
       <div class="tabla-container">
         <div class="tabla-header">
           <span>#</span>
@@ -1998,43 +2016,35 @@ function renderStats() {
   document.getElementById('statPTS').textContent = s.pts;
 }
 
-// Tabla REAL categoría 2021 - actualizada con datos oficiales Liga Prado
-// Se actualizan los stats de Urreta desde los resultados cargados; el resto son datos reales del PDF
 function renderTabla() {
-  const s = calcEstadisticas();
-
-  const equipos = [
-    { nombre: 'Urreta',           pj:s.pj, g:s.g, e:s.e, pe:s.pe, gf:s.gf, gc:s.gc, esUrreta: true },
-    { nombre: 'Av. Lezica',       pj:6, g:6, e:0, pe:0, gf:21, gc:1  },
-    { nombre: '3 de Abril',       pj:5, g:4, e:0, pe:1, gf:25, gc:3  },
-    { nombre: 'Las Flores',       pj:6, g:5, e:0, pe:1, gf:24, gc:8  },
-    { nombre: 'Yegros',           pj:6, g:3, e:2, pe:1, gf:22, gc:10 },
-    { nombre: 'Covicenova',       pj:6, g:3, e:0, pe:3, gf:18, gc:11 },
-    { nombre: 'E. del Norte',     pj:6, g:3, e:1, pe:2, gf:19, gc:18 },
-    { nombre: 'Ombú Jrs.',        pj:6, g:4, e:0, pe:2, gf:12, gc:11 },
-    { nombre: 'Malvín Alto',      pj:5, g:3, e:0, pe:2, gf:10, gc:15 },
-    { nombre: 'Pablán',           pj:5, g:2, e:1, pe:2, gf:12, gc:18 },
-    { nombre: 'L. Washington',    pj:5, g:1, e:1, pe:3, gf:14, gc:22 },
-    { nombre: 'Isidro Fynn',      pj:5, g:1, e:1, pe:3, gf:5,  gc:16 },
-    { nombre: 'Bochas',           pj:5, g:1, e:0, pe:4, gf:4,  gc:15 },
-    { nombre: 'San Francisco',    pj:6, g:0, e:0, pe:6, gf:2,  gc:19 },
-    { nombre: 'D. Uruguayo',      pj:6, g:0, e:0, pe:6, gf:0,  gc:21 },
-    { nombre: 'C. Corinto',       pj:6, g:0, e:0, pe:6, gf:1,  gc:35 },
-  ].map(e => {
-    e.pts = e.g * 3 + e.e;
-    e.gd  = e.gf - e.gc;
-    return e;
-  }).sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
-
+  // Auto-compute standings from all FIXTURE_FECHA match results
+  const stats = {};
+  FIXTURE_FECHA.forEach(fecha => {
+    fecha.forEach(p => {
+      if (p.gl === null || p.gv === null) return;
+      if (!stats[p.local]) stats[p.local] = {pj:0,g:0,e:0,pe:0,gf:0,gc:0};
+      if (!stats[p.visitante]) stats[p.visitante] = {pj:0,g:0,e:0,pe:0,gf:0,gc:0};
+      stats[p.local].pj++;    stats[p.visitante].pj++;
+      stats[p.local].gf += p.gl;  stats[p.local].gc += p.gv;
+      stats[p.visitante].gf += p.gv; stats[p.visitante].gc += p.gl;
+      if (p.gl > p.gv) { stats[p.local].g++; stats[p.visitante].pe++; }
+      else if (p.gl < p.gv) { stats[p.visitante].g++; stats[p.local].pe++; }
+      else { stats[p.local].e++; stats[p.visitante].e++; }
+    });
+  });
+  const equipos = Object.entries(stats).map(([nombre, s]) => ({
+    nombre, ...s,
+    pts: s.g * 3 + s.e,
+    gd: s.gf - s.gc,
+    esUrreta: nombre === 'Urreta'
+  })).sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
   const tbody = document.getElementById('tablaBody');
   tbody.innerHTML = '';
   equipos.forEach((eq, i) => {
     const isU = eq.esUrreta;
     tbody.innerHTML += `<div class="tabla-row ${isU ? 'urreta-row' : ''}">
       <span class="pos-num">${i + 1}</span>
-      <span class="equipo-tabla ${isU ? 'urreta' : ''}">
-        ${isU ? '⚽ ' : ''}${eq.nombre}
-      </span>
+      <span class="equipo-tabla ${isU ? 'urreta' : ''}">${isU ? '&#9917; ' : ''}${eq.nombre}</span>
       <span class="tabla-num">${eq.pj}</span>
       <span class="tabla-num verde">${eq.g}</span>
       <span class="tabla-num amarillo">${eq.e}</span>
@@ -2342,14 +2352,15 @@ fetch('./practicas.json?t=' + Date.now())
 renderPracticas(practicasData);
 
 // Mostrar botón editar si URL tiene #admin
-if (window.location.hash === '#admin') {
-  const btn = document.getElementById('editPracticasBtn');
-  if (btn) btn.style.display = 'inline-block';
+function updateAdminBtns() {
+  const isAdmin = window.location.hash === '#admin';
+  const b1 = document.getElementById('editPracticasBtn');
+  const b2 = document.getElementById('editResultadosBtn');
+  if (b1) b1.style.display = isAdmin ? 'inline-block' : 'none';
+  if (b2) b2.style.display = isAdmin ? 'inline-block' : 'none';
 }
-window.addEventListener('hashchange', () => {
-  const btn = document.getElementById('editPracticasBtn');
-  if (btn) btn.style.display = window.location.hash === '#admin' ? 'inline-block' : 'none';
-});
+updateAdminBtns();
+window.addEventListener('hashchange', updateAdminBtns);
 
 function abrirAdminPracticas() {
   const pw = prompt('Contraseña:');
@@ -2425,6 +2436,120 @@ async function guardarPracticas() {
   }
 }
 
+// ====== ADMIN RESULTADOS ======
+function abrirAdminResultados() {
+  const pw = prompt('Contrase\u00f1a:');
+  if (pw !== 'urreta2021') { alert('Contrase\u00f1a incorrecta'); return; }
+  const form = document.getElementById('adminResultadosForm');
+  form.innerHTML = FIXTURE_FECHA.map((fecha, fi) => {
+    const rows = fecha.map((p, pi) => `
+      <div class="admin-partido-row">
+        <span class="admin-eq local">${p.local}</span>
+        <input class="admin-score-input" id="ar_gl_${fi}_${pi}" type="number" min="0" max="30" value="${p.gl !== null ? p.gl : ''}">
+        <span class="admin-sep">:</span>
+        <input class="admin-score-input" id="ar_gv_${fi}_${pi}" type="number" min="0" max="30" value="${p.gv !== null ? p.gv : ''}">
+        <span class="admin-eq">${p.visitante}</span>
+        <label class="admin-wo-label"><input type="checkbox" id="ar_wo_${fi}_${pi}" ${p.wo ? 'checked' : ''}>W/O</label>
+      </div>`).join('');
+    return `<div class="admin-fecha-block">
+      <div class="admin-fecha-titulo">FECHA ${fi + 1} &mdash; ${FECHAS[fi] || ''}</div>
+      ${rows}
+    </div>`;
+  }).join('');
+  document.getElementById('adminResultadosOverlay').classList.add('visible');
+  document.getElementById('adminResultadosStatus').textContent = '';
+}
+
+function cerrarAdminResultados() {
+  document.getElementById('adminResultadosOverlay').classList.remove('visible');
+}
+
+async function guardarResultadosAdmin() {
+  const status = document.getElementById('adminResultadosStatus');
+  const token = document.getElementById('ar_token').value.trim();
+  if (!token) { status.textContent = '\u26a0\ufe0f Ingres\u00e1 el GitHub Token.'; return; }
+  status.textContent = 'Guardando...';
+
+  // Collect results from form and update FIXTURE_FECHA in memory
+  const nuevasFechas = {};
+  FIXTURE_FECHA.forEach((fecha, fi) => {
+    const fechaKey = String(fi + 1);
+    nuevasFechas[fechaKey] = [];
+    fecha.forEach((p, pi) => {
+      const glVal = document.getElementById(`ar_gl_${fi}_${pi}`).value;
+      const gvVal = document.getElementById(`ar_gv_${fi}_${pi}`).value;
+      const wo = document.getElementById(`ar_wo_${fi}_${pi}`).checked;
+      const gl = glVal !== '' ? parseInt(glVal) : null;
+      const gv = gvVal !== '' ? parseInt(gvVal) : null;
+      // Update in memory
+      p.gl = gl; p.gv = gv; p.wo = wo || undefined;
+      const entry = { local: p.local, visitante: p.visitante, gl, gv };
+      if (wo) entry.wo = true;
+      nuevasFechas[fechaKey].push(entry);
+    });
+  });
+
+  // Also sync resultados (Urreta-specific) from FIXTURE_FECHA
+  FIXTURE.forEach((f, idx) => {
+    if (f.libre) return;
+    const fi = idx;
+    const fecha = FIXTURE_FECHA[fi];
+    if (!fecha) return;
+    const p = fecha.find(r => r.local === 'Urreta' || r.visitante === 'Urreta');
+    if (!p || p.gl === null) return;
+    const esLocal = p.local === 'Urreta';
+    resultados[idx + 1] = { golesUrreta: esLocal ? p.gl : p.gv, golesRival: esLocal ? p.gv : p.gl };
+    if (p.wo) resultados[idx + 1].wo = true;
+  });
+
+  renderAll();
+
+  // Save to resultados.json
+  const nuevosResultados = { ultima_actualizacion: new Date().toISOString(), urreta: resultados, fechas: nuevasFechas };
+  const contenido = JSON.stringify(nuevosResultados, null, 2);
+  const b64 = btoa(unescape(encodeURIComponent(contenido)));
+  try {
+    const getResp = await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/resultados.json', {
+      headers: { 'Authorization': 'token ' + token }
+    });
+    let sha = null;
+    if (getResp.ok) { sha = (await getResp.json()).sha; }
+    const body = { message: 'Actualizar resultados desde admin web', content: b64 };
+    if (sha) body.sha = sha;
+    const putResp = await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/resultados.json', {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (putResp.ok) {
+      status.textContent = '\u2705 Guardado correctamente.';
+      setTimeout(cerrarAdminResultados, 1500);
+    } else {
+      status.textContent = '\u274c Error al guardar. Revis\u00e1 el token.';
+    }
+  } catch(e) {
+    status.textContent = '\u274c Error: ' + e.message;
+  }
+}
+
 </script>
+
+<!-- MODAL EDICIÓN RESULTADOS -->
+<div class="admin-resultados-overlay" id="adminResultadosOverlay">
+  <div class="admin-resultados-modal">
+    <h3>✏️ Editar Resultados</h3>
+    <div id="adminResultadosForm"></div>
+    <div class="admin-resultados-btns">
+      <button class="admin-cancel-btn" onclick="cerrarAdminResultados()">Cancelar</button>
+      <button class="admin-save-btn" onclick="guardarResultadosAdmin()">Guardar ✓</button>
+    </div>
+    <div style="margin-top:8px;">
+      <label style="font-size:0.8rem;color:#888;">GitHub Token</label>
+      <input id="ar_token" type="password" placeholder="ghp_..." style="width:100%;background:#111;border:1px solid #333;border-radius:6px;padding:8px;color:#fff;margin-top:4px;">
+    </div>
+    <div class="admin-status" id="adminResultadosStatus" style="margin-top:10px;"></div>
+  </div>
+</div>
+
 </body>
 </html>
