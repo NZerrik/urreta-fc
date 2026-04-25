@@ -1359,13 +1359,13 @@ const FIXTURE_FECHA = [
     { local: 'L. Washington', visitante: 'C. Corinto',    gl: 8,    gv: 0    },
   ],
   [ // F6
-    { local: 'Las Flores',    visitante: 'C. Corinto',    gl: null, gv: null },
+    { local: 'Las Flores',    visitante: 'C. Corinto',    gl: 6,    gv: 0    },
     { local: '3 de Abril',    visitante: 'L. Washington', gl: null, gv: null },
     { local: 'D. Uruguayo',   visitante: 'Av. Lezica',    gl: null, gv: null },
     { local: 'Urreta',        visitante: 'Covicenova',    gl: 6,    gv: 0    },
     { local: 'Isidro Fynn',   visitante: 'Pablán',        gl: null, gv: null },
     { local: 'San Francisco', visitante: 'Ombú Jrs.',     gl: 1,    gv: 4    },
-    { local: 'Yegros',        visitante: 'E. del Norte',  gl: null, gv: null },
+    { local: 'Yegros',        visitante: 'E. del Norte',  gl: 4,    gv: 4    },
     { local: 'Bochas',        visitante: 'Malvín Alto',   gl: null, gv: null },
   ],
   [ // F7
@@ -2007,10 +2007,10 @@ function renderTabla() {
     { nombre: 'Urreta',           pj:s.pj, g:s.g, e:s.e, pe:s.pe, gf:s.gf, gc:s.gc, esUrreta: true },
     { nombre: 'Av. Lezica',       pj:5, g:5, e:0, pe:0, gf:18, gc:1  },
     { nombre: '3 de Abril',       pj:5, g:4, e:0, pe:1, gf:25, gc:3  },
-    { nombre: 'Las Flores',       pj:5, g:4, e:0, pe:1, gf:18, gc:8  },
-    { nombre: 'Yegros',           pj:5, g:3, e:1, pe:1, gf:18, gc:6  },
+    { nombre: 'Las Flores',       pj:6, g:5, e:0, pe:1, gf:24, gc:8  },
+    { nombre: 'Yegros',           pj:6, g:3, e:2, pe:1, gf:22, gc:10 },
     { nombre: 'Covicenova',       pj:6, g:3, e:0, pe:3, gf:18, gc:11 },
-    { nombre: 'E. del Norte',     pj:5, g:3, e:0, pe:2, gf:15, gc:14 },
+    { nombre: 'E. del Norte',     pj:6, g:3, e:1, pe:2, gf:19, gc:18 },
     { nombre: 'Ombú Jrs.',        pj:6, g:4, e:0, pe:2, gf:12, gc:11 },
     { nombre: 'Malvín Alto',      pj:5, g:3, e:0, pe:2, gf:10, gc:15 },
     { nombre: 'Pablán',           pj:5, g:2, e:1, pe:2, gf:12, gc:18 },
@@ -2019,7 +2019,7 @@ function renderTabla() {
     { nombre: 'Bochas',           pj:5, g:1, e:0, pe:4, gf:4,  gc:15 },
     { nombre: 'San Francisco',    pj:6, g:0, e:0, pe:6, gf:2,  gc:19 },
     { nombre: 'D. Uruguayo',      pj:5, g:0, e:0, pe:5, gf:0,  gc:15 },
-    { nombre: 'C. Corinto',       pj:5, g:0, e:0, pe:5, gf:1,  gc:29 },
+    { nombre: 'C. Corinto',       pj:6, g:0, e:0, pe:6, gf:1,  gc:35 },
   ].map(e => {
     e.pts = e.g * 3 + e.e;
     e.gd  = e.gf - e.gc;
