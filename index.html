@@ -1149,10 +1149,10 @@
 
 <!-- NAV BAR -->
 <nav class="nav-bar">
-  <a href="#fixture" onclick="switchTab('prado')">⚽ Liga Prado</a>
-  <a href="#fixture-metro" onclick="switchTab('metro')">🏅 Metro</a>
-  <a href="#tabla" onclick="switchTab('prado')">📊 Tabla</a>
-  <a href="#tabla" onclick="switchTab('prado');switchSubTab('canchas')">📍 Canchas</a>
+  <a href="#" onclick="navTo('prado','fixture');return false;">⚽ Liga Prado</a>
+  <a href="#" onclick="navTo('metro','fixture-metro');return false;">🏅 Metro</a>
+  <a href="#" onclick="navTo('prado','tabla');return false;">📊 Tabla</a>
+  <a href="#" onclick="navTo('prado','subtab-canchas','canchas');return false;">📍 Canchas</a>
   <a href="#practicas">🏃 Prácticas</a>
 </nav>
 
@@ -1775,6 +1775,15 @@ function switchSubTab(tab) {
     if(btn) btn.classList.toggle('active', t === tab);
     if(content) content.classList.toggle('active', t === tab);
   });
+}
+
+function navTo(mainTab, scrollId, subTab) {
+  switchTab(mainTab);
+  if (subTab) switchSubTab(subTab);
+  setTimeout(() => {
+    const el = document.getElementById(scrollId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
 }
 
 function renderProximoPrado(proxIdx, sec, secCd) {
