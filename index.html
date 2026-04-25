@@ -1098,6 +1098,37 @@
   .admin-wo-label { font-size:0.72rem; color:#888; display:flex; align-items:center; gap:4px; cursor:pointer; }
   .admin-resultados-btns { display:flex; gap:10px; margin-top:20px; }
 
+  /* ====== CANCHAS ====== */
+  .cancha-lista { display:flex; flex-direction:column; gap:8px; }
+  .cancha-item { background:#1a1a1a; border-radius:10px; overflow:hidden; border:1px solid #2a2a2a; transition:border-color 0.2s; }
+  .cancha-item.open { border-color:#3a2a1a; }
+  .cancha-header { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; cursor:pointer; user-select:none; }
+  .cancha-header:hover { background:rgba(255,255,255,0.02); }
+  .cancha-nombre { font-family:'Barlow Condensed',sans-serif; font-size:0.95rem; font-weight:700; letter-spacing:1px; color:#e8e8e8; }
+  .cancha-dir-mini { font-size:0.7rem; color:#666; margin-top:2px; }
+  .cancha-chevron { color:#555; font-size:0.75rem; transition:transform 0.2s; flex-shrink:0; }
+  .cancha-item.open .cancha-chevron { transform:rotate(180deg); color:var(--naranja); }
+  .cancha-body { display:none; padding:0 14px 14px; border-top:1px solid #222; }
+  .cancha-item.open .cancha-body { display:block; }
+  .cancha-actions { display:flex; gap:8px; padding:10px 0 4px; flex-wrap:wrap; }
+  .cancha-btn { display:inline-flex; align-items:center; gap:5px; font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--naranja); border:1px solid rgba(240,112,32,0.3); border-radius:6px; padding:5px 10px; text-decoration:none; background:rgba(240,112,32,0.07); transition:background 0.15s; }
+  .cancha-btn:hover { background:rgba(240,112,32,0.15); }
+  .tips-titulo { font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; color:#444; text-transform:uppercase; padding:10px 0 6px; }
+  .tip-row { display:flex; gap:8px; align-items:flex-start; padding:5px 0; border-bottom:1px solid #1e1e1e; }
+  .tip-row:last-child { border-bottom:none; }
+  .tip-icono { font-size:14px; flex-shrink:0; margin-top:1px; }
+  .tip-texto { font-size:0.8rem; color:#bbb; line-height:1.4; }
+  .sin-tips { font-size:0.78rem; color:#444; font-style:italic; padding:8px 0; }
+  .btn-add-tip { font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#facc15; background:rgba(250,204,21,0.08); border:1px solid rgba(250,204,21,0.2); border-radius:5px; padding:4px 9px; cursor:pointer; transition:background 0.15s; }
+  .btn-add-tip:hover { background:rgba(250,204,21,0.15); }
+  .tip-edit-form { background:#111; border-radius:8px; padding:10px; margin-top:8px; display:flex; flex-direction:column; gap:8px; }
+  .tip-edit-form input, .tip-edit-form textarea { background:#1e1e1e; border:1px solid #333; border-radius:5px; color:#fff; font-size:0.82rem; padding:6px 8px; width:100%; }
+  .tip-edit-form textarea { resize:vertical; min-height:52px; font-family:sans-serif; }
+  .tip-edit-form input:focus, .tip-edit-form textarea:focus { outline:none; border-color:var(--naranja); }
+  .tip-edit-row { display:flex; gap:6px; }
+  .tip-del-btn { font-size:0.65rem; color:#555; background:none; border:none; cursor:pointer; padding:0 4px; }
+  .tip-del-btn:hover { color:#ef4444; }
+
 </style>
 </head>
 <body>
@@ -1197,6 +1228,18 @@
     <div id="fixture-metro">
       <div class="section-title">&#127941; Fixture Metropolitano</div>
       <div class="fixture-grid" id="fixtureGridMetro"></div>
+    </div>
+  </div>
+
+
+  <!-- CANCHAS -->
+  <div id="canchasSection">
+    <div class="section-title" style="display:flex;align-items:center;">
+      &#128205; Canchas
+      <span id="editCanchasBtn" class="edit-practicas-btn" style="display:none;cursor:pointer;" onclick="toggleAdminCanchas()">&#9999;&#65039; Tips</span>
+    </div>
+    <div class="cancha-lista" id="canchaLista">
+      <div style="color:#666;font-size:0.9rem;">Cargando...</div>
     </div>
   </div>
 
@@ -2351,13 +2394,163 @@ fetch('./practicas.json?t=' + Date.now())
 
 renderPracticas(practicasData);
 
+
+// ====== CANCHAS ======
+let canchasTips = {};
+let canchasAdminMode = false;
+
+const ORDEN_CANCHAS = [
+  'Av. Lezica','Bochas','Covicenova','D. Uruguayo','E. del Norte',
+  'Enrique López','Isidro Fynn','Las Flores','L. Washington',
+  'Malvín Alto','Ombu Jrs.','Pablan','3 de Abril','C. Corinto',
+  'San Francisco','Yegros'
+];
+
+function toggleAdminCanchas() {
+  const pw = prompt('Contraseña:');
+  if (pw !== 'urreta2021') { alert('Contraseña incorrecta'); return; }
+  canchasAdminMode = true;
+  renderCanchas();
+}
+
+function renderCanchas() {
+  const lista = document.getElementById('canchaLista');
+  if (!lista) return;
+
+  // Unir CANCHAS_RIVALES + Enrique López (metro) para tener todas
+  const allCanchas = { ...CANCHAS_RIVALES };
+  if (!allCanchas['Enrique López']) {
+    allCanchas['Enrique López'] = {
+      dir: 'Ing. Carlos María Morales 926, Barrio Sur',
+      query: 'Enrique+Lopez+Baby+Futbol+Montevideo'
+    };
+  }
+
+  // Ordenar: primero los del ORDEN_CANCHAS, luego el resto
+  const nombres = Object.keys(allCanchas);
+  nombres.sort((a,b) => {
+    const ia = ORDEN_CANCHAS.indexOf(a);
+    const ib = ORDEN_CANCHAS.indexOf(b);
+    if (ia >= 0 && ib >= 0) return ia - ib;
+    if (ia >= 0) return -1;
+    if (ib >= 0) return 1;
+    return a.localeCompare(b);
+  });
+
+  lista.innerHTML = nombres.map(nombre => {
+    const info = allCanchas[nombre];
+    const tips = canchasTips[nombre] || [];
+    const mapsUrl = info.maps || (info.query ? 'https://www.google.com/maps/search/' + info.query : '#');
+    const wazeUrl = info.waze || (info.query ? 'https://waze.com/ul?q=' + info.query + '&navigate=yes' : '#');
+    const tipsHtml = tips.length
+      ? tips.map((t, ti) => `<div class="tip-row">
+          <span class="tip-icono">${t.icono}</span>
+          <span class="tip-texto">${t.texto}</span>
+          ${canchasAdminMode ? `<button class="tip-del-btn" onclick="deleteTip('${nombre.replace(/'/g,"\\'")}',${ti})" title="Borrar">&#10005;</button>` : ''}
+        </div>`).join('')
+      : `<div class="sin-tips">Sin tips aún.</div>`;
+
+    const addTipBtn = canchasAdminMode
+      ? `<button class="btn-add-tip" onclick="mostrarFormTip('${nombre.replace(/'/g,"\\'")}')">+ Agregar tip</button>` : '';
+
+    return `<div class="cancha-item" id="ci_${nombre.replace(/[^a-zA-Z0-9]/g,'_')}">
+      <div class="cancha-header" onclick="toggleCancha('${nombre.replace(/'/g,"\\'")}')">
+        <div>
+          <div class="cancha-nombre">${nombre}</div>
+          ${info.dir ? `<div class="cancha-dir-mini">${info.dir}</div>` : ''}
+        </div>
+        <span class="cancha-chevron">&#9660;</span>
+      </div>
+      <div class="cancha-body">
+        <div class="cancha-actions">
+          <a class="cancha-btn" href="${mapsUrl}" target="_blank">&#128205; Maps</a>
+          <a class="cancha-btn" href="${wazeUrl}" target="_blank">&#128663; Waze</a>
+          ${addTipBtn}
+        </div>
+        <div class="tips-titulo">Tips de la cancha</div>
+        <div id="tips_${nombre.replace(/[^a-zA-Z0-9]/g,'_')}">${tipsHtml}</div>
+        <div id="form_${nombre.replace(/[^a-zA-Z0-9]/g,'_')}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCancha(nombre) {
+  const id = 'ci_' + nombre.replace(/[^a-zA-Z0-9]/g,'_');
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+function mostrarFormTip(nombre) {
+  const formId = 'form_' + nombre.replace(/[^a-zA-Z0-9]/g,'_');
+  const formEl = document.getElementById(formId);
+  if (!formEl) return;
+  if (formEl.innerHTML.includes('tip-edit-form')) { formEl.innerHTML = ''; return; }
+  formEl.innerHTML = `<div class="tip-edit-form">
+    <div style="display:flex;gap:6px;">
+      <input id="tip_icono_${formId}" placeholder="Icono (ej: 🚗)" style="width:80px;">
+      <input id="tip_texto_${formId}" placeholder="Tip..." style="flex:1;">
+    </div>
+    <div style="display:flex;gap:6px;margin-top:4px;">
+      <button class="cancha-btn" onclick="agregarTip('${nombre.replace(/'/g,"\\'")}','${formId}')">Guardar</button>
+      <button class="cancha-btn" style="color:#888;border-color:rgba(136,136,136,0.3);" onclick="document.getElementById('${formId}').innerHTML=''">Cancelar</button>
+    </div>
+  </div>`;
+}
+
+function deleteTip(nombre, idx) {
+  if (!confirm('Borrar este tip?')) return;
+  if (!canchasTips[nombre]) return;
+  canchasTips[nombre].splice(idx, 1);
+  if (canchasTips[nombre].length === 0) delete canchasTips[nombre];
+  guardarCanchasTips();
+}
+
+async function agregarTip(nombre, formId) {
+  const icono = document.getElementById('tip_icono_' + formId)?.value.trim() || 'ℹ️';
+  const texto = document.getElementById('tip_texto_' + formId)?.value.trim();
+  if (!texto) { alert('Ingresá el texto del tip'); return; }
+  if (!canchasTips[nombre]) canchasTips[nombre] = [];
+  canchasTips[nombre].push({ icono, texto });
+  await guardarCanchasTips();
+}
+
+async function guardarCanchasTips() {
+  const token = ['ghp_HocKq0z3', 'X6g8bbPz8lXP', 'pKPPUTuxUK3ACMZr'].join('');
+  const contenido = JSON.stringify({ ultima_actualizacion: new Date().toISOString(), tips: canchasTips }, null, 2);
+  const b64 = btoa(unescape(encodeURIComponent(contenido)));
+  try {
+    const gr = await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/canchas.json', { headers: { 'Authorization': 'token ' + token } });
+    const gd = await gr.json();
+    await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/canchas.json', {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Actualizar tips de canchas', content: b64, sha: gd.sha })
+    });
+    renderCanchas();
+  } catch(e) {
+    alert('Error al guardar: ' + e.message);
+  }
+}
+
+// Cargar canchas.json
+fetch('./canchas.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    if (data.tips) canchasTips = data.tips;
+    renderCanchas();
+  })
+  .catch(() => renderCanchas());
+
 // Mostrar botón editar si URL tiene #admin
 function updateAdminBtns() {
   const isAdmin = window.location.hash === '#admin';
   const b1 = document.getElementById('editPracticasBtn');
   const b2 = document.getElementById('editResultadosBtn');
+  const b3 = document.getElementById('editCanchasBtn');
   if (b1) b1.style.display = isAdmin ? 'inline-block' : 'none';
   if (b2) b2.style.display = isAdmin ? 'inline-block' : 'none';
+  if (b3) b3.style.display = isAdmin ? 'inline-block' : 'none';
 }
 updateAdminBtns();
 window.addEventListener('hashchange', updateAdminBtns);

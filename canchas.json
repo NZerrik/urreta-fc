@@ -1,0 +1,48 @@
+{
+  "ultima_actualizacion": "2026-04-25T00:00:00",
+  "tips": {
+    "Av. Lezica": [
+      { "icono": "📍", "texto": "Club en Villa Colón, acceder por Cno. Corrales o Cno. Colman." }
+    ],
+    "Bochas": [
+      { "icono": "🚗", "texto": "Viaje largo, ~45 min desde Montevideo por Ruta 1 dirección San José. Salir con tiempo." },
+      { "icono": "📍", "texto": "Está en Ciudad del Plata. Cruzar el puente del Santa Lucía y seguir por Ruta 1." }
+    ],
+    "Covicenova": [
+      { "icono": "⚠️", "texto": "Zona del Cerro. Conviene ir en grupo y llegar junto con otros padres." },
+      { "icono": "📍", "texto": "Entrar por Camino Buffa desde Cno. Tomkinson." }
+    ],
+    "Las Flores": [
+      { "icono": "📍", "texto": "Está detrás del Cementerio del Cerro. Usar Maps la primera vez, la zona puede ser confusa." },
+      { "icono": "⚠️", "texto": "Zona del Cerro. Precaución." }
+    ],
+    "D. Uruguayo": [
+      { "icono": "📍", "texto": "En la Curva de Maroñas, cerca del Hipódromo. Los domingos con carreras hay tráfico." }
+    ],
+    "E. del Norte": [
+      { "icono": "📍", "texto": "Sobre Camino Ariel en Sayago. Acceder desde Bulevar Artigas." }
+    ],
+    "Malvín Alto": [
+      { "icono": "📍", "texto": "Zona tranquila de Malvín Alto, cerca de Camino Carrasco." },
+      { "icono": "🚗", "texto": "Buen estacionamiento en la zona." }
+    ],
+    "Ombú Jrs.": [
+      { "icono": "ℹ️", "texto": "Instalaciones renovadas en 2025 con apoyo del MTOP." },
+      { "icono": "📍", "texto": "En Jardines del Hipódromo, sobre Libia esq. Maldonado." }
+    ],
+    "L. Washington": [
+      { "icono": "ℹ️", "texto": "El complejo se llama Parque José Taberne." },
+      { "icono": "🚗", "texto": "Hay estacionamiento dentro del predio." }
+    ],
+    "Isidro Fynn": [
+      { "icono": "📍", "texto": "Club en Colón, zona del ferrocarril. Buscar Camino Manuel M. Fortet." }
+    ],
+    "Yegros": [
+      { "icono": "📍", "texto": "En Colón, cerca de Camino José Durán." }
+    ],
+    "Enrique López": [
+      { "icono": "⚠️", "texto": "Zona de Barrio Sur/Palermo. Estacionamiento limitado, conviene llegar temprano o ir en transporte." },
+      { "icono": "📍", "texto": "Ing. Carlos María Morales 926, Barrio Sur." }
+    ]
+  }
+}
