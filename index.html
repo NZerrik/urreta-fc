@@ -1196,6 +1196,7 @@
   <div class="torneo-tabs">
     <button class="tab-btn active" id="tab-prado-btn" onclick="switchTab('prado')">&#127942; Liga Prado</button>
     <button class="tab-btn" id="tab-metro-btn" onclick="switchTab('metro')">&#127941; Metropolitano</button>
+    <button class="tab-btn" id="tab-canchas-btn" onclick="switchTab('canchas')">&#128205; Canchas</button>
   </div>
 
   <!-- LIGA PRADO -->
@@ -1232,14 +1233,16 @@
   </div>
 
 
-  <!-- CANCHAS -->
-  <div id="canchasSection">
-    <div class="section-title" style="display:flex;align-items:center;">
-      &#128205; Canchas
-      <span id="editCanchasBtn" class="edit-practicas-btn" style="display:none;cursor:pointer;" onclick="toggleAdminCanchas()">&#9999;&#65039; Tips</span>
-    </div>
-    <div class="cancha-lista" id="canchaLista">
-      <div style="color:#666;font-size:0.9rem;">Cargando...</div>
+  <!-- CANCHAS TAB -->
+  <div id="tab-canchas" class="tab-content">
+    <div id="canchasSection">
+      <div class="section-title" style="display:flex;align-items:center;">
+        &#128205; Canchas
+        <span id="editCanchasBtn" class="edit-practicas-btn" style="display:none;cursor:pointer;" onclick="toggleAdminCanchas()">&#9999;&#65039; Tips</span>
+      </div>
+      <div class="cancha-lista" id="canchaLista">
+        <div style="color:#666;font-size:0.9rem;">Cargando...</div>
+      </div>
     </div>
   </div>
 
