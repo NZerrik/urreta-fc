@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-04-23T00:00:00",
+  "ultima_actualizacion": "2026-04-26T00:00:00",
   "fixture": [
     {
       "fecha": 1,
@@ -10,8 +10,8 @@
       "cancha": "Enrique López Baby Fútbol",
       "cancha_maps": "https://www.google.com/maps/search/Enrique+Lopez+Baby+Futbol+Montevideo",
       "cancha_waze": "https://waze.com/ul?q=Enrique+Lopez+Baby+Futbol+Montevideo&navigate=yes",
-      "golesUrreta": null,
-      "golesRival": null
+      "golesUrreta": 5,
+      "golesRival": 1
     }
   ]
 }
