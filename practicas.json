@@ -2,16 +2,16 @@
   "practicas": [
     {
       "dia": "Lunes",
-      "hora": "20:30",
-      "hora_fin": "indefinido (Asadito)",
+      "hora": "18:30",
+      "hora_fin": "20:00",
       "lugar": "Cuartel de Artillería N°5",
       "maps": "https://www.google.com/maps?q=-34.8488083,-56.1776733",
       "waze": "https://waze.com/ul?ll=-34.8488083,-56.1776733&navigate=yes"
     },
     {
       "dia": "Viernes",
-      "hora": "19:00",
-      "hora_fin": "20:00",
+      "hora": "20:30",
+      "hora_fin": "indefinido (Asadito)",
       "lugar": "Club Victoria",
       "maps": "https://maps.app.goo.gl/g7k3F2JmhsxSVFCT6",
       "waze": "https://ul.waze.com/ul?ll=-34.66935855%2C-52.82226563&navigate=yes&zoom=4&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location"
