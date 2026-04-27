@@ -11,6 +11,7 @@
     {
       "dia": "Viernes",
       "nota": "01/05",
+      "excepcional": true,
       "hora": "20:30",
       "hora_fin": "indefinido (Asadito)",
       "lugar": "Club Victoria",
