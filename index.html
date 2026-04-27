@@ -2394,7 +2394,7 @@ function renderPracticas(data) {
   if (!grid) return;
   grid.innerHTML = data.map(p => `
     <div class="practica-card">
-      <div class="practica-dia">${p.dia}</div>
+      <div class="practica-dia">${p.dia}${p.nota ? ` <span style="font-size:0.6rem;font-weight:700;letter-spacing:1px;color:#facc15;background:rgba(250,204,21,0.12);border:1px solid rgba(250,204,21,0.25);border-radius:4px;padding:2px 6px;vertical-align:middle;">${p.nota}</span>` : ''}</div>
       <div class="practica-hora">🕐 ${p.hora}${p.hora_fin ? ' – ' + p.hora_fin : ''}hs</div>
       <div class="practica-lugar">📍 ${p.lugar}</div>
       <div class="practica-btns">

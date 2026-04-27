@@ -10,11 +10,21 @@
     },
     {
       "dia": "Viernes",
+      "nota": "01/05",
       "hora": "20:30",
       "hora_fin": "indefinido (Asadito)",
       "lugar": "Club Victoria",
       "maps": "https://maps.app.goo.gl/g7k3F2JmhsxSVFCT6",
       "waze": "https://ul.waze.com/ul?ll=-34.66935855%2C-52.82226563&navigate=yes&zoom=4&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location"
+    },
+    {
+      "dia": "Viernes",
+      "nota": "desde 08/05",
+      "hora": "19:00",
+      "hora_fin": "20:00",
+      "lugar": "Campo Grande (Fútbol 5)",
+      "maps": "https://www.google.com/maps/search/Campo+Grande+futbol+5+Montevideo",
+      "waze": "https://waze.com/ul?q=Campo+Grande+futbol+5+Montevideo&navigate=yes"
     }
   ]
 }
