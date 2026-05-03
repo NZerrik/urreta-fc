@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-04-25T21:48:32.936Z",
+  "ultima_actualizacion": "2026-05-03T21:50:17.663Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -25,6 +25,10 @@
     "6": {
       "golesUrreta": 6,
       "golesRival": 0
+    },
+    "7": {
+      "golesUrreta": 1,
+      "golesRival": 3
     }
   },
   "fechas": {
@@ -372,8 +376,8 @@
       {
         "local": "Av. Lezica",
         "visitante": "Urreta",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 1
       },
       {
         "local": "L. Washington",
@@ -788,5 +792,8 @@
         "gv": null
       }
     ]
+  },
+  "horas": {
+    "7": 17
   }
 }
