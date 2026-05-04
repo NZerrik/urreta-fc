@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-03T21:51:22.227Z",
+  "ultima_actualizacion": "2026-05-04T02:37:49.026Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -346,8 +346,8 @@
       {
         "local": "Malvín Alto",
         "visitante": "Las Flores",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 9
       },
       {
         "local": "E. del Norte",
@@ -364,14 +364,14 @@
       {
         "local": "Pablán",
         "visitante": "San Francisco",
-        "gl": null,
-        "gv": null
+        "gl": 5,
+        "gv": 2
       },
       {
         "local": "Covicenova",
         "visitante": "Isidro Fynn",
-        "gl": null,
-        "gv": null
+        "gl": 5,
+        "gv": 0
       },
       {
         "local": "Av. Lezica",
@@ -382,8 +382,8 @@
       {
         "local": "L. Washington",
         "visitante": "D. Uruguayo",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "C. Corinto",
@@ -793,7 +793,5 @@
       }
     ]
   },
-  "horas": {
-    "7": 17
-  }
+  "horas": {}
 }
