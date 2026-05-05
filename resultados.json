@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-04T02:37:49.026Z",
+  "ultima_actualizacion": "2026-05-05T14:26:20.886Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -793,5 +793,7 @@
       }
     ]
   },
-  "horas": {}
+  "horas": {
+    "8": 17
+  }
 }
