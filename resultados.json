@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-05T14:26:20.886Z",
+  "ultima_actualizacion": "2026-05-05T16:21:04.956Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -388,8 +388,8 @@
       {
         "local": "C. Corinto",
         "visitante": "3 de Abril",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 7
       }
     ],
     "8": [
