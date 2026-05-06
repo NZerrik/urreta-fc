@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-06T15:47:12.890Z",
+  "ultima_actualizacion": "2026-05-06T15:48:21.922Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -359,8 +359,8 @@
       {
         "local": "Ombú Jrs.",
         "visitante": "Yegros",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 1
       },
       {
         "local": "Pablán",
