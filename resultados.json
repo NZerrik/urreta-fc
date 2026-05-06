@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-05T16:22:50.795Z",
+  "ultima_actualizacion": "2026-05-06T15:47:12.890Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -352,8 +352,9 @@
       {
         "local": "E. del Norte",
         "visitante": "Bochas",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0,
+        "wo": true
       },
       {
         "local": "Ombú Jrs.",
