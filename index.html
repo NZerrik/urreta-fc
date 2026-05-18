@@ -1348,14 +1348,14 @@ const FECHAS = [
   '19/04/2026', // F5
   '23/04/2026', // F6 - jueves
   '03/05/2026', // F7
-  '10/05/2026', // F8
-  '17/05/2026', // F9
-  '24/05/2026', // F10
-  '31/05/2026', // F11
-  '07/06/2026', // F12
-  '14/06/2026', // F13
-  '21/06/2026', // F14
-  '28/06/2026', // F15
+  '17/05/2026', // F8 (jugada hoy)
+  '24/05/2026', // F9
+  '31/05/2026', // F10
+  '07/06/2026', // F11
+  '14/06/2026', // F12
+  '21/06/2026', // F13
+  '28/06/2026', // F14
+  '05/07/2026', // F15
 ];
 
 // Fixture COMPLETO de Urreta según imagen del fixture
@@ -1453,7 +1453,7 @@ const FIXTURE_FECHA = [
   [ // F8
     { local: 'Las Flores',    visitante: '3 de Abril',    gl: null, gv: null },
     { local: 'D. Uruguayo',   visitante: 'C. Corinto',    gl: null, gv: null },
-    { local: 'Urreta',        visitante: 'L. Washington', gl: null, gv: null },
+    { local: 'Urreta',        visitante: 'L. Washington', gl: 8,    gv: 0    },
     { local: 'Isidro Fynn',   visitante: 'Av. Lezica',    gl: null, gv: null },
     { local: 'San Francisco', visitante: 'Covicenova',    gl: null, gv: null },
     { local: 'Yegros',        visitante: 'Pablán',        gl: null, gv: null },
@@ -1601,7 +1601,7 @@ const HORAS_PARTIDO = {
   6:  19,   // 19:00hs (estar 18:30)
   7:  17,   // 17:00hs (estar 16:30)
   8:  null,
-  9:  null,
+  9:  12.5,   // 12:30hs (estar 12:00)
   10: null,
   11: null,
   12: null,
@@ -1702,6 +1702,13 @@ function getResultadoBadge(idx) {
   return '<span class="resultado-badge badge-empate">Empate</span>';
 }
 
+function formatHora(h) {
+  if (h === null || h === undefined) return null;
+  const hh = Math.floor(h);
+  const mm = Math.round((h - hh) * 60);
+  return hh + ':' + String(mm).padStart(2, '0');
+}
+
 function getCountdownHtml(fecha_txt, hora) {
   if (!fecha_txt || fecha_txt === 'A confirmar') {
     return `<div class="countdown-grid">
@@ -1712,8 +1719,10 @@ function getCountdownHtml(fecha_txt, hora) {
     </div>`;
   }
   const [dd, mm, yy] = fecha_txt.split('/').map(Number);
-  const h = hora ?? 10;
-  const target = new Date(yy, mm - 1, dd, h, 0, 0);
+  const hDec = hora ?? 10;
+  const h = Math.floor(hDec);
+  const min = Math.round((hDec - h) * 60);
+  const target = new Date(yy, mm - 1, dd, h, min, 0);
   const now = new Date();
   const diff = target - now;
 
@@ -1806,7 +1815,7 @@ function renderProximoPrado(proxIdx, sec, secCd) {
   const localClass = p.esLocal ? 'local' : 'visitante';
   const visitaClass = p.esLocal ? 'visitante' : 'local';
   const horaRaw = HORAS_PARTIDO[proxIdx + 1];
-  const horaStr = horaRaw !== null && horaRaw !== undefined ? `${horaRaw}:00` : null;
+  const horaStr = formatHora(horaRaw);
 
   secCd.style.display = 'block';
   document.getElementById('countdownTitulo').textContent = `Próximo partido · Fecha ${proxIdx + 1}`;

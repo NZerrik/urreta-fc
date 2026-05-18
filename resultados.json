@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-17T16:18:04.792Z",
+  "ultima_actualizacion": "2026-05-17T23:36:22.834512",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -29,6 +29,10 @@
     "7": {
       "golesUrreta": 1,
       "golesRival": 3
+    },
+    "8": {
+      "golesUrreta": 8,
+      "golesRival": 0
     }
   },
   "fechas": {
@@ -301,8 +305,8 @@
       {
         "local": "3 de Abril",
         "visitante": "L. Washington",
-        "gl": 5,
-        "gv": 0
+        "gl": null,
+        "gv": null
       },
       {
         "local": "D. Uruguayo",
@@ -338,8 +342,8 @@
       {
         "local": "Bochas",
         "visitante": "Malvín Alto",
-        "gl": 3,
-        "gv": 0,
+        "gl": 0,
+        "gv": 3,
         "wo": true
       }
     ],
@@ -410,8 +414,8 @@
       {
         "local": "Urreta",
         "visitante": "L. Washington",
-        "gl": null,
-        "gv": null
+        "gl": 8,
+        "gv": 0
       },
       {
         "local": "Isidro Fynn",
@@ -796,6 +800,6 @@
     ]
   },
   "horas": {
-    "8": 14
+    "8": 17
   }
 }
