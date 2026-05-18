@@ -1577,6 +1577,13 @@ fetch('./resultados.json?t=' + Date.now())
     if (data.horas) {
       Object.keys(data.horas).forEach(k => { HORAS_PARTIDO[parseInt(k)] = data.horas[k]; });
     }
+    // Merge fecha_txt overrides
+    if (data.fechas_txt) {
+      Object.keys(data.fechas_txt).forEach(k => {
+        const idx = parseInt(k) - 1;
+        if (FIXTURE[idx]) FIXTURE[idx].fecha_txt = data.fechas_txt[k];
+      });
+    }
     // Mostrar última actualización
     if (data.ultima_actualizacion) {
       const d = new Date(data.ultima_actualizacion);
@@ -2372,6 +2379,17 @@ fetch('./resultados.json?t=' + Date.now())
         }
       });
     }
+    // Merge horas override
+    if (data.horas) {
+      Object.keys(data.horas).forEach(k => { HORAS_PARTIDO[parseInt(k)] = data.horas[k]; });
+    }
+    // Merge fecha_txt overrides
+    if (data.fechas_txt) {
+      Object.keys(data.fechas_txt).forEach(k => {
+        const idx = parseInt(k) - 1;
+        if (FIXTURE[idx]) FIXTURE[idx].fecha_txt = data.fechas_txt[k];
+      });
+    }
     if (data.ultima_actualizacion) {
       const d = new Date(data.ultima_actualizacion);
       const el = document.getElementById('ultimaActualizacion');
@@ -2749,16 +2767,19 @@ async function guardarResultadosAdmin() {
 
   // Collect horas and fechas overrides
   const horasOverride = {};
+  const fechasTxtOverride = {};
   FIXTURE.forEach((p, i) => {
     if (p.libre || resultados[i+1]) return;
     const horaEl = document.getElementById(`ah_hora_${i}`);
     const fechaEl = document.getElementById(`ah_fecha_${i}`);
     if (horaEl && horaEl.value !== '') {
-      const h = parseInt(horaEl.value);
+      const h = parseFloat(horaEl.value);
       if (!isNaN(h)) { HORAS_PARTIDO[i+1] = h; horasOverride[i+1] = h; }
     }
     if (fechaEl && fechaEl.value.trim()) {
-      FIXTURE[i].fecha_txt = fechaEl.value.trim();
+      const nuevaFecha = fechaEl.value.trim();
+      FIXTURE[i].fecha_txt = nuevaFecha;
+      fechasTxtOverride[i+1] = nuevaFecha;
     }
   });
 
@@ -2778,7 +2799,7 @@ async function guardarResultadosAdmin() {
   renderAll();
 
   // Save to resultados.json
-  const nuevosResultados = { ultima_actualizacion: new Date().toISOString(), urreta: resultados, fechas: nuevasFechas, horas: horasOverride };
+  const nuevosResultados = { ultima_actualizacion: new Date().toISOString(), urreta: resultados, fechas: nuevasFechas, horas: horasOverride, fechas_txt: fechasTxtOverride };
   const contenido = JSON.stringify(nuevosResultados, null, 2);
   const b64 = btoa(unescape(encodeURIComponent(contenido)));
   try {
