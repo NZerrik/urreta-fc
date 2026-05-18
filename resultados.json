@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-17T23:36:22.834512",
+  "ultima_actualizacion": "2026-05-18T23:47:42.744Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -426,26 +426,26 @@
       {
         "local": "San Francisco",
         "visitante": "Covicenova",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 9
       },
       {
         "local": "Yegros",
         "visitante": "Pablán",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 4
       },
       {
         "local": "Bochas",
         "visitante": "Ombú Jrs.",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 2
       },
       {
         "local": "Malvín Alto",
         "visitante": "E. del Norte",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 8
       }
     ],
     "9": [
@@ -800,6 +800,15 @@
     ]
   },
   "horas": {
-    "8": 17
+    "9": 12.5
+  },
+  "fechas_txt": {
+    "9": "24/05/2026",
+    "10": "31/05/2026",
+    "11": "07/06/2026",
+    "12": "14/06/2026",
+    "13": "21/06/2026",
+    "14": "28/06/2026",
+    "15": "05/07/2026"
   }
 }
