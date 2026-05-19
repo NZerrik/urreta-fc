@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-19T15:14:50.115Z",
+  "ultima_actualizacion": "2026-05-19T19:26:29.627Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -421,8 +421,8 @@
       {
         "local": "Isidro Fynn",
         "visitante": "Av. Lezica",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 4
       },
       {
         "local": "San Francisco",
