@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-19T19:32:29.879Z",
+  "ultima_actualizacion": "2026-05-19T19:33:14.390Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -343,8 +343,7 @@
         "local": "Bochas",
         "visitante": "Malvín Alto",
         "gl": 3,
-        "gv": 0,
-        "wo": true
+        "gv": 0
       }
     ],
     "7": [
