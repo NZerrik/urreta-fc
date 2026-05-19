@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-19T00:04:35.388Z",
+  "ultima_actualizacion": "2026-05-19T15:14:50.115Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -402,14 +402,15 @@
       {
         "local": "Las Flores",
         "visitante": "3 de Abril",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 2
       },
       {
         "local": "D. Uruguayo",
         "visitante": "C. Corinto",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 3,
+        "wo": true
       },
       {
         "local": "Urreta",
