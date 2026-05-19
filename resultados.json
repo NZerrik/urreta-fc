@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-18T23:47:42.744Z",
+  "ultima_actualizacion": "2026-05-19T00:04:35.388Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -305,8 +305,8 @@
       {
         "local": "3 de Abril",
         "visitante": "L. Washington",
-        "gl": null,
-        "gv": null
+        "gl": 5,
+        "gv": 0
       },
       {
         "local": "D. Uruguayo",
