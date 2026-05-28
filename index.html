@@ -2239,7 +2239,7 @@ function renderFixtureMetro() {
   const hoy = new Date();
   const hoyD = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
   metroFechas.forEach(p => {
-    const esJugado = p.golesUrreta !== null;
+    const esJugado = p.golesUrreta != null; // != cubre undefined y null
     const fd = parseDate(p.fecha_txt);
     const esProximo = !esJugado && fd && fd >= hoyD;
     const local = p.esLocal ? 'Urreta' : p.rival;
@@ -2254,7 +2254,7 @@ function renderFixtureMetro() {
       const badgeClass = ganó ? 'badge-victoria' : perdió ? 'badge-derrota' : 'badge-empate';
       scoreHtml = `<div class="resultado-area"><span class="resultado-badge ${badgeClass}">${badgeText}</span><div class="resultado-display"><span class="gol-num">${gu}</span><span class="gol-sep">:</span><span class="gol-num">${gr}</span></div></div>`;
     }
-    const horaLabel = p.hora ? ` \u00b7 ${p.hora}:00hs` : '';
+    const horaLabel = p.hora != null ? ` \u00b7 ${formatHora(p.hora)}hs` : '';
     const statusLabel = esJugado ? 'Jugado' : esProximo ? 'Pr\u00f3ximo' : 'Pendiente';
     const statusClass = esJugado ? 'status-jugado' : esProximo ? 'status-proximo' : 'status-pendiente';
     const card = document.createElement('div');
