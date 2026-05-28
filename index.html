@@ -1782,7 +1782,7 @@ function getProximoMetroIdx() {
   const hoyD = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
   for(let i=0; i<metroFechas.length; i++){
     const p = metroFechas[i];
-    if(p.golesUrreta !== null) continue;
+    if(p.golesUrreta != null) continue; // != cubre tanto null como undefined
     const fd = parseDate(p.fecha_txt);
     if(fd && fd >= hoyD) return i;
   }
@@ -1909,7 +1909,7 @@ function renderProximoMetro(idx, sec, secCd) {
   const localClass = p.esLocal ? 'local' : 'visitante';
   const visitaClass = p.esLocal ? 'visitante' : 'local';
   const horaRaw = p.hora;
-  const horaStr = horaRaw ? `${horaRaw}:00` : null;
+  const horaStr = formatHora(horaRaw);
 
   secCd.style.display = 'block';
   document.getElementById('countdownTitulo').textContent = `Próximo partido · Metro Fecha ${p.fecha}`;
