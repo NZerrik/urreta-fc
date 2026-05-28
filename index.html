@@ -1726,6 +1726,48 @@ function formatHora(h) {
   return hh + ':' + String(mm).padStart(2, '0');
 }
 
+// ====== LOGOS DE EQUIPOS ======
+const LOGOS_CONOCIDOS = {
+  'Enrique López': 'https://www.babyfutbol.uy/wp-content/uploads/2017/08/ENRIQUE-LOPEZ.jpg',
+};
+
+function _teamInitials(name) {
+  const words = name.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g,'').split(/\s+/).filter(w=>w.length>0);
+  if(words.length===1) return words[0].slice(0,2).toUpperCase();
+  return words.slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+
+function _teamColor(name) {
+  let h=0; for(let i=0;i<name.length;i++) h=name.charCodeAt(i)+((h<<5)-h);
+  const cols=['#c0392b','#d35400','#8e44ad','#16a085','#2980b9','#27ae60','#c0392b','#1a5276'];
+  return cols[Math.abs(h)%cols.length];
+}
+
+function teamShieldSvg(name, size) {
+  size = size || 64;
+  const initials = _teamInitials(name);
+  const color = _teamColor(name);
+  const fs = Math.round(size * 0.33);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <path d="M32 2 L60 13 L60 35 Q60 56 32 62 Q4 56 4 35 L4 13 Z" fill="${color}" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+    <path d="M32 8 L54 17 L54 35 Q54 52 32 57 Q10 52 10 35 L10 17 Z" fill="rgba(0,0,0,0.18)"/>
+    <text x="32" y="38" text-anchor="middle" dominant-baseline="middle" font-family="Bebas Neue,Barlow Condensed,sans-serif" font-size="${fs}" fill="white" font-weight="bold" letter-spacing="1">${initials}</text>
+  </svg>`;
+}
+
+function teamLogoHtml(name, size) {
+  size = size || 64;
+  if(name === 'Urreta') {
+    const src = document.querySelector('.club-badge img')?.src || '';
+    return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;border-radius:50%;background:rgba(0,0,0,0.3);padding:2px;" alt="Urreta" />`;
+  }
+  if(LOGOS_CONOCIDOS[name]) {
+    const esc = name.replace(/'/g,"\\'");
+    return `<img src="${LOGOS_CONOCIDOS[name]}" style="width:${size}px;height:${size}px;object-fit:contain;border-radius:50%;background:rgba(0,0,0,0.3);padding:2px;" alt="${name}" onerror="this.outerHTML=teamShieldSvg('${esc}',${size})" />`;
+  }
+  return teamShieldSvg(name, size);
+}
+
 function getCountdownHtml(fecha_txt, hora) {
   if (!fecha_txt || fecha_txt === 'A confirmar') {
     return `<div class="countdown-grid">
@@ -1868,11 +1910,13 @@ function renderProximoPrado(proxIdx, sec, secCd) {
     <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:var(--naranja);background:rgba(240,112,32,0.15);padding:3px 8px;border-radius:3px;">🏆 LIGA PRADO</div>
     <div class="proximo-content">
       <div class="equipo-proximo">
+        <div style="margin-bottom:8px;display:flex;justify-content:center;">${teamLogoHtml(local, 64)}</div>
         <div class="equipo-nombre ${localClass}">${local}</div>
         <div style="font-size:0.75rem;color:#666;margin-top:4px;">Local</div>
       </div>
       <div class="vs-badge">VS</div>
       <div class="equipo-proximo">
+        <div style="margin-bottom:8px;display:flex;justify-content:center;">${teamLogoHtml(visita, 64)}</div>
         <div class="equipo-nombre ${visitaClass}">${visita}</div>
         <div style="font-size:0.75rem;color:#666;margin-top:4px;">Visitante</div>
       </div>
@@ -1929,11 +1973,13 @@ function renderProximoMetro(idx, sec, secCd) {
       <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:#60a5fa;background:rgba(37,99,235,0.15);padding:3px 8px;border-radius:3px;">🏅 METROPOLITANO</div>
       <div class="proximo-content">
         <div class="equipo-proximo">
+          <div style="margin-bottom:8px;display:flex;justify-content:center;">${teamLogoHtml(local, 64)}</div>
           <div class="equipo-nombre ${localClass}">${local}</div>
           <div style="font-size:0.75rem;color:#666;margin-top:4px;">Local</div>
         </div>
         <div class="vs-badge" style="background:#3b82f6;">VS</div>
         <div class="equipo-proximo">
+          <div style="margin-bottom:8px;display:flex;justify-content:center;">${teamLogoHtml(visita, 64)}</div>
           <div class="equipo-nombre ${visitaClass}">${visita}</div>
           <div style="font-size:0.75rem;color:#666;margin-top:4px;">Visitante</div>
         </div>
