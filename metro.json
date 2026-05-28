@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-04-26T00:00:00",
+  "ultima_actualizacion": "2026-05-27T00:00:00",
   "fixture": [
     {
       "fecha": 1,
@@ -12,6 +12,16 @@
       "cancha_waze": "https://waze.com/ul?q=Enrique+Lopez+Baby+Futbol+Montevideo&navigate=yes",
       "golesUrreta": 5,
       "golesRival": 1
+    },
+    {
+      "fecha": 2,
+      "fecha_txt": "31/05/2026",
+      "hora": 15.5,
+      "rival": "Por confirmar",
+      "esLocal": true,
+      "cancha": "Cancha Complejo Liga Prado",
+      "cancha_maps": "https://www.google.com/maps/place/Cancha+Complejo+Liga+Prado/@-34.8387287,-56.2422537,16z/data=!4m6!3m5!1s0x95a1d58fd4179771:0x580e5f49512974aa!8m2!3d-34.8395168!4d-56.2442493!16s%2Fg%2F11t0tg2yy0",
+      "cancha_waze": "https://waze.com/ul?ll=-34.8395168,-56.2442493&navigate=yes"
     }
   ]
 }
