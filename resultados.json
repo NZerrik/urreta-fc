@@ -456,38 +456,38 @@
       {
         "local": "E. del Norte",
         "visitante": "Las Flores",
-        "gl": null,
-        "gv": null
+        "gl": 4,
+        "gv": 0
       },
       {
         "local": "Ombú Jrs.",
         "visitante": "Malvín Alto",
-        "gl": null,
-        "gv": null
+        "gl": 8,
+        "gv": 0
       },
       {
         "local": "Pablán",
         "visitante": "Bochas",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 1
       },
       {
         "local": "Covicenova",
         "visitante": "Yegros",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 2
       },
       {
         "local": "Av. Lezica",
         "visitante": "San Francisco",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "L. Washington",
         "visitante": "Isidro Fynn",
-        "gl": null,
-        "gv": null
+        "gl": 4,
+        "gv": 0
       },
       {
         "local": "C. Corinto",
@@ -498,8 +498,9 @@
       {
         "local": "3 de Abril",
         "visitante": "D. Uruguayo",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0,
+        "wo": true
       }
     ],
     "10": [
