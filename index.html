@@ -2789,6 +2789,24 @@ function abrirAdminResultados() {
       <input type="number" id="ah_hora_${i}" value="${hora ?? ''}" placeholder="hs" min="0" max="23" style="width:52px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
     </div>`;
   }).join('');
+  // Populate metro form
+  const metroForm = document.getElementById('adminMetroForm');
+  metroForm.innerHTML = metroFechas.length ? metroFechas.map((p, i) => {
+    const local = p.esLocal ? 'Urreta' : p.rival;
+    const visita = p.esLocal ? p.rival : 'Urreta';
+    const gu = p.golesUrreta != null ? p.golesUrreta : '';
+    const gr = p.golesRival != null ? p.golesRival : '';
+    const jugado = p.golesUrreta != null;
+    return `<div class="admin-partido-row">
+      <span class="admin-eq local">${local}</span>
+      <input class="admin-score-input" id="am_gu_${i}" type="number" min="0" max="30" value="${p.esLocal ? gu : gr}" placeholder="–">
+      <span class="admin-sep">:</span>
+      <input class="admin-score-input" id="am_gr_${i}" type="number" min="0" max="30" value="${p.esLocal ? gr : gu}" placeholder="–">
+      <span class="admin-eq">${visita}</span>
+      <span style="font-size:0.72rem;color:${jugado ? '#22c55e' : '#666'};min-width:50px;">${jugado ? '✓ jugado' : 'pendiente'}</span>
+    </div>`;
+  }).join('') : '<div style="color:#666;padding:10px;font-size:0.85rem;">Fixture Metro no cargado</div>';
+
   document.getElementById('adminResultadosOverlay').classList.add('visible');
   document.getElementById('adminResultadosStatus').textContent = '';
 }
@@ -2852,7 +2870,41 @@ async function guardarResultadosAdmin() {
     if (p.wo) resultados[idx + 1].wo = true;
   });
 
+  // Collect metro results
+  metroFechas.forEach((p, i) => {
+    const guEl = document.getElementById(`am_gu_${i}`);
+    const grEl = document.getElementById(`am_gr_${i}`);
+    if (!guEl || !grEl) return;
+    const guVal = guEl.value;
+    const grVal = grEl.value;
+    if (guVal !== '' && grVal !== '') {
+      const gl = parseInt(guVal), gv = parseInt(grVal);
+      if (!isNaN(gl) && !isNaN(gv)) {
+        p.golesUrreta = p.esLocal ? gl : gv;
+        p.golesRival  = p.esLocal ? gv : gl;
+      }
+    } else if (guVal === '' && grVal === '') {
+      delete p.golesUrreta;
+      delete p.golesRival;
+    }
+  });
+
   renderAll();
+
+  // Save metro.json
+  const metroContenido = JSON.stringify({ ultima_actualizacion: new Date().toISOString(), fixture: metroFechas }, null, 2);
+  const metroB64 = btoa(unescape(encodeURIComponent(metroContenido)));
+  try {
+    const metroGet = await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/metro.json', { headers: { 'Authorization': 'token ' + token } });
+    const metroSha = metroGet.ok ? (await metroGet.json()).sha : null;
+    const metroBody = { message: 'Actualizar metro.json desde admin web', content: metroB64 };
+    if (metroSha) metroBody.sha = metroSha;
+    await fetch('https://api.github.com/repos/NZerrik/urreta-fc/contents/metro.json', {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(metroBody)
+    });
+  } catch(e) { console.warn('Error saving metro.json', e); }
 
   // Save to resultados.json
   const nuevosResultados = { ultima_actualizacion: new Date().toISOString(), urreta: resultados, fechas: nuevasFechas, horas: horasOverride, fechas_txt: fechasTxtOverride };
@@ -2893,6 +2945,13 @@ async function guardarResultadosAdmin() {
       <div id="adminHorasForm"></div>
     </div>
     <div id="adminResultadosForm"></div>
+    <div style="margin-top:24px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:#60a5fa;text-transform:uppercase;margin-bottom:8px;">🏅 Metropolitano</div>
+      <div class="admin-fecha-block">
+        <div class="admin-fecha-titulo" style="background:#0f172a;color:#60a5fa;">FIXTURE METROPOLITANO</div>
+        <div id="adminMetroForm"></div>
+      </div>
+    </div>
     <div class="admin-resultados-btns">
       <button class="admin-cancel-btn" onclick="cerrarAdminResultados()">Cancelar</button>
       <button class="admin-save-btn" onclick="guardarResultadosAdmin()">Guardar ✓</button>
