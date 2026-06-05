@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-05-24T20:31:50.881Z",
+  "ultima_actualizacion": "2026-06-05T23:40:09.347Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -64,8 +64,7 @@
         "local": "Malvín Alto",
         "visitante": "D. Uruguayo",
         "gl": 3,
-        "gv": 0,
-        "wo": true
+        "gv": 0
       },
       {
         "local": "E. del Norte",
@@ -805,10 +804,9 @@
     ]
   },
   "horas": {
-    "9": 12.5
+    "10": 16
   },
   "fechas_txt": {
-    "9": "24/05/2026",
     "10": "07/06/2026",
     "11": "14/06/2026",
     "12": "21/06/2026",
