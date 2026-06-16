@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-07T20:40:34.096Z",
+  "ultima_actualizacion": "2026-06-16T01:51:01.148Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -41,6 +41,11 @@
     "10": {
       "golesUrreta": 2,
       "golesRival": 5
+    },
+    "11": {
+      "golesUrreta": 3,
+      "golesRival": 0,
+      "wo": true
     }
   },
   "fechas": {
@@ -510,8 +515,9 @@
       {
         "local": "Las Flores",
         "visitante": "D. Uruguayo",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0,
+        "wo": true
       },
       {
         "local": "Urreta",
@@ -522,38 +528,38 @@
       {
         "local": "Isidro Fynn",
         "visitante": "C. Corinto",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 2
       },
       {
         "local": "San Francisco",
         "visitante": "L. Washington",
-        "gl": null,
-        "gv": null
+        "gl": 4,
+        "gv": 2
       },
       {
         "local": "Yegros",
         "visitante": "Av. Lezica",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 6
       },
       {
         "local": "Bochas",
         "visitante": "Covicenova",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 3
       },
       {
         "local": "Malvín Alto",
         "visitante": "Pablán",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "E. del Norte",
         "visitante": "Ombú Jrs.",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       }
     ],
     "11": [
@@ -602,8 +608,9 @@
       {
         "local": "D. Uruguayo",
         "visitante": "Urreta",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 3,
+        "wo": true
       }
     ],
     "12": [
