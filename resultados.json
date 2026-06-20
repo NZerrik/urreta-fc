@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-16T01:51:01.148Z",
+  "ultima_actualizacion": "2026-06-20T22:47:45.420Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -46,6 +46,10 @@
       "golesUrreta": 3,
       "golesRival": 0,
       "wo": true
+    },
+    "12": {
+      "golesUrreta": 4,
+      "golesRival": 0
     }
   },
   "fechas": {
@@ -617,8 +621,8 @@
       {
         "local": "Las Flores",
         "visitante": "Urreta",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 4
       },
       {
         "local": "Isidro Fynn",
@@ -816,7 +820,6 @@
   },
   "horas": {},
   "fechas_txt": {
-    "11": "14/06/2026",
     "12": "21/06/2026",
     "13": "28/06/2026",
     "14": "05/07/2026",
