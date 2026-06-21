@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-20T22:47:45.420Z",
+  "ultima_actualizacion": "2026-06-21T00:00:00.000Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -570,8 +570,8 @@
       {
         "local": "Ombú Jrs.",
         "visitante": "Las Flores",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 1
       },
       {
         "local": "Pablán",
@@ -588,20 +588,20 @@
       {
         "local": "Av. Lezica",
         "visitante": "Bochas",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "L. Washington",
         "visitante": "Yegros",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 5
       },
       {
         "local": "C. Corinto",
         "visitante": "San Francisco",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 0
       },
       {
         "local": "3 de Abril",
