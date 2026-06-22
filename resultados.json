@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-21T00:00:00.000Z",
+  "ultima_actualizacion": "2026-06-22T00:53:57.115Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -576,14 +576,14 @@
       {
         "local": "Pablán",
         "visitante": "E. del Norte",
-        "gl": null,
-        "gv": null
+        "gl": 6,
+        "gv": 2
       },
       {
         "local": "Covicenova",
         "visitante": "Malvín Alto",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "Av. Lezica",
@@ -820,7 +820,6 @@
   },
   "horas": {},
   "fechas_txt": {
-    "12": "21/06/2026",
     "13": "28/06/2026",
     "14": "05/07/2026",
     "15": "12/07/2026"
