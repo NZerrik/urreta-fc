@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-22T00:54:00.212Z",
+  "ultima_actualizacion": "2026-06-23T00:08:20.459Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -633,8 +633,8 @@
       {
         "local": "San Francisco",
         "visitante": "3 de Abril",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 8
       },
       {
         "local": "Yegros",
@@ -651,20 +651,20 @@
       {
         "local": "Malvín Alto",
         "visitante": "Av. Lezica",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 8
       },
       {
         "local": "E. del Norte",
         "visitante": "Covicenova",
-        "gl": null,
-        "gv": null
+        "gl": 1,
+        "gv": 3
       },
       {
         "local": "Ombú Jrs.",
         "visitante": "Pablán",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 2
       }
     ],
     "13": [
