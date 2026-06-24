@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-24T00:22:54.137Z",
+  "ultima_actualizacion": "2026-06-24T21:00:40.620Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -640,14 +640,15 @@
       {
         "local": "Yegros",
         "visitante": "C. Corinto",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 0
       },
       {
         "local": "Bochas",
         "visitante": "L. Washington",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 3,
+        "wo": true
       },
       {
         "local": "Malvín Alto",
