@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-23T00:08:20.459Z",
+  "ultima_actualizacion": "2026-06-24T00:22:54.137Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -627,8 +627,9 @@
       {
         "local": "Isidro Fynn",
         "visitante": "D. Uruguayo",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0,
+        "wo": true
       },
       {
         "local": "San Francisco",
