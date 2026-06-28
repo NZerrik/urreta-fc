@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-24T21:00:40.620Z",
+  "ultima_actualizacion": "2026-06-28T20:59:15.358Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -49,6 +49,10 @@
     },
     "12": {
       "golesUrreta": 4,
+      "golesRival": 0
+    },
+    "13": {
+      "golesUrreta": 8,
       "golesRival": 0
     }
   },
@@ -715,8 +719,8 @@
       {
         "local": "Urreta",
         "visitante": "Isidro Fynn",
-        "gl": null,
-        "gv": null
+        "gl": 8,
+        "gv": 0
       }
     ],
     "14": [
