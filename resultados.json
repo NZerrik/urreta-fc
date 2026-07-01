@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-06-28T20:59:15.358Z",
+  "ultima_actualizacion": "2026-07-01T15:58:45.870Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -683,8 +683,8 @@
       {
         "local": "Covicenova",
         "visitante": "Ombú Jrs.",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 1
       },
       {
         "local": "Av. Lezica",
@@ -695,8 +695,8 @@
       {
         "local": "L. Washington",
         "visitante": "Malvín Alto",
-        "gl": null,
-        "gv": null
+        "gl": 8,
+        "gv": 0
       },
       {
         "local": "C. Corinto",
@@ -826,7 +826,6 @@
   },
   "horas": {},
   "fechas_txt": {
-    "13": "28/06/2026",
     "14": "05/07/2026",
     "15": "12/07/2026"
   }
