@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-07-01T15:58:45.870Z",
+  "ultima_actualizacion": "2026-07-02T11:26:38.664Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -677,8 +677,8 @@
       {
         "local": "Pablán",
         "visitante": "Las Flores",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 6
       },
       {
         "local": "Covicenova",
@@ -707,8 +707,8 @@
       {
         "local": "3 de Abril",
         "visitante": "Yegros",
-        "gl": null,
-        "gv": null
+        "gl": 8,
+        "gv": 0
       },
       {
         "local": "D. Uruguayo",
