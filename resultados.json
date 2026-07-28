@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-07-02T11:26:38.664Z",
+  "ultima_actualizacion": "2026-07-27T12:00:00.000Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -54,6 +54,11 @@
     "13": {
       "golesUrreta": 8,
       "golesRival": 0
+    },
+    "14": {
+      "golesUrreta": 3,
+      "golesRival": 0,
+      "wo": true
     }
   },
   "fechas": {
@@ -733,8 +738,9 @@
       {
         "local": "San Francisco",
         "visitante": "Urreta",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 3,
+        "wo": true
       },
       {
         "local": "Yegros",
