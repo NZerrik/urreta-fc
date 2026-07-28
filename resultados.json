@@ -615,8 +615,8 @@
       {
         "local": "3 de Abril",
         "visitante": "Isidro Fynn",
-        "gl": null,
-        "gv": null
+        "gl": 7,
+        "gv": 0
       },
       {
         "local": "D. Uruguayo",
@@ -751,8 +751,9 @@
       {
         "local": "Bochas",
         "visitante": "3 de Abril",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 3,
+        "wo": true
       },
       {
         "local": "Malvín Alto",
