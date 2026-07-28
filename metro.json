@@ -25,5 +25,17 @@
       "golesUrreta": 7,
       "golesRival": 0
     }
+    {
+      "fecha": 2,
+      "fecha_txt": "26/07/2026",
+      "hora": 15.5,
+      "rival": "Independiente Lezica",
+      "esLocal": true,
+      "cancha": "Cancha Indepentiente Lezica",
+      "cancha_maps": "https://maps.app.goo.gl/bCJnPUgETJ1LwrFU8",
+      "cancha_waze": "",
+      "golesUrreta": 1,
+      "golesRival": 1
+    }
   ]
 }
