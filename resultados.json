@@ -694,8 +694,8 @@
       {
         "local": "Av. Lezica",
         "visitante": "E. del Norte",
-        "gl": null,
-        "gv": null
+        "gl": 9,
+        "gv": 1
       },
       {
         "local": "L. Washington",
@@ -706,8 +706,8 @@
       {
         "local": "C. Corinto",
         "visitante": "Bochas",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "3 de Abril",
@@ -718,8 +718,8 @@
       {
         "local": "D. Uruguayo",
         "visitante": "San Francisco",
-        "gl": null,
-        "gv": null
+        "gl": 0,
+        "gv": 3
       },
       {
         "local": "Urreta",
