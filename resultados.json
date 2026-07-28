@@ -732,8 +732,8 @@
       {
         "local": "Las Flores",
         "visitante": "Isidro Fynn",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "San Francisco",
@@ -745,8 +745,8 @@
       {
         "local": "Yegros",
         "visitante": "D. Uruguayo",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "Bochas",
@@ -757,14 +757,14 @@
       {
         "local": "Malvín Alto",
         "visitante": "C. Corinto",
-        "gl": null,
-        "gv": null
+        "gl": 3,
+        "gv": 0
       },
       {
         "local": "E. del Norte",
         "visitante": "L. Washington",
-        "gl": null,
-        "gv": null
+        "gl": 8,
+        "gv": 0
       },
       {
         "local": "Ombú Jrs.",
@@ -775,8 +775,8 @@
       {
         "local": "Pablán",
         "visitante": "Covicenova",
-        "gl": null,
-        "gv": null
+        "gl": 2,
+        "gv": 1
       }
     ],
     "15": [
