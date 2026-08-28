@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-07-27T12:00:00.000Z",
+  "ultima_actualizacion": "2026-08-27T00:00:00.000Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -59,776 +59,162 @@
       "golesUrreta": 3,
       "golesRival": 0,
       "wo": true
+    },
+    "15": {
+      "golesUrreta": 2,
+      "golesRival": 0
     }
   },
   "fechas": {
     "1": [
-      {
-        "local": "San Francisco",
-        "visitante": "Las Flores",
-        "gl": 2,
-        "gv": 7
-      },
-      {
-        "local": "Yegros",
-        "visitante": "Isidro Fynn",
-        "gl": 2,
-        "gv": 2
-      },
-      {
-        "local": "Bochas",
-        "visitante": "Urreta",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Malvín Alto",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "E. del Norte",
-        "visitante": "3 de Abril",
-        "gl": 0,
-        "gv": 9
-      },
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "C. Corinto",
-        "gl": 2,
-        "gv": 0
-      },
-      {
-        "local": "Pablán",
-        "visitante": "L. Washington",
-        "gl": 3,
-        "gv": 3
-      },
-      {
-        "local": "Covicenova",
-        "visitante": "Av. Lezica",
-        "gl": 0,
-        "gv": 1
-      }
+      { "local": "San Francisco", "visitante": "Las Flores", "gl": 2, "gv": 7 },
+      { "local": "Yegros", "visitante": "Isidro Fynn", "gl": 2, "gv": 2 },
+      { "local": "Bochas", "visitante": "Urreta", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Malvín Alto", "visitante": "D. Uruguayo", "gl": 3, "gv": 0 },
+      { "local": "E. del Norte", "visitante": "3 de Abril", "gl": 0, "gv": 9 },
+      { "local": "Ombú Jrs.", "visitante": "C. Corinto", "gl": 2, "gv": 0 },
+      { "local": "Pablán", "visitante": "L. Washington", "gl": 3, "gv": 3 },
+      { "local": "Covicenova", "visitante": "Av. Lezica", "gl": 0, "gv": 1 }
     ],
     "2": [
-      {
-        "local": "Las Flores",
-        "visitante": "Av. Lezica",
-        "gl": 1,
-        "gv": 2
-      },
-      {
-        "local": "L. Washington",
-        "visitante": "Covicenova",
-        "gl": 0,
-        "gv": 8
-      },
-      {
-        "local": "C. Corinto",
-        "visitante": "Pablán",
-        "gl": 0,
-        "gv": 5
-      },
-      {
-        "local": "3 de Abril",
-        "visitante": "Ombú Jrs.",
-        "gl": 7,
-        "gv": 0
-      },
-      {
-        "local": "D. Uruguayo",
-        "visitante": "E. del Norte",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Urreta",
-        "visitante": "Malvín Alto",
-        "gl": 7,
-        "gv": 1
-      },
-      {
-        "local": "Isidro Fynn",
-        "visitante": "Bochas",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      },
-      {
-        "local": "San Francisco",
-        "visitante": "Yegros",
-        "gl": 1,
-        "gv": 4
-      }
+      { "local": "Las Flores", "visitante": "Av. Lezica", "gl": 1, "gv": 2 },
+      { "local": "L. Washington", "visitante": "Covicenova", "gl": 0, "gv": 8 },
+      { "local": "C. Corinto", "visitante": "Pablán", "gl": 0, "gv": 5 },
+      { "local": "3 de Abril", "visitante": "Ombú Jrs.", "gl": 7, "gv": 0 },
+      { "local": "D. Uruguayo", "visitante": "E. del Norte", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Urreta", "visitante": "Malvín Alto", "gl": 7, "gv": 1 },
+      { "local": "Isidro Fynn", "visitante": "Bochas", "gl": 3, "gv": 0, "wo": true },
+      { "local": "San Francisco", "visitante": "Yegros", "gl": 1, "gv": 4 }
     ],
     "3": [
-      {
-        "local": "Yegros",
-        "visitante": "Las Flores",
-        "gl": 2,
-        "gv": 3
-      },
-      {
-        "local": "Bochas",
-        "visitante": "San Francisco",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      },
-      {
-        "local": "Malvín Alto",
-        "visitante": "Isidro Fynn",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "E. del Norte",
-        "visitante": "Urreta",
-        "gl": 1,
-        "gv": 6
-      },
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      },
-      {
-        "local": "Pablán",
-        "visitante": "3 de Abril",
-        "gl": 1,
-        "gv": 7
-      },
-      {
-        "local": "Covicenova",
-        "visitante": "C. Corinto",
-        "gl": 6,
-        "gv": 1
-      },
-      {
-        "local": "Av. Lezica",
-        "visitante": "L. Washington",
-        "gl": 6,
-        "gv": 0
-      }
+      { "local": "Yegros", "visitante": "Las Flores", "gl": 2, "gv": 3 },
+      { "local": "Bochas", "visitante": "San Francisco", "gl": 3, "gv": 0, "wo": true },
+      { "local": "Malvín Alto", "visitante": "Isidro Fynn", "gl": 3, "gv": 0 },
+      { "local": "E. del Norte", "visitante": "Urreta", "gl": 1, "gv": 6 },
+      { "local": "Ombú Jrs.", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true },
+      { "local": "Pablán", "visitante": "3 de Abril", "gl": 1, "gv": 7 },
+      { "local": "Covicenova", "visitante": "C. Corinto", "gl": 6, "gv": 1 },
+      { "local": "Av. Lezica", "visitante": "L. Washington", "gl": 6, "gv": 0 }
     ],
     "4": [
-      {
-        "local": "Las Flores",
-        "visitante": "L. Washington",
-        "gl": 5,
-        "gv": 3
-      },
-      {
-        "local": "C. Corinto",
-        "visitante": "Av. Lezica",
-        "gl": 0,
-        "gv": 8
-      },
-      {
-        "local": "3 de Abril",
-        "visitante": "Covicenova",
-        "gl": 3,
-        "gv": 1
-      },
-      {
-        "local": "D. Uruguayo",
-        "visitante": "Pablán",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Urreta",
-        "visitante": "Ombú Jrs.",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "Isidro Fynn",
-        "visitante": "E. del Norte",
-        "gl": 0,
-        "gv": 8
-      },
-      {
-        "local": "San Francisco",
-        "visitante": "Malvín Alto",
-        "gl": 0,
-        "gv": 3
-      },
-      {
-        "local": "Yegros",
-        "visitante": "Bochas",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      }
+      { "local": "Las Flores", "visitante": "L. Washington", "gl": 5, "gv": 3 },
+      { "local": "C. Corinto", "visitante": "Av. Lezica", "gl": 0, "gv": 8 },
+      { "local": "3 de Abril", "visitante": "Covicenova", "gl": 3, "gv": 1 },
+      { "local": "D. Uruguayo", "visitante": "Pablán", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Urreta", "visitante": "Ombú Jrs.", "gl": 3, "gv": 0 },
+      { "local": "Isidro Fynn", "visitante": "E. del Norte", "gl": 0, "gv": 8 },
+      { "local": "San Francisco", "visitante": "Malvín Alto", "gl": 0, "gv": 3 },
+      { "local": "Yegros", "visitante": "Bochas", "gl": 3, "gv": 0, "wo": true }
     ],
     "5": [
-      {
-        "local": "Bochas",
-        "visitante": "Las Flores",
-        "gl": 1,
-        "gv": 6
-      },
-      {
-        "local": "Malvín Alto",
-        "visitante": "Yegros",
-        "gl": 0,
-        "gv": 8
-      },
-      {
-        "local": "E. del Norte",
-        "visitante": "San Francisco",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "Isidro Fynn",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "Pablán",
-        "visitante": "Urreta",
-        "gl": 0,
-        "gv": 8
-      },
-      {
-        "local": "Covicenova",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      },
-      {
-        "local": "Av. Lezica",
-        "visitante": "3 de Abril",
-        "gl": 1,
-        "gv": 0
-      },
-      {
-        "local": "L. Washington",
-        "visitante": "C. Corinto",
-        "gl": 8,
-        "gv": 0
-      }
+      { "local": "Bochas", "visitante": "Las Flores", "gl": 1, "gv": 6 },
+      { "local": "Malvín Alto", "visitante": "Yegros", "gl": 0, "gv": 8 },
+      { "local": "E. del Norte", "visitante": "San Francisco", "gl": 3, "gv": 0 },
+      { "local": "Ombú Jrs.", "visitante": "Isidro Fynn", "gl": 3, "gv": 0 },
+      { "local": "Pablán", "visitante": "Urreta", "gl": 0, "gv": 8 },
+      { "local": "Covicenova", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true },
+      { "local": "Av. Lezica", "visitante": "3 de Abril", "gl": 1, "gv": 0 },
+      { "local": "L. Washington", "visitante": "C. Corinto", "gl": 8, "gv": 0 }
     ],
     "6": [
-      {
-        "local": "Las Flores",
-        "visitante": "C. Corinto",
-        "gl": 6,
-        "gv": 0
-      },
-      {
-        "local": "3 de Abril",
-        "visitante": "L. Washington",
-        "gl": 5,
-        "gv": 0
-      },
-      {
-        "local": "D. Uruguayo",
-        "visitante": "Av. Lezica",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Urreta",
-        "visitante": "Covicenova",
-        "gl": 6,
-        "gv": 0
-      },
-      {
-        "local": "Isidro Fynn",
-        "visitante": "Pablán",
-        "gl": 0,
-        "gv": 3
-      },
-      {
-        "local": "San Francisco",
-        "visitante": "Ombú Jrs.",
-        "gl": 1,
-        "gv": 4
-      },
-      {
-        "local": "Yegros",
-        "visitante": "E. del Norte",
-        "gl": 4,
-        "gv": 4
-      },
-      {
-        "local": "Bochas",
-        "visitante": "Malvín Alto",
-        "gl": 3,
-        "gv": 0
-      }
+      { "local": "Las Flores", "visitante": "C. Corinto", "gl": 6, "gv": 0 },
+      { "local": "3 de Abril", "visitante": "L. Washington", "gl": 5, "gv": 0 },
+      { "local": "D. Uruguayo", "visitante": "Av. Lezica", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Urreta", "visitante": "Covicenova", "gl": 6, "gv": 0 },
+      { "local": "Isidro Fynn", "visitante": "Pablán", "gl": 0, "gv": 3 },
+      { "local": "San Francisco", "visitante": "Ombú Jrs.", "gl": 1, "gv": 4 },
+      { "local": "Yegros", "visitante": "E. del Norte", "gl": 4, "gv": 4 },
+      { "local": "Bochas", "visitante": "Malvín Alto", "gl": 3, "gv": 0 }
     ],
     "7": [
-      {
-        "local": "Malvín Alto",
-        "visitante": "Las Flores",
-        "gl": 1,
-        "gv": 9
-      },
-      {
-        "local": "E. del Norte",
-        "visitante": "Bochas",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      },
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "Yegros",
-        "gl": 1,
-        "gv": 1
-      },
-      {
-        "local": "Pablán",
-        "visitante": "San Francisco",
-        "gl": 5,
-        "gv": 2
-      },
-      {
-        "local": "Covicenova",
-        "visitante": "Isidro Fynn",
-        "gl": 5,
-        "gv": 0
-      },
-      {
-        "local": "Av. Lezica",
-        "visitante": "Urreta",
-        "gl": 3,
-        "gv": 1
-      },
-      {
-        "local": "L. Washington",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "C. Corinto",
-        "visitante": "3 de Abril",
-        "gl": 0,
-        "gv": 7
-      }
+      { "local": "Malvín Alto", "visitante": "Las Flores", "gl": 1, "gv": 9 },
+      { "local": "E. del Norte", "visitante": "Bochas", "gl": 3, "gv": 0, "wo": true },
+      { "local": "Ombú Jrs.", "visitante": "Yegros", "gl": 1, "gv": 1 },
+      { "local": "Pablán", "visitante": "San Francisco", "gl": 5, "gv": 2 },
+      { "local": "Covicenova", "visitante": "Isidro Fynn", "gl": 5, "gv": 0 },
+      { "local": "Av. Lezica", "visitante": "Urreta", "gl": 3, "gv": 1 },
+      { "local": "L. Washington", "visitante": "D. Uruguayo", "gl": 3, "gv": 0 },
+      { "local": "C. Corinto", "visitante": "3 de Abril", "gl": 0, "gv": 7 }
     ],
     "8": [
-      {
-        "local": "Las Flores",
-        "visitante": "3 de Abril",
-        "gl": 1,
-        "gv": 2
-      },
-      {
-        "local": "D. Uruguayo",
-        "visitante": "C. Corinto",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Urreta",
-        "visitante": "L. Washington",
-        "gl": 8,
-        "gv": 0
-      },
-      {
-        "local": "Isidro Fynn",
-        "visitante": "Av. Lezica",
-        "gl": 0,
-        "gv": 4
-      },
-      {
-        "local": "San Francisco",
-        "visitante": "Covicenova",
-        "gl": 1,
-        "gv": 9
-      },
-      {
-        "local": "Yegros",
-        "visitante": "Pablán",
-        "gl": 2,
-        "gv": 4
-      },
-      {
-        "local": "Bochas",
-        "visitante": "Ombú Jrs.",
-        "gl": 0,
-        "gv": 2
-      },
-      {
-        "local": "Malvín Alto",
-        "visitante": "E. del Norte",
-        "gl": 0,
-        "gv": 8
-      }
+      { "local": "Las Flores", "visitante": "3 de Abril", "gl": 1, "gv": 2 },
+      { "local": "D. Uruguayo", "visitante": "C. Corinto", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Urreta", "visitante": "L. Washington", "gl": 8, "gv": 0 },
+      { "local": "Isidro Fynn", "visitante": "Av. Lezica", "gl": 0, "gv": 4 },
+      { "local": "San Francisco", "visitante": "Covicenova", "gl": 1, "gv": 9 },
+      { "local": "Yegros", "visitante": "Pablán", "gl": 2, "gv": 4 },
+      { "local": "Bochas", "visitante": "Ombú Jrs.", "gl": 0, "gv": 2 },
+      { "local": "Malvín Alto", "visitante": "E. del Norte", "gl": 0, "gv": 8 }
     ],
     "9": [
-      {
-        "local": "E. del Norte",
-        "visitante": "Las Flores",
-        "gl": 4,
-        "gv": 0
-      },
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "Malvín Alto",
-        "gl": 8,
-        "gv": 0
-      },
-      {
-        "local": "Pablán",
-        "visitante": "Bochas",
-        "gl": 2,
-        "gv": 1
-      },
-      {
-        "local": "Covicenova",
-        "visitante": "Yegros",
-        "gl": 2,
-        "gv": 2
-      },
-      {
-        "local": "Av. Lezica",
-        "visitante": "San Francisco",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "L. Washington",
-        "visitante": "Isidro Fynn",
-        "gl": 4,
-        "gv": 0
-      },
-      {
-        "local": "C. Corinto",
-        "visitante": "Urreta",
-        "gl": 0,
-        "gv": 5
-      },
-      {
-        "local": "3 de Abril",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      }
+      { "local": "E. del Norte", "visitante": "Las Flores", "gl": 4, "gv": 0 },
+      { "local": "Ombú Jrs.", "visitante": "Malvín Alto", "gl": 8, "gv": 0 },
+      { "local": "Pablán", "visitante": "Bochas", "gl": 2, "gv": 1 },
+      { "local": "Covicenova", "visitante": "Yegros", "gl": 2, "gv": 2 },
+      { "local": "Av. Lezica", "visitante": "San Francisco", "gl": 3, "gv": 0 },
+      { "local": "L. Washington", "visitante": "Isidro Fynn", "gl": 4, "gv": 0 },
+      { "local": "C. Corinto", "visitante": "Urreta", "gl": 0, "gv": 5 },
+      { "local": "3 de Abril", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true }
     ],
     "10": [
-      {
-        "local": "Las Flores",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      },
-      {
-        "local": "Urreta",
-        "visitante": "3 de Abril",
-        "gl": 2,
-        "gv": 5
-      },
-      {
-        "local": "Isidro Fynn",
-        "visitante": "C. Corinto",
-        "gl": 0,
-        "gv": 2
-      },
-      {
-        "local": "San Francisco",
-        "visitante": "L. Washington",
-        "gl": 4,
-        "gv": 2
-      },
-      {
-        "local": "Yegros",
-        "visitante": "Av. Lezica",
-        "gl": 1,
-        "gv": 6
-      },
-      {
-        "local": "Bochas",
-        "visitante": "Covicenova",
-        "gl": 2,
-        "gv": 3
-      },
-      {
-        "local": "Malvín Alto",
-        "visitante": "Pablán",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "E. del Norte",
-        "visitante": "Ombú Jrs.",
-        "gl": 3,
-        "gv": 0
-      }
+      { "local": "Las Flores", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true },
+      { "local": "Urreta", "visitante": "3 de Abril", "gl": 2, "gv": 5 },
+      { "local": "Isidro Fynn", "visitante": "C. Corinto", "gl": 0, "gv": 2 },
+      { "local": "San Francisco", "visitante": "L. Washington", "gl": 4, "gv": 2 },
+      { "local": "Yegros", "visitante": "Av. Lezica", "gl": 1, "gv": 6 },
+      { "local": "Bochas", "visitante": "Covicenova", "gl": 2, "gv": 3 },
+      { "local": "Malvín Alto", "visitante": "Pablán", "gl": 3, "gv": 0 },
+      { "local": "E. del Norte", "visitante": "Ombú Jrs.", "gl": 3, "gv": 0 }
     ],
     "11": [
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "Las Flores",
-        "gl": 1,
-        "gv": 1
-      },
-      {
-        "local": "Pablán",
-        "visitante": "E. del Norte",
-        "gl": 6,
-        "gv": 2
-      },
-      {
-        "local": "Covicenova",
-        "visitante": "Malvín Alto",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "Av. Lezica",
-        "visitante": "Bochas",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "L. Washington",
-        "visitante": "Yegros",
-        "gl": 1,
-        "gv": 5
-      },
-      {
-        "local": "C. Corinto",
-        "visitante": "San Francisco",
-        "gl": 2,
-        "gv": 0
-      },
-      {
-        "local": "3 de Abril",
-        "visitante": "Isidro Fynn",
-        "gl": 7,
-        "gv": 0
-      },
-      {
-        "local": "D. Uruguayo",
-        "visitante": "Urreta",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      }
+      { "local": "Ombú Jrs.", "visitante": "Las Flores", "gl": 1, "gv": 1 },
+      { "local": "Pablán", "visitante": "E. del Norte", "gl": 6, "gv": 2 },
+      { "local": "Covicenova", "visitante": "Malvín Alto", "gl": 3, "gv": 0 },
+      { "local": "Av. Lezica", "visitante": "Bochas", "gl": 3, "gv": 0 },
+      { "local": "L. Washington", "visitante": "Yegros", "gl": 1, "gv": 5 },
+      { "local": "C. Corinto", "visitante": "San Francisco", "gl": 2, "gv": 0 },
+      { "local": "3 de Abril", "visitante": "Isidro Fynn", "gl": 7, "gv": 0 },
+      { "local": "D. Uruguayo", "visitante": "Urreta", "gl": 0, "gv": 3, "wo": true }
     ],
     "12": [
-      {
-        "local": "Las Flores",
-        "visitante": "Urreta",
-        "gl": 0,
-        "gv": 4
-      },
-      {
-        "local": "Isidro Fynn",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0,
-        "wo": true
-      },
-      {
-        "local": "San Francisco",
-        "visitante": "3 de Abril",
-        "gl": 0,
-        "gv": 8
-      },
-      {
-        "local": "Yegros",
-        "visitante": "C. Corinto",
-        "gl": 2,
-        "gv": 0
-      },
-      {
-        "local": "Bochas",
-        "visitante": "L. Washington",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Malvín Alto",
-        "visitante": "Av. Lezica",
-        "gl": 0,
-        "gv": 8
-      },
-      {
-        "local": "E. del Norte",
-        "visitante": "Covicenova",
-        "gl": 1,
-        "gv": 3
-      },
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "Pablán",
-        "gl": 2,
-        "gv": 2
-      }
+      { "local": "Las Flores", "visitante": "Urreta", "gl": 0, "gv": 4 },
+      { "local": "Isidro Fynn", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true },
+      { "local": "San Francisco", "visitante": "3 de Abril", "gl": 0, "gv": 8 },
+      { "local": "Yegros", "visitante": "C. Corinto", "gl": 2, "gv": 0 },
+      { "local": "Bochas", "visitante": "L. Washington", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Malvín Alto", "visitante": "Av. Lezica", "gl": 0, "gv": 8 },
+      { "local": "E. del Norte", "visitante": "Covicenova", "gl": 1, "gv": 3 },
+      { "local": "Ombú Jrs.", "visitante": "Pablán", "gl": 2, "gv": 2 }
     ],
     "13": [
-      {
-        "local": "Pablán",
-        "visitante": "Las Flores",
-        "gl": 0,
-        "gv": 6
-      },
-      {
-        "local": "Covicenova",
-        "visitante": "Ombú Jrs.",
-        "gl": 0,
-        "gv": 1
-      },
-      {
-        "local": "Av. Lezica",
-        "visitante": "E. del Norte",
-        "gl": 9,
-        "gv": 1
-      },
-      {
-        "local": "L. Washington",
-        "visitante": "Malvín Alto",
-        "gl": 8,
-        "gv": 0
-      },
-      {
-        "local": "C. Corinto",
-        "visitante": "Bochas",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "3 de Abril",
-        "visitante": "Yegros",
-        "gl": 8,
-        "gv": 0
-      },
-      {
-        "local": "D. Uruguayo",
-        "visitante": "San Francisco",
-        "gl": 0,
-        "gv": 3
-      },
-      {
-        "local": "Urreta",
-        "visitante": "Isidro Fynn",
-        "gl": 8,
-        "gv": 0
-      }
+      { "local": "Pablán", "visitante": "Las Flores", "gl": 0, "gv": 6 },
+      { "local": "Covicenova", "visitante": "Ombú Jrs.", "gl": 0, "gv": 1 },
+      { "local": "Av. Lezica", "visitante": "E. del Norte", "gl": 9, "gv": 1 },
+      { "local": "L. Washington", "visitante": "Malvín Alto", "gl": 8, "gv": 0 },
+      { "local": "C. Corinto", "visitante": "Bochas", "gl": 3, "gv": 0 },
+      { "local": "3 de Abril", "visitante": "Yegros", "gl": 8, "gv": 0 },
+      { "local": "D. Uruguayo", "visitante": "San Francisco", "gl": 0, "gv": 3 },
+      { "local": "Urreta", "visitante": "Isidro Fynn", "gl": 8, "gv": 0 }
     ],
     "14": [
-      {
-        "local": "Las Flores",
-        "visitante": "Isidro Fynn",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "San Francisco",
-        "visitante": "Urreta",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Yegros",
-        "visitante": "D. Uruguayo",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "Bochas",
-        "visitante": "3 de Abril",
-        "gl": 0,
-        "gv": 3,
-        "wo": true
-      },
-      {
-        "local": "Malvín Alto",
-        "visitante": "C. Corinto",
-        "gl": 3,
-        "gv": 0
-      },
-      {
-        "local": "E. del Norte",
-        "visitante": "L. Washington",
-        "gl": 8,
-        "gv": 0
-      },
-      {
-        "local": "Ombú Jrs.",
-        "visitante": "Av. Lezica",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "Pablán",
-        "visitante": "Covicenova",
-        "gl": 2,
-        "gv": 1
-      }
+      { "local": "Las Flores", "visitante": "Isidro Fynn", "gl": 3, "gv": 0 },
+      { "local": "San Francisco", "visitante": "Urreta", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Yegros", "visitante": "D. Uruguayo", "gl": 3, "gv": 0 },
+      { "local": "Bochas", "visitante": "3 de Abril", "gl": 0, "gv": 3, "wo": true },
+      { "local": "Malvín Alto", "visitante": "C. Corinto", "gl": 3, "gv": 0 },
+      { "local": "E. del Norte", "visitante": "L. Washington", "gl": 8, "gv": 0 },
+      { "local": "Ombú Jrs.", "visitante": "Av. Lezica", "gl": 0, "gv": 3 },
+      { "local": "Pablán", "visitante": "Covicenova", "gl": 2, "gv": 1 }
     ],
     "15": [
-      {
-        "local": "Covicenova",
-        "visitante": "Las Flores",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "Av. Lezica",
-        "visitante": "Pablán",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "L. Washington",
-        "visitante": "Ombú Jrs.",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "C. Corinto",
-        "visitante": "E. del Norte",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "3 de Abril",
-        "visitante": "Malvín Alto",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "D. Uruguayo",
-        "visitante": "Bochas",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "Urreta",
-        "visitante": "Yegros",
-        "gl": null,
-        "gv": null
-      },
-      {
-        "local": "Isidro Fynn",
-        "visitante": "San Francisco",
-        "gl": null,
-        "gv": null
-      }
+      { "local": "Covicenova", "visitante": "Las Flores", "gl": 0, "gv": 8 },
+      { "local": "Av. Lezica", "visitante": "Pablán", "gl": 4, "gv": 0 },
+      { "local": "L. Washington", "visitante": "Ombú Jrs.", "gl": 0, "gv": 5 },
+      { "local": "C. Corinto", "visitante": "E. del Norte", "gl": 1, "gv": 7 },
+      { "local": "3 de Abril", "visitante": "Malvín Alto", "gl": 8, "gv": 0 },
+      { "local": "D. Uruguayo", "visitante": "Bochas", "gl": 0, "gv": 3 },
+      { "local": "Urreta", "visitante": "Yegros", "gl": 2, "gv": 0 },
+      { "local": "Isidro Fynn", "visitante": "San Francisco", "gl": 0, "gv": 5 }
     ]
   },
   "horas": {},
