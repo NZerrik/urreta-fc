@@ -1081,6 +1081,10 @@
   .tab-btn.active { color: var(--naranja); background: rgba(240,112,32,0.08); border-bottom-color: var(--naranja); }
   /* El Clausura tiene su propio acento violeta para distinguirlo del Apertura de un vistazo */
   #liga-clausura-btn.active, #tabla-clausura-btn.active { color: var(--clausura); background: rgba(168,85,247,0.10); border-bottom-color: var(--clausura); }
+  .liga-hero { position: relative; width: 100%; height: 150px; border-radius: 12px; overflow: hidden; margin-bottom: 14px; background: var(--gris-oscuro); }
+  .liga-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: saturate(0.8); transition: opacity 0.2s; }
+  .liga-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(17,17,17,0.15) 0%, rgba(17,17,17,0.75) 100%); pointer-events: none; }
+  .liga-hero-label { position: absolute; bottom: 10px; left: 14px; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:2px; font-size:0.85rem; color: var(--naranja); }
   .clausura-banner {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
     background: rgba(168,85,247,0.12); border: 1px solid var(--clausura-oscuro);
@@ -1226,6 +1230,11 @@
       <div class="torneo-tabs" style="margin-bottom:14px;">
         <button class="tab-btn active" id="liga-apertura-btn" onclick="switchLigaTorneo('apertura')">Apertura</button>
         <button class="tab-btn" id="liga-clausura-btn" onclick="switchLigaTorneo('clausura')">Clausura</button>
+      </div>
+      <div class="liga-hero" id="ligaHeroImg">
+        <img src="./team-photo.jpg" alt="" />
+        <div class="liga-hero-overlay"></div>
+        <div class="liga-hero-label" id="ligaHeroLabel">🏆 APERTURA</div>
       </div>
       <div class="clausura-banner" id="clausuraBannerFixture" style="display:none;">
         <span>🏆 <strong>¡Arrancó el Clausura!</strong> Mismos rivales que el Apertura, ahora con la localidad cambiada.</span>
@@ -1978,6 +1987,24 @@ function switchLigaTorneo(t) {
   renderFixture(t);
   renderStats(t);
   actualizarClausuraBanners();
+  actualizarLigaHero(t);
+}
+
+// Foto del fixture: cambia según el toggle Apertura/Clausura (independiente
+// de la foto del "próximo partido", que se elige por fecha más cercana).
+function actualizarLigaHero(torneo) {
+  const img = document.querySelector('#ligaHeroImg img');
+  const label = document.getElementById('ligaHeroLabel');
+  if (!img || !label) return;
+  if (torneo === 'clausura') {
+    img.src = './team-photo-clausura.jpg';
+    label.textContent = '🏆 CLAUSURA';
+    label.style.color = 'var(--clausura)';
+  } else {
+    img.src = './team-photo.jpg';
+    label.textContent = '🏆 APERTURA';
+    label.style.color = 'var(--naranja)';
+  }
 }
 
 // Apertura/Clausura/Anual activo en la tabla de posiciones
