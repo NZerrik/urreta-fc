@@ -1631,15 +1631,25 @@ fetch('./resultados.json?t=' + Date.now())
           const idx = parseInt(fechaKey) - 1;
           if (FIXTURE_FECHA_CLAUSURA[idx]) {
             data.clausura.fechas[fechaKey].forEach(p => {
+              // Buscar por el mismo par de equipos sin importar quién quedó de local:
+              // la localidad real no siempre es la inversa exacta del Apertura.
               const row = FIXTURE_FECHA_CLAUSURA[idx].find(r =>
-                r.local === p.local && r.visitante === p.visitante
+                (r.local === p.local && r.visitante === p.visitante) ||
+                (r.local === p.visitante && r.visitante === p.local)
               );
               if (row && p.gl !== null && p.gl !== undefined) {
+                row.local = p.local;
+                row.visitante = p.visitante;
                 row.gl = p.gl;
                 row.gv = p.gv;
                 if (p.wo) row.wo = true;
               }
             });
+            // Recalcular esLocal de Urreta en FIXTURE_CLAUSURA según el partido real cargado
+            const filaUrreta = FIXTURE_FECHA_CLAUSURA[idx].find(r => r.local === 'Urreta' || r.visitante === 'Urreta');
+            if (filaUrreta && FIXTURE_CLAUSURA[idx]) {
+              FIXTURE_CLAUSURA[idx].esLocal = filaUrreta.local === 'Urreta';
+            }
           }
         });
       }

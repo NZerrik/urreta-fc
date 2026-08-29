@@ -221,5 +221,34 @@
   "fechas_txt": {
     "14": "05/07/2026",
     "15": "12/07/2026"
+  },
+  "clausura": {
+    "urreta": {
+      "1": { "golesUrreta": 3, "golesRival": 0, "wo": true },
+      "2": { "golesUrreta": 7, "golesRival": 0 }
+    },
+    "fechas": {
+      "1": [
+        { "local": "Las Flores", "visitante": "San Francisco", "gl": 3, "gv": 0 },
+        { "local": "Isidro Fynn", "visitante": "Yegros", "gl": 0, "gv": 6 },
+        { "local": "Av. Lezica", "visitante": "Covicenova", "gl": 8, "gv": 0 },
+        { "local": "3 de Abril", "visitante": "E. del Norte", "gl": 9, "gv": 1 },
+        { "local": "L. Washington", "visitante": "Pablán", "gl": 0, "gv": 3 },
+        { "local": "Urreta", "visitante": "Bochas", "gl": 3, "gv": 0, "wo": true },
+        { "local": "Ombú Jrs.", "visitante": "C. Corinto", "gl": 3, "gv": 0 }
+      ],
+      "2": [
+        { "local": "Yegros", "visitante": "San Francisco", "gl": 7, "gv": 0 },
+        { "local": "Urreta", "visitante": "Malvín Alto", "gl": 7, "gv": 0 },
+        { "local": "Pablán", "visitante": "C. Corinto", "gl": 3, "gv": 0 },
+        { "local": "Av. Lezica", "visitante": "Las Flores", "gl": 0, "gv": 4 },
+        { "local": "Covicenova", "visitante": "L. Washington", "gl": 3, "gv": 0 },
+        { "local": "E. del Norte", "visitante": "D. Uruguayo", "gl": 3, "gv": 0 },
+        { "local": "Ombú Jrs.", "visitante": "3 de Abril", "gl": 0, "gv": 4 },
+        { "local": "Bochas", "visitante": "Isidro Fynn", "gl": 4, "gv": 0 }
+      ]
+    },
+    "horas": {},
+    "fechas_txt": {}
   }
 }
