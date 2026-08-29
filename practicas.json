@@ -1,12 +1,12 @@
 {
   "practicas": [
     {
-      "dia": "Lunes",
-      "hora": "18:30",
+      "dia": "Miércoles",
+      "hora": "19:00",
       "hora_fin": "20:00",
-      "lugar": "Cuartel de Artillería N°5",
-      "maps": "https://www.google.com/maps?q=-34.8488083,-56.1776733",
-      "waze": "https://waze.com/ul?ll=-34.8488083,-56.1776733&navigate=yes"
+      "lugar": "Tiro Libre",
+      "maps": "https://maps.app.goo.gl/4hxBsZN3yR4yHvHf8",
+      "waze": "https://waze.com/ul?ll=-34.8843746,-56.1704987&navigate=yes"
     },
     {
       "dia": "Viernes",
