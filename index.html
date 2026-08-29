@@ -19,6 +19,8 @@
     --verde-gol: #22C55E;
     --rojo-gol: #EF4444;
     --amarillo: #FACC15;
+    --clausura: #A855F7;
+    --clausura-oscuro: #7C3AED;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1077,6 +1079,20 @@
   .tab-btn { flex: 1; background: transparent; border: none; border-bottom: 3px solid transparent; color: #777; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.92rem; letter-spacing: 2px; text-transform: uppercase; padding: 13px 16px; cursor: pointer; transition: all 0.2s; }
   .tab-btn:hover { color: #aaa; background: rgba(255,255,255,0.03); }
   .tab-btn.active { color: var(--naranja); background: rgba(240,112,32,0.08); border-bottom-color: var(--naranja); }
+  /* El Clausura tiene su propio acento violeta para distinguirlo del Apertura de un vistazo */
+  #liga-clausura-btn.active, #tabla-clausura-btn.active { color: var(--clausura); background: rgba(168,85,247,0.10); border-bottom-color: var(--clausura); }
+  .clausura-banner {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: rgba(168,85,247,0.12); border: 1px solid var(--clausura-oscuro);
+    border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;
+    font-size: 0.85rem; color: var(--blanco-suave);
+  }
+  .clausura-banner strong { color: var(--clausura); }
+  .clausura-banner button {
+    background: none; border: none; color: #aaa; font-size: 1.1rem; line-height: 1;
+    cursor: pointer; padding: 2px 4px; flex-shrink: 0;
+  }
+  .clausura-banner button:hover { color: var(--blanco); }
   .tab-content { display: none; }
   .tab-content.active { display: flex; flex-direction: column; gap: 24px; }
 
@@ -1211,6 +1227,10 @@
         <button class="tab-btn active" id="liga-apertura-btn" onclick="switchLigaTorneo('apertura')">Apertura</button>
         <button class="tab-btn" id="liga-clausura-btn" onclick="switchLigaTorneo('clausura')">Clausura</button>
       </div>
+      <div class="clausura-banner" id="clausuraBannerFixture" style="display:none;">
+        <span>🏆 <strong>¡Arrancó el Clausura!</strong> Mismos rivales que el Apertura, ahora con la localidad cambiada.</span>
+        <button onclick="cerrarClausuraBanner()" aria-label="Cerrar">✕</button>
+      </div>
       <div class="fixture-grid" id="fixtureGrid"></div>
     </div>
 
@@ -1227,6 +1247,10 @@
           <button class="tab-btn active" id="tabla-apertura-btn" onclick="switchTablaTorneo('apertura')">Apertura</button>
           <button class="tab-btn" id="tabla-clausura-btn" onclick="switchTablaTorneo('clausura')">Clausura</button>
           <button class="tab-btn" id="tabla-anual-btn" onclick="switchTablaTorneo('anual')">Anual</button>
+        </div>
+        <div class="clausura-banner" id="clausuraBannerTabla" style="display:none;">
+          <span>🏆 <strong>¡Arrancó el Clausura!</strong> La tabla se resetea; el Anual suma Apertura + Clausura.</span>
+          <button onclick="cerrarClausuraBanner()" aria-label="Cerrar">✕</button>
         </div>
         <div class="tabla-container">
           <div class="tabla-header">
@@ -1953,6 +1977,7 @@ function switchLigaTorneo(t) {
   });
   renderFixture(t);
   renderStats(t);
+  actualizarClausuraBanners();
 }
 
 // Apertura/Clausura/Anual activo en la tabla de posiciones
@@ -1964,6 +1989,22 @@ function switchTablaTorneo(t) {
     if(btn) btn.classList.toggle('active', k === t);
   });
   renderTabla(t);
+  actualizarClausuraBanners();
+}
+
+// Banner de "arrancó el Clausura": se muestra la primera vez que se entra
+// a esa sub-pestaña en fixture o tabla, y queda cerrado para siempre una vez descartado.
+function actualizarClausuraBanners() {
+  const visto = localStorage.getItem('urreta_clausura_banner_visto') === '1';
+  const bFixture = document.getElementById('clausuraBannerFixture');
+  const bTabla = document.getElementById('clausuraBannerTabla');
+  if (bFixture) bFixture.style.display = (!visto && ligaTorneoActivo === 'clausura') ? 'flex' : 'none';
+  if (bTabla) bTabla.style.display = (!visto && tablaTorneoActivo === 'clausura') ? 'flex' : 'none';
+}
+
+function cerrarClausuraBanner() {
+  localStorage.setItem('urreta_clausura_banner_visto', '1');
+  actualizarClausuraBanners();
 }
 
 function navTo(mainTab, scrollId, subTab) {
@@ -1985,6 +2026,11 @@ function renderProximoPrado(proxIdx, sec, secCd, torneo='apertura') {
   const horaRaw = td.HORAS[proxIdx + 1];
   const horaStr = formatHora(horaRaw);
   const torneoLabel = torneo === 'clausura' ? 'Clausura' : 'Apertura';
+  const accentColor = torneo === 'clausura' ? 'var(--clausura)' : 'var(--naranja)';
+  const accentBg = torneo === 'clausura' ? 'rgba(168,85,247,0.15)' : 'rgba(240,112,32,0.15)';
+  const overlayGradient = torneo === 'clausura'
+    ? 'linear-gradient(to bottom,rgba(30,10,40,0.2) 0%,rgba(30,10,40,0.75) 60%,rgba(30,10,40,0.88) 100%)'
+    : 'linear-gradient(to bottom,rgba(26,10,0,0.2) 0%,rgba(26,10,0,0.75) 60%,rgba(26,10,0,0.88) 100%)';
 
   secCd.style.display = 'block';
   document.getElementById('countdownTitulo').textContent = `Próximo partido · ${torneoLabel} · Fecha ${proxIdx + 1}`;
@@ -2015,9 +2061,9 @@ function renderProximoPrado(proxIdx, sec, secCd, torneo='apertura') {
   sec.innerHTML = `
   <div class="proximo-card fade-in">
    <img src="./team-photo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.5;filter:saturate(0.7);" alt="" />
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,10,0,0.2) 0%,rgba(26,10,0,0.75) 60%,rgba(26,10,0,0.88) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:${overlayGradient};pointer-events:none;"></div>
     <div style="position:relative;z-index:1;">
-    <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:var(--naranja);background:rgba(240,112,32,0.15);padding:3px 8px;border-radius:3px;">🏆 LIGA PRADO · ${torneoLabel.toUpperCase()}</div>
+    <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:${accentColor};background:${accentBg};padding:3px 8px;border-radius:3px;">🏆 LIGA PRADO · ${torneoLabel.toUpperCase()}</div>
     <div class="proximo-content">
       <div class="equipo-proximo">
         <div style="margin-bottom:8px;display:flex;justify-content:center;">${teamLogoHtml(local, 64)}</div>
