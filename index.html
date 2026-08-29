@@ -1207,6 +1207,10 @@
   <div id="tab-prado" class="tab-content active">
     <div id="fixture">
       <div class="section-title">&#9917; Fixture Liga Prado</div>
+      <div class="torneo-tabs" style="margin-bottom:14px;">
+        <button class="tab-btn active" id="liga-apertura-btn" onclick="switchLigaTorneo('apertura')">Apertura</button>
+        <button class="tab-btn" id="liga-clausura-btn" onclick="switchLigaTorneo('clausura')">Clausura</button>
+      </div>
       <div class="fixture-grid" id="fixtureGrid"></div>
     </div>
 
@@ -1219,6 +1223,11 @@
     <div id="subtab-tabla" class="tab-content active">
       <div id="tabla">
         <div class="section-title" style="display:flex;align-items:center;">&#128202; Tabla de Posiciones<button class="edit-practicas-btn" id="editResultadosBtn" style="display:none" onclick="abrirAdminResultados()">&#9999;&#65039; Resultados</button></div>
+        <div class="torneo-tabs" style="margin-bottom:14px;">
+          <button class="tab-btn active" id="tabla-apertura-btn" onclick="switchTablaTorneo('apertura')">Apertura</button>
+          <button class="tab-btn" id="tabla-clausura-btn" onclick="switchTablaTorneo('clausura')">Clausura</button>
+          <button class="tab-btn" id="tabla-anual-btn" onclick="switchTablaTorneo('anual')">Anual</button>
+        </div>
         <div class="tabla-container">
           <div class="tabla-header">
             <span>#</span>
@@ -1387,6 +1396,14 @@ const FIXTURE = [
   { rival: 'Yegros',        esLocal: true,  fecha_txt: FECHAS[14] }, // F15
 ];
 
+// ====== CLAUSURA: mismos rivales y orden que Apertura, localidad invertida ======
+// Las fechas se completan luego vía resultados.json (clausura.fechas_txt)
+const FIXTURE_CLAUSURA = FIXTURE.map(p => ({
+  rival: p.rival,
+  esLocal: !p.esLocal,
+  fecha_txt: 'A confirmar',
+}));
+
 // ====== TODOS LOS PARTIDOS POR FECHA (cat. 2021 según imagen) ======
 // gl/gv = goles local/visitante, null = sin resultado todavía
 const FIXTURE_FECHA = [
@@ -1542,6 +1559,12 @@ const FIXTURE_FECHA = [
   ],
 ];
 
+// ====== CLAUSURA: mismos partidos por fecha, localidad invertida ======
+// Se completan luego vía resultados.json (clausura.fechas)
+const FIXTURE_FECHA_CLAUSURA = FIXTURE_FECHA.map(fecha =>
+  fecha.map(p => ({ local: p.visitante, visitante: p.local, gl: null, gv: null }))
+);
+
 // Resultados por defecto (F1 W/O y F2 ya jugados)
 const _DEFAULTS = {
   '1': { golesUrreta: 3, golesRival: 0, wo: true },
@@ -1555,6 +1578,9 @@ if (!resultados) {
   if (!resultados['1']) { resultados['1'] = _DEFAULTS['1']; localStorage.setItem('urreta_resultados', JSON.stringify(resultados)); }
   if (!resultados['2']) { resultados['2'] = _DEFAULTS['2']; localStorage.setItem('urreta_resultados', JSON.stringify(resultados)); }
 }
+
+// Resultados de Urreta en el Clausura (sin defaults, arranca vacío)
+let resultadosClausura = JSON.parse(localStorage.getItem('urreta_resultados_clausura') || 'null') || {};
 
 // Cargar desde resultados.json (fuente oficial, se actualiza con el bot)
 fetch('./resultados.json?t=' + Date.now())
@@ -1594,6 +1620,39 @@ fetch('./resultados.json?t=' + Date.now())
         if (FIXTURE[idx]) FIXTURE[idx].fecha_txt = data.fechas_txt[k];
       });
     }
+    // ===== CLAUSURA: mismo esquema de merge, bajo la clave "clausura" =====
+    if (data.clausura) {
+      if (data.clausura.urreta) {
+        Object.assign(resultadosClausura, data.clausura.urreta);
+        localStorage.setItem('urreta_resultados_clausura', JSON.stringify(resultadosClausura));
+      }
+      if (data.clausura.fechas) {
+        Object.keys(data.clausura.fechas).forEach(fechaKey => {
+          const idx = parseInt(fechaKey) - 1;
+          if (FIXTURE_FECHA_CLAUSURA[idx]) {
+            data.clausura.fechas[fechaKey].forEach(p => {
+              const row = FIXTURE_FECHA_CLAUSURA[idx].find(r =>
+                r.local === p.local && r.visitante === p.visitante
+              );
+              if (row && p.gl !== null && p.gl !== undefined) {
+                row.gl = p.gl;
+                row.gv = p.gv;
+                if (p.wo) row.wo = true;
+              }
+            });
+          }
+        });
+      }
+      if (data.clausura.horas) {
+        Object.keys(data.clausura.horas).forEach(k => { HORAS_PARTIDO_CLAUSURA[parseInt(k)] = data.clausura.horas[k]; });
+      }
+      if (data.clausura.fechas_txt) {
+        Object.keys(data.clausura.fechas_txt).forEach(k => {
+          const idx = parseInt(k) - 1;
+          if (FIXTURE_CLAUSURA[idx]) FIXTURE_CLAUSURA[idx].fecha_txt = data.clausura.fechas_txt[k];
+        });
+      }
+    }
     // Mostrar última actualización
     if (data.ultima_actualizacion) {
       const d = new Date(data.ultima_actualizacion);
@@ -1627,12 +1686,25 @@ const HORAS_PARTIDO = {
   15: null,
 };
 
+// Hora de cada partido del Clausura. Se completa vía resultados.json (clausura.horas)
+const HORAS_PARTIDO_CLAUSURA = {};
+for (let _i = 1; _i <= 15; _i++) HORAS_PARTIDO_CLAUSURA[_i] = null;
+
 function getHoraPartido(fechaNum) {
   const h = HORAS_PARTIDO[fechaNum];
   return h !== null && h !== undefined ? `${h}:00hs` : null;
 }
 
+// ====== Acceso genérico a los datos de un torneo ('apertura' | 'clausura') ======
+function torneoData(torneo) {
+  if (torneo === 'clausura') {
+    return { FIX: FIXTURE_CLAUSURA, FIX_FECHA: FIXTURE_FECHA_CLAUSURA, res: resultadosClausura, HORAS: HORAS_PARTIDO_CLAUSURA, storageKey: 'urreta_resultados_clausura' };
+  }
+  return { FIX: FIXTURE, FIX_FECHA: FIXTURE_FECHA, res: resultados, HORAS: HORAS_PARTIDO, storageKey: 'urreta_resultados' };
+}
+
 let modalFechaIdx = null;
+let modalTorneo = 'apertura';
 let countdownInterval = null;
 
 // CANCHA DE URRETA
@@ -1689,10 +1761,11 @@ function getDiaSemana(fecha_txt) {
   return d ? dias[d.getDay()] : 'Viernes';
 }
 
-function isProximo(idx) {
-  const partido = FIXTURE[idx];
+function isProximo(idx, torneo='apertura') {
+  const td = torneoData(torneo);
+  const partido = td.FIX[idx];
   if(partido.libre) return false;
-  if(resultados[idx+1]) return false;
+  if(td.res[idx+1]) return false;
   // Si está suspendido y sin resultado, es el próximo
   if(partido.suspendido) return true;
   const hoy = new Date();
@@ -1701,16 +1774,18 @@ function isProximo(idx) {
   return fd >= new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
 }
 
-function getStatus(idx) {
-  const p = FIXTURE[idx];
+function getStatus(idx, torneo='apertura') {
+  const td = torneoData(torneo);
+  const p = td.FIX[idx];
   if(p.libre) return 'libre';
-  if(resultados[idx+1]) return 'jugado';
-  if(isProximo(idx)) return 'proximo';
+  if(td.res[idx+1]) return 'jugado';
+  if(isProximo(idx, torneo)) return 'proximo';
   return 'pendiente';
 }
 
-function getResultadoBadge(idx) {
-  const r = resultados[idx+1];
+function getResultadoBadge(idx, torneo='apertura') {
+  const td = torneoData(torneo);
+  const r = td.res[idx+1];
   if(!r) return '';
   if(r.wo) return '<span class="resultado-badge badge-victoria">W/O</span>';
   const gu = r.golesUrreta, gr = r.golesRival;
@@ -1858,6 +1933,29 @@ function switchSubTab(tab) {
   });
 }
 
+// Apertura/Clausura activo en el fixture de Liga Prado
+let ligaTorneoActivo = 'apertura';
+function switchLigaTorneo(t) {
+  ligaTorneoActivo = t;
+  ['apertura','clausura'].forEach(k => {
+    const btn = document.getElementById('liga-' + k + '-btn');
+    if(btn) btn.classList.toggle('active', k === t);
+  });
+  renderFixture(t);
+  renderStats(t);
+}
+
+// Apertura/Clausura/Anual activo en la tabla de posiciones
+let tablaTorneoActivo = 'apertura';
+function switchTablaTorneo(t) {
+  tablaTorneoActivo = t;
+  ['apertura','clausura','anual'].forEach(k => {
+    const btn = document.getElementById('tabla-' + k + '-btn');
+    if(btn) btn.classList.toggle('active', k === t);
+  });
+  renderTabla(t);
+}
+
 function navTo(mainTab, scrollId, subTab) {
   switchTab(mainTab);
   if (subTab) switchSubTab(subTab);
@@ -1867,17 +1965,19 @@ function navTo(mainTab, scrollId, subTab) {
   }, 50);
 }
 
-function renderProximoPrado(proxIdx, sec, secCd) {
-  const p = FIXTURE[proxIdx];
+function renderProximoPrado(proxIdx, sec, secCd, torneo='apertura') {
+  const td = torneoData(torneo);
+  const p = td.FIX[proxIdx];
   const local = p.esLocal ? 'Urreta' : p.rival;
   const visita = p.esLocal ? p.rival : 'Urreta';
   const localClass = p.esLocal ? 'local' : 'visitante';
   const visitaClass = p.esLocal ? 'visitante' : 'local';
-  const horaRaw = HORAS_PARTIDO[proxIdx + 1];
+  const horaRaw = td.HORAS[proxIdx + 1];
   const horaStr = formatHora(horaRaw);
+  const torneoLabel = torneo === 'clausura' ? 'Clausura' : 'Apertura';
 
   secCd.style.display = 'block';
-  document.getElementById('countdownTitulo').textContent = `Próximo partido · Fecha ${proxIdx + 1}`;
+  document.getElementById('countdownTitulo').textContent = `Próximo partido · ${torneoLabel} · Fecha ${proxIdx + 1}`;
 
   if (p.suspendido) {
     document.getElementById('countdownLive').innerHTML = `<div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#EF4444;letter-spacing:3px;text-align:center;margin-top:8px;">⚠️ SUSPENDIDO — FECHA A CONFIRMAR</div>`;
@@ -1907,7 +2007,7 @@ function renderProximoPrado(proxIdx, sec, secCd) {
    <img src="./team-photo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.5;filter:saturate(0.7);" alt="" />
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,10,0,0.2) 0%,rgba(26,10,0,0.75) 60%,rgba(26,10,0,0.88) 100%);pointer-events:none;"></div>
     <div style="position:relative;z-index:1;">
-    <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:var(--naranja);background:rgba(240,112,32,0.15);padding:3px 8px;border-radius:3px;">🏆 LIGA PRADO</div>
+    <div style="position:absolute;top:0;right:0;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;font-weight:700;color:var(--naranja);background:rgba(240,112,32,0.15);padding:3px 8px;border-radius:3px;">🏆 LIGA PRADO · ${torneoLabel.toUpperCase()}</div>
     <div class="proximo-content">
       <div class="equipo-proximo">
         <div style="margin-bottom:8px;display:flex;justify-content:center;">${teamLogoHtml(local, 64)}</div>
@@ -2013,14 +2113,18 @@ function renderProximoMetro(idx, sec, secCd) {
 function renderProximo() {
   let proxPradoIdx = -1;
   for(let i=0;i<FIXTURE.length;i++){
-    if(isProximo(i)){ proxPradoIdx=i; break; }
+    if(isProximo(i, 'apertura')){ proxPradoIdx=i; break; }
+  }
+  let proxClausuraIdx = -1;
+  for(let i=0;i<FIXTURE_CLAUSURA.length;i++){
+    if(isProximo(i, 'clausura')){ proxClausuraIdx=i; break; }
   }
   const proxMetroIdx = getProximoMetroIdx();
 
   const sec = document.getElementById('proximoSection');
   const secCd = document.getElementById('countdownSection');
 
-  if(proxPradoIdx < 0 && proxMetroIdx < 0){
+  if(proxPradoIdx < 0 && proxClausuraIdx < 0 && proxMetroIdx < 0){
     sec.innerHTML = `
     <div class="proximo-card fade-in">
       <img src="./team-photo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.5;filter:saturate(0.7);" alt="" />
@@ -2036,22 +2140,32 @@ function renderProximo() {
   }
 
   const pradoDate = proxPradoIdx >= 0 ? parseDate(FIXTURE[proxPradoIdx].fecha_txt) : null;
+  const clausuraDate = proxClausuraIdx >= 0 ? parseDate(FIXTURE_CLAUSURA[proxClausuraIdx].fecha_txt) : null;
   const metroDate = proxMetroIdx >= 0 ? parseDate(metroFechas[proxMetroIdx].fecha_txt) : null;
 
-  let useMetro = false;
-  if(!pradoDate && metroDate) useMetro = true;
-  else if(pradoDate && metroDate && metroDate < pradoDate) useMetro = true;
+  // Elegir la fecha más próxima entre las candidatas con fecha conocida
+  const candidatos = [];
+  if (pradoDate) candidatos.push({ tipo: 'prado', date: pradoDate });
+  if (clausuraDate) candidatos.push({ tipo: 'clausura', date: clausuraDate });
+  if (metroDate) candidatos.push({ tipo: 'metro', date: metroDate });
+  candidatos.sort((a, b) => a.date - b.date);
+  const elegido = candidatos[0]
+    ? candidatos[0].tipo
+    : (proxPradoIdx >= 0 ? 'prado' : (proxClausuraIdx >= 0 ? 'clausura' : 'metro'));
 
-  if(useMetro) {
+  if(elegido === 'metro') {
     renderProximoMetro(proxMetroIdx, sec, secCd);
+  } else if(elegido === 'clausura') {
+    renderProximoPrado(proxClausuraIdx, sec, secCd, 'clausura');
   } else {
-    renderProximoPrado(proxPradoIdx, sec, secCd);
+    renderProximoPrado(proxPradoIdx, sec, secCd, 'apertura');
   }
 }
 
 
-function renderTodosHtml(fechaIdx) {
-  const partidos = FIXTURE_FECHA[fechaIdx];
+function renderTodosHtml(fechaIdx, torneo='apertura') {
+  const td = torneoData(torneo);
+  const partidos = td.FIX_FECHA[fechaIdx];
   if (!partidos) return '';
   const rows = partidos.map(p => {
     const esU = p.local === 'Urreta' || p.visitante === 'Urreta';
@@ -2082,13 +2196,14 @@ function toggleTodos(btn) {
   panel.classList.toggle('open');
 }
 
-function renderFixture() {
+function renderFixture(torneo='apertura') {
+  const td = torneoData(torneo);
   const grid = document.getElementById('fixtureGrid');
   grid.innerHTML = '';
-  FIXTURE.forEach((p, idx) => {
+  td.FIX.forEach((p, idx) => {
     const fechaNum = idx + 1;
-    const status = getStatus(idx);
-    const r = resultados[fechaNum];
+    const status = getStatus(idx, torneo);
+    const r = td.res[fechaNum];
     const statusLabel = {
       'jugado': 'Jugado', 'proximo': p.suspendido ? 'Suspendido' : 'Próximo', 'pendiente': 'Pendiente', 'libre': 'Fecha libre'
     }[status];
@@ -2108,16 +2223,16 @@ function renderFixture() {
         const col1 = p.esLocal ? 'color:var(--naranja-claro)' : '';
         const col2 = p.esLocal ? '' : 'color:var(--naranja-claro)';
         scoreHtml = `<div class="resultado-area">
-          ${getResultadoBadge(idx)}
+          ${getResultadoBadge(idx, torneo)}
           <div class="resultado-display">
             <span class="gol-num" style="${col1}">${gu}</span>
             <span class="gol-sep">:</span>
             <span class="gol-num" style="${col2}">${gr}</span>
           </div>
-          <button class="btn-editar" onclick="abrirModal(${idx})">✏</button>
+          <button class="btn-editar" onclick="abrirModal(${idx}, '${torneo}')">✏</button>
         </div>`;
       } else {
-        scoreHtml = `<button class="btn-editar" onclick="abrirModal(${idx})" title="Cargar resultado">+ Resultado</button>`;
+        scoreHtml = `<button class="btn-editar" onclick="abrirModal(${idx}, '${torneo}')" title="Cargar resultado">+ Resultado</button>`;
       }
 
       bodyHtml = `<div class="fecha-partido">
@@ -2132,13 +2247,13 @@ function renderFixture() {
         ⚽ Ver todos los partidos
         <span class="chevron">▾</span>
       </button>
-      <div class="todos-resultados">${renderTodosHtml(idx)}</div>`;
+      <div class="todos-resultados">${renderTodosHtml(idx, torneo)}</div>`;
     }
 
     const card = document.createElement('div');
     card.className = `fecha-card fade-in ${status === 'jugado' ? 'jugada' : ''} ${status === 'proximo' ? 'activa' : ''}`;
-    const climaId = `clima-fecha-${fechaNum}`;
-    const horaFecha = HORAS_PARTIDO[fechaNum];
+    const climaId = `clima-fecha-${torneo}-${fechaNum}`;
+    const horaFecha = td.HORAS[fechaNum];
     const horaLabel = (!p.suspendido && horaFecha) ? `· ${horaFecha}:00hs` : '';
     card.innerHTML = `
       <div class="fecha-header">
@@ -2150,18 +2265,19 @@ function renderFixture() {
       ${bodyHtml}`;
     grid.appendChild(card);
 
-    // Cargar clima async para esta fecha (solo si no es libre y tiene fecha)
-    if (!p.libre && p.fecha_txt) {
+    // Cargar clima async para esta fecha (solo si no es libre y tiene fecha confirmada)
+    if (!p.libre && p.fecha_txt && p.fecha_txt !== 'A confirmar') {
       injectClima(climaId, p.fecha_txt, 'badge');
     }
   });
 }
 
-function calcEstadisticas() {
+function calcEstadisticas(torneo='apertura') {
+  const td = torneoData(torneo);
   let pj=0, g=0, e=0, pe=0, gf=0, gc=0, pts=0;
-  FIXTURE.forEach((p, idx) => {
+  td.FIX.forEach((p, idx) => {
     if(p.libre) return;
-    const r = resultados[idx+1];
+    const r = td.res[idx+1];
     if(!r) return;
     pj++;
     gf += r.golesUrreta;
@@ -2173,36 +2289,46 @@ function calcEstadisticas() {
   return { pj, g, e, pe, gf, gc, pts };
 }
 
-function renderStats() {
-  const s = calcEstadisticas();
+function renderStats(torneo='apertura') {
+  const s = calcEstadisticas(torneo);
   document.getElementById('statPJ').textContent = s.pj;
   document.getElementById('statG').textContent = s.g;
   document.getElementById('statGF').textContent = s.gf;
   document.getElementById('statPTS').textContent = s.pts;
 }
 
-function renderTabla() {
-  // Auto-compute standings from all FIXTURE_FECHA match results
+function computeTablaEquipos(fechaArraysList) {
+  // Auto-compute standings from one or more FIXTURE_FECHA-like arrays (sumadas para "Anual")
   const stats = {};
-  FIXTURE_FECHA.forEach(fecha => {
-    fecha.forEach(p => {
-      if (p.gl === null || p.gv === null) return;
-      if (!stats[p.local]) stats[p.local] = {pj:0,g:0,e:0,pe:0,gf:0,gc:0};
-      if (!stats[p.visitante]) stats[p.visitante] = {pj:0,g:0,e:0,pe:0,gf:0,gc:0};
-      stats[p.local].pj++;    stats[p.visitante].pj++;
-      stats[p.local].gf += p.gl;  stats[p.local].gc += p.gv;
-      stats[p.visitante].gf += p.gv; stats[p.visitante].gc += p.gl;
-      if (p.gl > p.gv) { stats[p.local].g++; stats[p.visitante].pe++; }
-      else if (p.gl < p.gv) { stats[p.visitante].g++; stats[p.local].pe++; }
-      else { stats[p.local].e++; stats[p.visitante].e++; }
+  fechaArraysList.forEach(fechaArr => {
+    fechaArr.forEach(fecha => {
+      fecha.forEach(p => {
+        if (p.gl === null || p.gv === null) return;
+        if (!stats[p.local]) stats[p.local] = {pj:0,g:0,e:0,pe:0,gf:0,gc:0};
+        if (!stats[p.visitante]) stats[p.visitante] = {pj:0,g:0,e:0,pe:0,gf:0,gc:0};
+        stats[p.local].pj++;    stats[p.visitante].pj++;
+        stats[p.local].gf += p.gl;  stats[p.local].gc += p.gv;
+        stats[p.visitante].gf += p.gv; stats[p.visitante].gc += p.gl;
+        if (p.gl > p.gv) { stats[p.local].g++; stats[p.visitante].pe++; }
+        else if (p.gl < p.gv) { stats[p.visitante].g++; stats[p.local].pe++; }
+        else { stats[p.local].e++; stats[p.visitante].e++; }
+      });
     });
   });
-  const equipos = Object.entries(stats).map(([nombre, s]) => ({
+  return Object.entries(stats).map(([nombre, s]) => ({
     nombre, ...s,
     pts: s.g * 3 + s.e,
     gd: s.gf - s.gc,
     esUrreta: nombre === 'Urreta'
   })).sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
+}
+
+function renderTabla(torneo='apertura') {
+  const fechaArraysList =
+    torneo === 'clausura' ? [FIXTURE_FECHA_CLAUSURA] :
+    torneo === 'anual' ? [FIXTURE_FECHA, FIXTURE_FECHA_CLAUSURA] :
+    [FIXTURE_FECHA];
+  const equipos = computeTablaEquipos(fechaArraysList);
   const tbody = document.getElementById('tablaBody');
   tbody.innerHTML = '';
   equipos.forEach((eq, i) => {
@@ -2221,12 +2347,14 @@ function renderTabla() {
 }
 
 // ====== MODAL ======
-function abrirModal(idx) {
-  const p = FIXTURE[idx];
+function abrirModal(idx, torneo='apertura') {
+  const td = torneoData(torneo);
+  const p = td.FIX[idx];
   if(p.libre) return;
   modalFechaIdx = idx;
-  const r = resultados[idx+1] || { golesUrreta: 0, golesRival: 0 };
-  document.getElementById('modalInfo').textContent = `Fecha ${idx+1} · Urreta vs ${p.rival} (${p.fecha_txt})`;
+  modalTorneo = torneo;
+  const r = td.res[idx+1] || { golesUrreta: 0, golesRival: 0 };
+  document.getElementById('modalInfo').textContent = `Fecha ${idx+1} · Urreta vs ${p.rival} (${p.fecha_txt})${torneo === 'clausura' ? ' · Clausura' : ''}`;
   document.getElementById('labelLocal').textContent = 'Urreta';
   document.getElementById('labelVisitante').textContent = p.rival;
   document.getElementById('inputLocal').value = r.golesUrreta;
@@ -2242,8 +2370,9 @@ function cerrarModal() {
 function guardarResultado() {
   const gu = parseInt(document.getElementById('inputLocal').value) || 0;
   const gr = parseInt(document.getElementById('inputVisitante').value) || 0;
-  resultados[modalFechaIdx+1] = { golesUrreta: gu, golesRival: gr };
-  localStorage.setItem('urreta_resultados', JSON.stringify(resultados));
+  const td = torneoData(modalTorneo);
+  td.res[modalFechaIdx+1] = { golesUrreta: gu, golesRival: gr };
+  localStorage.setItem(td.storageKey, JSON.stringify(td.res));
   cerrarModal();
   renderAll();
 }
@@ -2333,10 +2462,10 @@ function renderFixtureMetro() {
 }
 
 function renderAll() {
-  renderStats();
+  renderStats(ligaTorneoActivo);
   renderProximo();
-  renderFixture();
-  renderTabla();
+  renderFixture(ligaTorneoActivo);
+  renderTabla(tablaTorneoActivo);
   renderFixtureMetro();
 }
 
@@ -2797,6 +2926,36 @@ function abrirAdminResultados() {
       <input type="number" id="ah_hora_${i}" value="${hora ?? ''}" placeholder="hs" min="0" max="23" style="width:52px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
     </div>`;
   }).join('');
+  // Populate Clausura results form
+  const formClausura = document.getElementById('adminResultadosFormClausura');
+  formClausura.innerHTML = FIXTURE_FECHA_CLAUSURA.map((fecha, fi) => {
+    const rows = fecha.map((p, pi) => `
+      <div class="admin-partido-row">
+        <span class="admin-eq local">${p.local}</span>
+        <input class="admin-score-input" id="ar2_gl_${fi}_${pi}" type="number" min="0" max="30" value="${p.gl !== null ? p.gl : ''}">
+        <span class="admin-sep">:</span>
+        <input class="admin-score-input" id="ar2_gv_${fi}_${pi}" type="number" min="0" max="30" value="${p.gv !== null ? p.gv : ''}">
+        <span class="admin-eq">${p.visitante}</span>
+        <label class="admin-wo-label"><input type="checkbox" id="ar2_wo_${fi}_${pi}" ${p.wo ? 'checked' : ''}>W/O</label>
+      </div>`).join('');
+    return `<div class="admin-fecha-block">
+      <div class="admin-fecha-titulo">FECHA ${fi + 1}</div>
+      ${rows}
+    </div>`;
+  }).join('');
+  // Populate Clausura horas form for upcoming matches
+  const horasFormClausura = document.getElementById('adminHorasFormClausura');
+  horasFormClausura.innerHTML = FIXTURE_CLAUSURA.map((p, i) => {
+    if (resultadosClausura[i+1]) return '';
+    const hora = HORAS_PARTIDO_CLAUSURA[i+1];
+    const fecha = p.fecha_txt;
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1e1e1e;font-size:0.82rem;">
+      <span style="color:#888;min-width:20px;">F${i+1}</span>
+      <span style="color:#ccc;flex:1;">${p.rival}</span>
+      <input type="text" id="ah2_fecha_${i}" value="${fecha}" placeholder="dd/mm/aaaa" style="width:90px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
+      <input type="number" id="ah2_hora_${i}" value="${hora ?? ''}" placeholder="hs" min="0" max="23" style="width:52px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
+    </div>`;
+  }).join('');
   // Populate metro form
   const metroForm = document.getElementById('adminMetroForm');
   metroForm.innerHTML = metroFechas.length ? metroFechas.map((p, i) => {
@@ -2878,6 +3037,53 @@ async function guardarResultadosAdmin() {
     if (p.wo) resultados[idx + 1].wo = true;
   });
 
+  // Collect Clausura results from form and update FIXTURE_FECHA_CLAUSURA in memory
+  const nuevasFechasClausura = {};
+  FIXTURE_FECHA_CLAUSURA.forEach((fecha, fi) => {
+    const fechaKey = String(fi + 1);
+    nuevasFechasClausura[fechaKey] = [];
+    fecha.forEach((p, pi) => {
+      const glVal = document.getElementById(`ar2_gl_${fi}_${pi}`).value;
+      const gvVal = document.getElementById(`ar2_gv_${fi}_${pi}`).value;
+      const wo = document.getElementById(`ar2_wo_${fi}_${pi}`).checked;
+      const gl = glVal !== '' ? parseInt(glVal) : null;
+      const gv = gvVal !== '' ? parseInt(gvVal) : null;
+      p.gl = gl; p.gv = gv; p.wo = wo || undefined;
+      const entry = { local: p.local, visitante: p.visitante, gl, gv };
+      if (wo) entry.wo = true;
+      nuevasFechasClausura[fechaKey].push(entry);
+    });
+  });
+
+  // Collect Clausura horas y fechas overrides
+  const horasOverrideClausura = {};
+  const fechasTxtOverrideClausura = {};
+  FIXTURE_CLAUSURA.forEach((p, i) => {
+    if (resultadosClausura[i+1]) return;
+    const horaEl = document.getElementById(`ah2_hora_${i}`);
+    const fechaEl = document.getElementById(`ah2_fecha_${i}`);
+    if (horaEl && horaEl.value !== '') {
+      const h = parseFloat(horaEl.value);
+      if (!isNaN(h)) { HORAS_PARTIDO_CLAUSURA[i+1] = h; horasOverrideClausura[i+1] = h; }
+    }
+    if (fechaEl && fechaEl.value.trim()) {
+      const nuevaFecha = fechaEl.value.trim();
+      FIXTURE_CLAUSURA[i].fecha_txt = nuevaFecha;
+      fechasTxtOverrideClausura[i+1] = nuevaFecha;
+    }
+  });
+
+  // Sync resultadosClausura (Urreta-specific) desde FIXTURE_FECHA_CLAUSURA
+  FIXTURE_CLAUSURA.forEach((f, idx) => {
+    const fecha = FIXTURE_FECHA_CLAUSURA[idx];
+    if (!fecha) return;
+    const p = fecha.find(r => r.local === 'Urreta' || r.visitante === 'Urreta');
+    if (!p || p.gl === null) return;
+    const esLocal = p.local === 'Urreta';
+    resultadosClausura[idx + 1] = { golesUrreta: esLocal ? p.gl : p.gv, golesRival: esLocal ? p.gv : p.gl };
+    if (p.wo) resultadosClausura[idx + 1].wo = true;
+  });
+
   // Collect metro results
   metroFechas.forEach((p, i) => {
     const guEl = document.getElementById(`am_gu_${i}`);
@@ -2915,7 +3121,11 @@ async function guardarResultadosAdmin() {
   } catch(e) { console.warn('Error saving metro.json', e); }
 
   // Save to resultados.json
-  const nuevosResultados = { ultima_actualizacion: new Date().toISOString(), urreta: resultados, fechas: nuevasFechas, horas: horasOverride, fechas_txt: fechasTxtOverride };
+  const nuevosResultados = {
+    ultima_actualizacion: new Date().toISOString(),
+    urreta: resultados, fechas: nuevasFechas, horas: horasOverride, fechas_txt: fechasTxtOverride,
+    clausura: { urreta: resultadosClausura, fechas: nuevasFechasClausura, horas: horasOverrideClausura, fechas_txt: fechasTxtOverrideClausura }
+  };
   const contenido = JSON.stringify(nuevosResultados, null, 2);
   const b64 = btoa(unescape(encodeURIComponent(contenido)));
   try {
@@ -2948,11 +3158,22 @@ async function guardarResultadosAdmin() {
 <div class="admin-resultados-overlay" id="adminResultadosOverlay">
   <div class="admin-resultados-modal">
     <h3>✏️ Editar Resultados</h3>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--naranja);text-transform:uppercase;margin-bottom:8px;">🏆 Liga Prado · Apertura</div>
     <div style="background:#111;border-radius:10px;padding:14px;margin-bottom:18px;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:#888;text-transform:uppercase;margin-bottom:10px;">Fecha y hora de próximos partidos</div>
       <div id="adminHorasForm"></div>
     </div>
     <div id="adminResultadosForm"></div>
+
+    <div style="margin-top:24px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--naranja);text-transform:uppercase;margin-bottom:8px;">🏆 Liga Prado · Clausura</div>
+      <div style="background:#111;border-radius:10px;padding:14px;margin-bottom:18px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:#888;text-transform:uppercase;margin-bottom:10px;">Fecha y hora de próximos partidos</div>
+        <div id="adminHorasFormClausura"></div>
+      </div>
+      <div id="adminResultadosFormClausura"></div>
+    </div>
+
     <div style="margin-top:24px;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:#60a5fa;text-transform:uppercase;margin-bottom:8px;">🏅 Metropolitano</div>
       <div class="admin-fecha-block">
