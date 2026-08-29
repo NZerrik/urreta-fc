@@ -36,6 +36,16 @@
       "cancha_waze": "",
       "golesUrreta": 1,
       "golesRival": 1
+    },
+    {
+      "fecha": 4,
+      "fecha_txt": "30/08/2026",
+      "hora": null,
+      "rival": "La Lata",
+      "esLocal": true,
+      "cancha": "Cancha Complejo Liga Prado",
+      "cancha_maps": "https://maps.app.goo.gl/izNcjfrKFLPsfsPX8",
+      "cancha_waze": ""
     }
   ]
 }
