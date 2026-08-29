@@ -2135,6 +2135,19 @@ function renderProximo() {
   const secCd = document.getElementById('countdownSection');
 
   if(proxPradoIdx < 0 && proxClausuraIdx < 0 && proxMetroIdx < 0){
+    // Ningún partido tiene fecha confirmada todavía. Antes de asumir que terminó la
+    // temporada, buscar el próximo partido pendiente (aunque su fecha sea "A confirmar"):
+    // pasa, por ejemplo, mientras el Clausura está en curso pero sin fixture de fechas cargado.
+    const pendClausuraIdx = FIXTURE_CLAUSURA.findIndex((p, i) => !p.libre && !resultadosClausura[i+1]);
+    const pendPradoIdx = FIXTURE.findIndex((p, i) => !p.libre && !resultados[i+1]);
+    if (pendClausuraIdx >= 0) {
+      renderProximoPrado(pendClausuraIdx, sec, secCd, 'clausura');
+      return;
+    }
+    if (pendPradoIdx >= 0) {
+      renderProximoPrado(pendPradoIdx, sec, secCd, 'apertura');
+      return;
+    }
     sec.innerHTML = `
     <div class="proximo-card fade-in">
       <img src="./team-photo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.5;filter:saturate(0.7);" alt="" />
