@@ -1224,8 +1224,8 @@
     <div id="fixture">
       <div class="section-title">&#9917; Fixture Liga Prado</div>
       <div class="torneo-tabs" style="margin-bottom:14px;">
-        <button class="tab-btn active" id="liga-apertura-btn" onclick="switchLigaTorneo('apertura')">Apertura</button>
-        <button class="tab-btn" id="liga-clausura-btn" onclick="switchLigaTorneo('clausura')">Clausura</button>
+        <button class="tab-btn" id="liga-apertura-btn" onclick="switchLigaTorneo('apertura')">Apertura</button>
+        <button class="tab-btn active" id="liga-clausura-btn" onclick="switchLigaTorneo('clausura')">Clausura</button>
       </div>
       <div class="clausura-banner" id="clausuraBannerFixture" style="display:none;">
         <span>🏆 <strong>¡Arrancó el Clausura!</strong> Mismos rivales que el Apertura, ahora con la localidad cambiada.</span>
@@ -1244,8 +1244,8 @@
       <div id="tabla">
         <div class="section-title" style="display:flex;align-items:center;">&#128202; Tabla de Posiciones<button class="edit-practicas-btn" id="editResultadosBtn" style="display:none" onclick="abrirAdminResultados()">&#9999;&#65039; Resultados</button></div>
         <div class="torneo-tabs" style="margin-bottom:14px;">
-          <button class="tab-btn active" id="tabla-apertura-btn" onclick="switchTablaTorneo('apertura')">Apertura</button>
-          <button class="tab-btn" id="tabla-clausura-btn" onclick="switchTablaTorneo('clausura')">Clausura</button>
+          <button class="tab-btn" id="tabla-apertura-btn" onclick="switchTablaTorneo('apertura')">Apertura</button>
+          <button class="tab-btn active" id="tabla-clausura-btn" onclick="switchTablaTorneo('clausura')">Clausura</button>
           <button class="tab-btn" id="tabla-anual-btn" onclick="switchTablaTorneo('anual')">Anual</button>
         </div>
         <div class="clausura-banner" id="clausuraBannerTabla" style="display:none;">
@@ -1980,7 +1980,7 @@ function switchSubTab(tab) {
 }
 
 // Apertura/Clausura activo en el fixture de Liga Prado
-let ligaTorneoActivo = 'apertura';
+let ligaTorneoActivo = 'clausura';
 function switchLigaTorneo(t) {
   ligaTorneoActivo = t;
   ['apertura','clausura'].forEach(k => {
@@ -2010,7 +2010,7 @@ function mostrarProximoDe(torneo) {
 }
 
 // Apertura/Clausura/Anual activo en la tabla de posiciones
-let tablaTorneoActivo = 'apertura';
+let tablaTorneoActivo = 'clausura';
 function switchTablaTorneo(t) {
   tablaTorneoActivo = t;
   ['apertura','clausura','anual'].forEach(k => {
@@ -2566,6 +2566,7 @@ function renderAll() {
   renderFixture(ligaTorneoActivo);
   renderTabla(tablaTorneoActivo);
   renderFixtureMetro();
+  actualizarClausuraBanners();
 }
 
 // ====== CLIMA (Open-Meteo — gratis, sin API key) ======
