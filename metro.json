@@ -45,7 +45,9 @@
       "esLocal": true,
       "cancha": "Cancha Complejo Liga Prado",
       "cancha_maps": "https://maps.app.goo.gl/izNcjfrKFLPsfsPX8",
-      "cancha_waze": ""
+      "cancha_waze": "",
+      "golesUrreta": 2,
+      "golesRival": 1
     }
   ]
 }
