@@ -10,10 +10,10 @@
     --naranja: #F07020;
     --naranja-oscuro: #C85010;
     --naranja-claro: #FFAA55;
-    --negro: #111111;
-    --gris-oscuro: #1E1E1E;
-    --gris-medio: #2A2A2A;
-    --gris-borde: #333333;
+    --negro: #0B1220;
+    --gris-oscuro: #141E2E;
+    --gris-medio: #1E2C40;
+    --gris-borde: #2B3B52;
     --blanco: #FFFFFF;
     --blanco-suave: #F5F5F5;
     --verde-gol: #22C55E;
@@ -35,7 +35,7 @@
 
   /* ===== HEADER ===== */
   header {
-    background: linear-gradient(135deg, #111 0%, #1a0a00 50%, #111 100%);
+    background: linear-gradient(135deg, #0B1220 0%, #1a0a00 50%, #0B1220 100%);
     border-bottom: 3px solid var(--naranja);
     padding: 0;
     position: relative;
@@ -282,8 +282,8 @@
 
   /* === NAV BAR === */
   .nav-bar {
-    background: #111;
-    border-bottom: 1px solid #1e1e1e;
+    background: #0B1220;
+    border-bottom: 1px solid #1C2A3D;
     padding: 9px 16px;
     display: flex;
     gap: 8px;
@@ -294,8 +294,8 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
+    background: #141E2E;
+    border: 1px solid #1E2C40;
     color: #bbb;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 600;
@@ -316,8 +316,8 @@
     margin-top: 8px;
   }
   .practica-card {
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
+    background: #141E2E;
+    border: 1px solid #1E2C40;
     border-radius: 12px;
     padding: 20px;
     display: flex;
@@ -368,7 +368,7 @@
   .practica-btn.waze:hover { background: #07e0ff; }
   .edit-practicas-btn {
     background: none;
-    border: 1px solid #444;
+    border: 1px solid #4A5D75;
     color: #888;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.8rem;
@@ -385,15 +385,15 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(6,12,20,0.8);
     z-index: 9999;
     justify-content: center;
     align-items: center;
   }
   .admin-overlay.visible { display: flex; }
   .admin-modal {
-    background: #1a1a1a;
-    border: 1px solid #333;
+    background: #141E2E;
+    border: 1px solid #2B3B52;
     border-radius: 14px;
     padding: 28px;
     width: min(480px, 95vw);
@@ -408,7 +408,7 @@
     margin: 0 0 20px;
   }
   .admin-practica-block {
-    border: 1px solid #2a2a2a;
+    border: 1px solid #1E2C40;
     border-radius: 8px;
     padding: 14px;
     margin-bottom: 14px;
@@ -423,8 +423,8 @@
   .admin-practica-block label:first-child { margin-top: 0; }
   .admin-practica-block input {
     width: 100%;
-    background: #111;
-    border: 1px solid #333;
+    background: #0B1220;
+    border: 1px solid #2B3B52;
     color: #fff;
     padding: 7px 10px;
     border-radius: 6px;
@@ -453,7 +453,7 @@
   }
   .admin-save-btn:hover { background: #ffe033; }
   .admin-cancel-btn {
-    background: #333;
+    background: #2B3B52;
     color: #aaa;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.95rem;
@@ -519,7 +519,7 @@
 
   /* ===== COUNTDOWN SECTION ===== */
   #countdownSection {
-    background: linear-gradient(180deg, #1a0a00 0%, #111 100%);
+    background: linear-gradient(180deg, #1a0a00 0%, #0B1220 100%);
     border-bottom: 2px solid var(--naranja-oscuro);
   }
 
@@ -585,7 +585,7 @@
   .todos-resultados {
     display: none;
     border-top: 1px solid var(--gris-borde);
-    background: rgba(0,0,0,0.2);
+    background: rgba(6,12,20,0.2);
   }
 
   .todos-resultados.open { display: block; }
@@ -640,7 +640,7 @@
     letter-spacing: 1px;
   }
 
-  .pf-score.pendiente { color: #444; font-family: 'Barlow', sans-serif; font-size: 0.75rem; padding: 3px 8px; }
+  .pf-score.pendiente { color: #4A5D75; font-family: 'Barlow', sans-serif; font-size: 0.75rem; padding: 3px 8px; }
 
   /* ===== CLIMA ===== */
   .clima-badge {
@@ -716,7 +716,7 @@
     user-select: none;
   }
 
-  .fecha-header:hover { background: #333; }
+  .fecha-header:hover { background: #2B3B52; }
 
   .fecha-num {
     font-family: 'Bebas Neue', sans-serif;
@@ -740,7 +740,7 @@
     border-radius: 4px;
   }
 
-  .status-pendiente { background: #333; color: #888; }
+  .status-pendiente { background: #2B3B52; color: #888; }
   .status-proximo { background: rgba(240,112,32,0.2); color: var(--naranja); }
   .status-jugado { background: rgba(34,197,94,0.2); color: var(--verde-gol); }
   .status-libre { background: rgba(250,204,21,0.2); color: var(--amarillo); }
@@ -817,7 +817,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(6,12,20,0.7);
     z-index: 100;
     align-items: center;
     justify-content: center;
@@ -934,7 +934,7 @@
     transition: background 0.2s;
   }
 
-  .btn-cancelar:hover { background: #333; }
+  .btn-cancelar:hover { background: #2B3B52; }
 
   /* Resultado badge */
   .resultado-badge {
@@ -1098,17 +1098,17 @@
 
 
   /* ===== ADMIN RESULTADOS ===== */
-  .admin-resultados-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; overflow-y:auto; }
+  .admin-resultados-overlay { display:none; position:fixed; inset:0; background:rgba(6,12,20,0.85); z-index:9999; overflow-y:auto; }
   .admin-resultados-overlay.visible { display:block; }
-  .admin-resultados-modal { background:#1a1a1a; border:1px solid #333; border-radius:14px; max-width:700px; margin:24px auto; padding:24px; }
+  .admin-resultados-modal { background:#141E2E; border:1px solid #2B3B52; border-radius:14px; max-width:700px; margin:24px auto; padding:24px; }
   .admin-resultados-modal h3 { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:3px; color:var(--naranja); margin-bottom:20px; }
-  .admin-fecha-block { margin-bottom:20px; background:#111; border-radius:10px; overflow:hidden; }
+  .admin-fecha-block { margin-bottom:20px; background:#0B1220; border-radius:10px; overflow:hidden; }
   .admin-fecha-titulo { background:#1f0d00; color:var(--naranja); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:2px; padding:8px 14px; }
-  .admin-partido-row { display:flex; align-items:center; gap:8px; padding:7px 14px; border-top:1px solid #1e1e1e; font-size:0.85rem; }
+  .admin-partido-row { display:flex; align-items:center; gap:8px; padding:7px 14px; border-top:1px solid #1C2A3D; font-size:0.85rem; }
   .admin-partido-row:hover { background:#161616; }
   .admin-eq { flex:1; color:#ccc; }
   .admin-eq.local { text-align:right; }
-  .admin-score-input { width:38px; text-align:center; background:#2a2a2a; border:1px solid #444; border-radius:5px; color:#fff; font-size:0.9rem; font-weight:700; padding:4px 0; }
+  .admin-score-input { width:38px; text-align:center; background:#1E2C40; border:1px solid #4A5D75; border-radius:5px; color:#fff; font-size:0.9rem; font-weight:700; padding:4px 0; }
   .admin-score-input:focus { outline:none; border-color:var(--naranja); }
   .admin-sep { color:#555; font-size:0.9rem; }
   .admin-wo-label { font-size:0.72rem; color:#888; display:flex; align-items:center; gap:4px; cursor:pointer; }
@@ -1116,7 +1116,7 @@
 
   /* ====== CANCHAS ====== */
   .cancha-lista { display:flex; flex-direction:column; gap:8px; }
-  .cancha-item { background:#1a1a1a; border-radius:10px; overflow:hidden; border:1px solid #2a2a2a; transition:border-color 0.2s; }
+  .cancha-item { background:#141E2E; border-radius:10px; overflow:hidden; border:1px solid #1E2C40; transition:border-color 0.2s; }
   .cancha-item.open { border-color:#3a2a1a; }
   .cancha-header { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; cursor:pointer; user-select:none; }
   .cancha-header:hover { background:rgba(255,255,255,0.02); }
@@ -1129,16 +1129,16 @@
   .cancha-actions { display:flex; gap:8px; padding:10px 0 4px; flex-wrap:wrap; }
   .cancha-btn { display:inline-flex; align-items:center; gap:5px; font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--naranja); border:1px solid rgba(240,112,32,0.3); border-radius:6px; padding:5px 10px; text-decoration:none; background:rgba(240,112,32,0.07); transition:background 0.15s; }
   .cancha-btn:hover { background:rgba(240,112,32,0.15); }
-  .tips-titulo { font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; color:#444; text-transform:uppercase; padding:10px 0 6px; }
-  .tip-row { display:flex; gap:8px; align-items:flex-start; padding:5px 0; border-bottom:1px solid #1e1e1e; }
+  .tips-titulo { font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; color:#4A5D75; text-transform:uppercase; padding:10px 0 6px; }
+  .tip-row { display:flex; gap:8px; align-items:flex-start; padding:5px 0; border-bottom:1px solid #1C2A3D; }
   .tip-row:last-child { border-bottom:none; }
   .tip-icono { font-size:14px; flex-shrink:0; margin-top:1px; }
   .tip-texto { font-size:0.8rem; color:#bbb; line-height:1.4; }
-  .sin-tips { font-size:0.78rem; color:#444; font-style:italic; padding:8px 0; }
+  .sin-tips { font-size:0.78rem; color:#4A5D75; font-style:italic; padding:8px 0; }
   .btn-add-tip { font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#facc15; background:rgba(250,204,21,0.08); border:1px solid rgba(250,204,21,0.2); border-radius:5px; padding:4px 9px; cursor:pointer; transition:background 0.15s; }
   .btn-add-tip:hover { background:rgba(250,204,21,0.15); }
-  .tip-edit-form { background:#111; border-radius:8px; padding:10px; margin-top:8px; display:flex; flex-direction:column; gap:8px; }
-  .tip-edit-form input, .tip-edit-form textarea { background:#1e1e1e; border:1px solid #333; border-radius:5px; color:#fff; font-size:0.82rem; padding:6px 8px; width:100%; }
+  .tip-edit-form { background:#0B1220; border-radius:8px; padding:10px; margin-top:8px; display:flex; flex-direction:column; gap:8px; }
+  .tip-edit-form input, .tip-edit-form textarea { background:#1C2A3D; border:1px solid #2B3B52; border-radius:5px; color:#fff; font-size:0.82rem; padding:6px 8px; width:100%; }
   .tip-edit-form textarea { resize:vertical; min-height:52px; font-family:sans-serif; }
   .tip-edit-form input:focus, .tip-edit-form textarea:focus { outline:none; border-color:var(--naranja); }
   .tip-edit-row { display:flex; gap:6px; }
@@ -1325,7 +1325,7 @@
       @urreta2021_
     </a>
   </div>
-  <div id="ultimaActualizacion" style="margin-top:6px;font-size:0.72rem;color:#444;"></div>
+  <div id="ultimaActualizacion" style="margin-top:6px;font-size:0.72rem;color:#4A5D75;"></div>
 </footer>
 
 <!-- MODAL CANCHA RIVAL -->
@@ -1334,7 +1334,7 @@
     <h3 id="canchaClubNombre">Club Rival</h3>
     <div class="modal-partido-info" id="canchaDir" style="font-size:0.9rem;margin-bottom:16px;"></div>
     <div style="display:flex;flex-direction:column;gap:10px;">
-      <a id="canchaGmaps" href="#" target="_blank" style="display:flex;align-items:center;gap:10px;background:#2a2a2a;border:1px solid #444;border-radius:8px;padding:12px 16px;color:white;text-decoration:none;font-weight:600;font-size:0.9rem;">
+      <a id="canchaGmaps" href="#" target="_blank" style="display:flex;align-items:center;gap:10px;background:#1E2C40;border:1px solid #4A5D75;border-radius:8px;padding:12px 16px;color:white;text-decoration:none;font-weight:600;font-size:0.9rem;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="#F07020"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
         Ver en Google Maps
       </a>
@@ -1859,7 +1859,7 @@ function teamShieldSvg(name, size) {
   const fs = Math.round(size * 0.33);
   return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
     <path d="M32 2 L60 13 L60 35 Q60 56 32 62 Q4 56 4 35 L4 13 Z" fill="${color}" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
-    <path d="M32 8 L54 17 L54 35 Q54 52 32 57 Q10 52 10 35 L10 17 Z" fill="rgba(0,0,0,0.18)"/>
+    <path d="M32 8 L54 17 L54 35 Q54 52 32 57 Q10 52 10 35 L10 17 Z" fill="rgba(6,12,20,0.18)"/>
     <text x="32" y="38" text-anchor="middle" dominant-baseline="middle" font-family="Bebas Neue,Barlow Condensed,sans-serif" font-size="${fs}" fill="white" font-weight="bold" letter-spacing="1">${initials}</text>
   </svg>`;
 }
@@ -1868,11 +1868,11 @@ function teamLogoHtml(name, size) {
   size = size || 64;
   if(name === 'Urreta') {
     const src = document.querySelector('.club-badge img')?.src || '';
-    return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;border-radius:50%;background:rgba(0,0,0,0.3);padding:2px;" alt="Urreta" />`;
+    return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:contain;border-radius:50%;background:rgba(6,12,20,0.3);padding:2px;" alt="Urreta" />`;
   }
   if(LOGOS_CONOCIDOS[name]) {
     const esc = name.replace(/'/g,"\\'");
-    return `<img src="${LOGOS_CONOCIDOS[name]}" style="width:${size}px;height:${size}px;object-fit:contain;border-radius:50%;background:rgba(0,0,0,0.3);padding:2px;" alt="${name}" onerror="this.outerHTML=teamShieldSvg('${esc}',${size})" />`;
+    return `<img src="${LOGOS_CONOCIDOS[name]}" style="width:${size}px;height:${size}px;object-fit:contain;border-radius:50%;background:rgba(6,12,20,0.3);padding:2px;" alt="${name}" onerror="this.outerHTML=teamShieldSvg('${esc}',${size})" />`;
   }
   return teamShieldSvg(name, size);
 }
@@ -3018,11 +3018,11 @@ function abrirAdminResultados() {
     if (p.libre || resultados[i+1]) return '';
     const hora = HORAS_PARTIDO[i+1];
     const fecha = p.fecha_txt;
-    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1e1e1e;font-size:0.82rem;">
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1C2A3D;font-size:0.82rem;">
       <span style="color:#888;min-width:20px;">F${i+1}</span>
       <span style="color:#ccc;flex:1;">${p.rival}</span>
-      <input type="text" id="ah_fecha_${i}" value="${fecha}" placeholder="dd/mm/aaaa" style="width:90px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
-      <input type="number" id="ah_hora_${i}" value="${hora ?? ''}" placeholder="hs" min="0" max="23" style="width:52px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
+      <input type="text" id="ah_fecha_${i}" value="${fecha}" placeholder="dd/mm/aaaa" style="width:90px;background:#1E2C40;border:1px solid #4A5D75;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
+      <input type="number" id="ah_hora_${i}" value="${hora ?? ''}" placeholder="hs" min="0" max="23" style="width:52px;background:#1E2C40;border:1px solid #4A5D75;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
     </div>`;
   }).join('');
   // Populate Clausura results form
@@ -3048,11 +3048,11 @@ function abrirAdminResultados() {
     if (resultadosClausura[i+1]) return '';
     const hora = HORAS_PARTIDO_CLAUSURA[i+1];
     const fecha = p.fecha_txt;
-    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1e1e1e;font-size:0.82rem;">
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1C2A3D;font-size:0.82rem;">
       <span style="color:#888;min-width:20px;">F${i+1}</span>
       <span style="color:#ccc;flex:1;">${p.rival}</span>
-      <input type="text" id="ah2_fecha_${i}" value="${fecha}" placeholder="dd/mm/aaaa" style="width:90px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
-      <input type="number" id="ah2_hora_${i}" value="${hora ?? ''}" placeholder="hs" min="0" max="23" style="width:52px;background:#2a2a2a;border:1px solid #444;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
+      <input type="text" id="ah2_fecha_${i}" value="${fecha}" placeholder="dd/mm/aaaa" style="width:90px;background:#1E2C40;border:1px solid #4A5D75;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
+      <input type="number" id="ah2_hora_${i}" value="${hora ?? ''}" placeholder="hs" min="0" max="23" style="width:52px;background:#1E2C40;border:1px solid #4A5D75;border-radius:5px;color:#fff;font-size:0.8rem;padding:3px 6px;text-align:center;">
     </div>`;
   }).join('');
   // Populate metro form
@@ -3258,7 +3258,7 @@ async function guardarResultadosAdmin() {
   <div class="admin-resultados-modal">
     <h3>✏️ Editar Resultados</h3>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--naranja);text-transform:uppercase;margin-bottom:8px;">🏆 Liga Prado · Apertura</div>
-    <div style="background:#111;border-radius:10px;padding:14px;margin-bottom:18px;">
+    <div style="background:#0B1220;border-radius:10px;padding:14px;margin-bottom:18px;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:#888;text-transform:uppercase;margin-bottom:10px;">Fecha y hora de próximos partidos</div>
       <div id="adminHorasForm"></div>
     </div>
@@ -3266,7 +3266,7 @@ async function guardarResultadosAdmin() {
 
     <div style="margin-top:24px;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--naranja);text-transform:uppercase;margin-bottom:8px;">🏆 Liga Prado · Clausura</div>
-      <div style="background:#111;border-radius:10px;padding:14px;margin-bottom:18px;">
+      <div style="background:#0B1220;border-radius:10px;padding:14px;margin-bottom:18px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:#888;text-transform:uppercase;margin-bottom:10px;">Fecha y hora de próximos partidos</div>
         <div id="adminHorasFormClausura"></div>
       </div>
