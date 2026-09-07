@@ -2136,7 +2136,7 @@ function renderProximoPrado(proxIdx, sec, secCd, torneo='apertura') {
       </div>
     </div>
     <div id="clima-proximo" class="clima-loading">Cargando clima...</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:36px;">
     ${(() => { const gcUrl = getGoogleCalendarUrl(p.fecha_txt, horaRaw, local, visita, canchaLabel); return gcUrl ? `<a class="waze-btn" href="${gcUrl}" target="_blank">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
       Agregar al calendario</a>` : ''; })()}
@@ -2199,7 +2199,7 @@ function renderProximoMetro(idx, sec, secCd) {
         </div>
       </div>
       <div id="clima-proximo" class="clima-loading">Cargando clima...</div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:36px;">
         ${gcUrl ? `<a class="waze-btn" href="${gcUrl}" target="_blank">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
           Agregar al calendario</a>` : ''}
