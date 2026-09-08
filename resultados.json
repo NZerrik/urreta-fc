@@ -249,7 +249,10 @@
         { "local": "Bochas", "visitante": "Isidro Fynn", "gl": 4, "gv": 0 }
       ],
       "3": [
-        { "local": "Urreta", "visitante": "E. del Norte", "gl": 6, "gv": 3 }
+        { "local": "Urreta", "visitante": "E. del Norte", "gl": 6, "gv": 3 },
+        { "local": "Las Flores", "visitante": "Yegros", "gl": 5, "gv": 1 },
+        { "local": "San Francisco", "visitante": "Bochas", "gl": 3, "gv": 0 },
+        { "local": "3 de Abril", "visitante": "Pablán", "gl": 3, "gv": 0 }
       ]
     },
     "horas": {},
