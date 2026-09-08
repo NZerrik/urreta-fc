@@ -1605,10 +1605,11 @@ const FIXTURE_FECHA = [
 
 // ====== CLAUSURA: mismos partidos por fecha, localidad invertida ======
 // Se completan luego vía resultados.json (clausura.fechas)
-// No se generan pares "adivinados": el Clausura no siempre repite los mismos
-// cruces del Apertura invertidos (se vio en la Fecha 4). Cada ronda arranca
-// vacía y se completa solo con los partidos reales que llegan por resultados.json.
-const FIXTURE_FECHA_CLAUSURA = FIXTURE_FECHA.map(() => []);
+// ====== CLAUSURA: mismos partidos por fecha, localidad invertida ======
+// Se completan luego vía resultados.json (clausura.fechas)
+const FIXTURE_FECHA_CLAUSURA = FIXTURE_FECHA.map(fecha =>
+  fecha.map(p => ({ local: p.visitante, visitante: p.local, gl: null, gv: null }))
+);
 
 // Resultados por defecto (F1 W/O y F2 ya jugados)
 const _DEFAULTS = {
@@ -1674,15 +1675,31 @@ fetch('./resultados.json?t=' + Date.now())
       if (data.clausura.fechas) {
         Object.keys(data.clausura.fechas).forEach(fechaKey => {
           const idx = parseInt(fechaKey) - 1;
-          if (FIXTURE_FECHA_CLAUSURA[idx] === undefined) return;
-          // El Clausura no siempre repite los cruces del Apertura invertidos, así que
-          // no hay un fixture "adivinado" contra el cual matchear: la ronda completa
-          // que llega en resultados.json ES la fuente de verdad para esa fecha.
-          FIXTURE_FECHA_CLAUSURA[idx] = data.clausura.fechas[fechaKey].map(p => ({
-            local: p.local, visitante: p.visitante, gl: p.gl, gv: p.gv, wo: p.wo || undefined
-          }));
+          if (!FIXTURE_FECHA_CLAUSURA[idx]) return;
+          data.clausura.fechas[fechaKey].forEach(p => {
+            if (p.gl === null || p.gl === undefined) return;
+            // Buscar por el mismo par de equipos sin importar quién quedó de local:
+            // la localidad real no siempre es la inversa exacta del Apertura.
+            const row = FIXTURE_FECHA_CLAUSURA[idx].find(r =>
+              (r.local === p.local && r.visitante === p.visitante) ||
+              (r.local === p.visitante && r.visitante === p.local)
+            );
+            if (row) {
+              row.local = p.local;
+              row.visitante = p.visitante;
+              row.gl = p.gl;
+              row.gv = p.gv;
+              if (p.wo) row.wo = true;
+            } else {
+              // El cruce no coincide con el adivinado (pasa a veces): se agrega
+              // igual como partido nuevo de la fecha, en vez de perderse.
+              FIXTURE_FECHA_CLAUSURA[idx].push({
+                local: p.local, visitante: p.visitante, gl: p.gl, gv: p.gv, wo: p.wo || undefined
+              });
+            }
+          });
           // Recalcular esLocal de Urreta en FIXTURE_CLAUSURA según el partido real cargado
-          const filaUrreta = FIXTURE_FECHA_CLAUSURA[idx].find(r => r.local === 'Urreta' || r.visitante === 'Urreta');
+          const filaUrreta = FIXTURE_FECHA_CLAUSURA[idx].find(r => (r.local === 'Urreta' || r.visitante === 'Urreta') && r.gl !== null);
           if (filaUrreta && FIXTURE_CLAUSURA[idx]) {
             FIXTURE_CLAUSURA[idx].esLocal = filaUrreta.local === 'Urreta';
           }
