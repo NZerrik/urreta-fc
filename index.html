@@ -2277,7 +2277,9 @@ async function compartirProximo(btn) {
     const ctx = canvas.getContext('2d');
 
     // Foto de fondo (cover)
-    const foto = await loadImage(data.fotoFondo);
+    const fotosDisponibles = ['./team-photo.jpg', './team-photo-clausura.jpg'];
+    const fotoElegida = fotosDisponibles[Math.floor(Math.random() * fotosDisponibles.length)];
+    const foto = await loadImage(fotoElegida);
     const scale = Math.max(W / foto.width, H / foto.height);
     const fw = foto.width * scale, fh = foto.height * scale;
     ctx.filter = 'saturate(0.8)';
