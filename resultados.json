@@ -254,7 +254,8 @@
         { "local": "San Francisco", "visitante": "Bochas", "gl": 3, "gv": 0 },
         { "local": "3 de Abril", "visitante": "Pablán", "gl": 3, "gv": 0 },
         { "local": "Av. Lezica", "visitante": "L. Washington", "gl": 4, "gv": 0 },
-        { "local": "D. Uruguayo", "visitante": "Ombú Jrs.", "gl": 0, "gv": 3 }
+        { "local": "D. Uruguayo", "visitante": "Ombú Jrs.", "gl": 0, "gv": 3 },
+        { "local": "Isidro Fynn", "visitante": "Malvín Alto", "gl": 0, "gv": 3 }
       ]
     },
     "horas": {},
