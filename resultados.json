@@ -258,7 +258,9 @@
         { "local": "Isidro Fynn", "visitante": "Malvín Alto", "gl": 0, "gv": 3 }
       ]
     },
-    "horas": {},
+    "horas": {
+      "4": "14:30"
+    },
     "fechas_txt": {
       "3": "06/09/2026",
       "4": "13/09/2026",
