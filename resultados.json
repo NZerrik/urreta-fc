@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-08-27T00:00:00.000Z",
+  "ultima_actualizacion": "2026-09-13T00:00:00.000Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -226,7 +226,8 @@
     "urreta": {
       "1": { "golesUrreta": 3, "golesRival": 0, "wo": true },
       "2": { "golesUrreta": 7, "golesRival": 0 },
-      "3": { "golesUrreta": 6, "golesRival": 3 }
+      "3": { "golesUrreta": 6, "golesRival": 3 },
+      "4": { "golesUrreta": 2, "golesRival": 1 }
     },
     "fechas": {
       "1": [
@@ -256,6 +257,9 @@
         { "local": "Av. Lezica", "visitante": "L. Washington", "gl": 4, "gv": 0 },
         { "local": "D. Uruguayo", "visitante": "Ombú Jrs.", "gl": 0, "gv": 3 },
         { "local": "Isidro Fynn", "visitante": "Malvín Alto", "gl": 0, "gv": 3 }
+      ],
+      "4": [
+        { "local": "Urreta", "visitante": "Ombú Jrs.", "gl": 2, "gv": 1 }
       ]
     },
     "horas": {
