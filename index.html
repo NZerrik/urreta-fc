@@ -2162,7 +2162,7 @@ function renderProximoPrado(proxIdx, sec, secCd, torneo='apertura') {
     </div></div>`;
 
   if (!p.suspendido) injectClima('clima-proximo', p.fecha_txt, 'proximo');
-  window._compartirData = { local, visita, fecha_txt: p.fecha_txt, horaStr, canchaLabel, fotoFondo, accentColor, torneoLabel: `LIGA PRADO · ${torneoLabel.toUpperCase()}` };
+  window._compartirData = { local, visita, fecha_txt: p.fecha_txt, horaStr, canchaLabel, wazeHref, fotoFondo, accentColor, torneoLabel: `LIGA PRADO · ${torneoLabel.toUpperCase()}` };
 }
 
 function renderProximoMetro(idx, sec, secCd) {
@@ -2229,7 +2229,7 @@ function renderProximoMetro(idx, sec, secCd) {
       </div>
     </div>
   </div>`;
-  window._compartirData = { local, visita, fecha_txt: p.fecha_txt, horaStr, canchaLabel: p.cancha, fotoFondo: './team-photo.jpg', accentColor: '#60a5fa', torneoLabel: 'METROPOLITANO' };
+  window._compartirData = { local, visita, fecha_txt: p.fecha_txt, horaStr, canchaLabel: p.cancha, wazeHref: p.cancha_waze, fotoFondo: './team-photo.jpg', accentColor: '#60a5fa', torneoLabel: 'METROPOLITANO' };
 
   injectClima('clima-proximo', p.fecha_txt, 'proximo');
 }
@@ -2276,11 +2276,13 @@ async function compartirProximo(btn) {
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext('2d');
 
-    // Foto de fondo (cover)
+    // Fondo sólido + foto completa (sin recortar)
+    ctx.fillStyle = '#0B1220';
+    ctx.fillRect(0, 0, W, H);
     const fotosDisponibles = ['./team-photo.jpg', './team-photo-clausura.jpg'];
     const fotoElegida = fotosDisponibles[Math.floor(Math.random() * fotosDisponibles.length)];
     const foto = await loadImage(fotoElegida);
-    const scale = Math.max(W / foto.width, H / foto.height);
+    const scale = Math.min(W / foto.width, H / foto.height);
     const fw = foto.width * scale, fh = foto.height * scale;
     ctx.filter = 'saturate(0.8)';
     ctx.drawImage(foto, (W - fw) / 2, (H - fh) / 2, fw, fh);
@@ -2346,11 +2348,12 @@ async function compartirProximo(btn) {
     const fileName = `urreta-vs-${data.visita === 'Urreta' ? data.local : data.visita}.png`.replace(/\s+/g, '-').toLowerCase();
     const file = new File([blob], fileName, { type: 'image/png' });
 
+    const wazeLine = data.wazeHref && data.wazeHref !== '#' ? `\n📍 ${data.canchaLabel}: ${data.wazeHref}` : '';
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
         files: [file],
         title: 'Urreta FC',
-        text: `${data.local} vs ${data.visita} · ${data.fecha_txt}`
+        text: `${data.local} vs ${data.visita} · ${data.fecha_txt}${wazeLine}`
       });
     } else {
       const url = URL.createObjectURL(blob);
@@ -2521,7 +2524,7 @@ function renderFixture(torneo='apertura') {
     card.className = `fecha-card fade-in ${status === 'jugado' ? 'jugada' : ''} ${status === 'proximo' ? 'activa' : ''}`;
     const climaId = `clima-fecha-${torneo}-${fechaNum}`;
     const horaFecha = td.HORAS[fechaNum];
-    const horaLabel = (!p.suspendido && horaFecha) ? `· ${horaFecha}:00hs` : '';
+    const horaLabel = (!p.suspendido && horaFecha) ? `· ${formatHora(horaFecha)}hs` : '';
     card.innerHTML = `
       <div class="fecha-header">
         <span class="fecha-num">Fecha ${fechaNum}</span>
