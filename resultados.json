@@ -238,7 +238,8 @@
         { "local": "3 de Abril", "visitante": "E. del Norte", "gl": 9, "gv": 1 },
         { "local": "L. Washington", "visitante": "Pablán", "gl": 0, "gv": 3 },
         { "local": "Urreta", "visitante": "Bochas", "gl": 3, "gv": 0, "wo": true },
-        { "local": "Ombú Jrs.", "visitante": "C. Corinto", "gl": 3, "gv": 0 }
+        { "local": "Ombú Jrs.", "visitante": "C. Corinto", "gl": 3, "gv": 0 },
+        { "local": "Malvín Alto", "visitante": "D. Uruguayo", "gl": 3, "gv": 0 }
       ],
       "2": [
         { "local": "Yegros", "visitante": "San Francisco", "gl": 7, "gv": 0 },
