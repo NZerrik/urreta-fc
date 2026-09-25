@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-09-13T00:00:00.000Z",
+  "ultima_actualizacion": "2026-09-25T00:00:00.000Z",
   "urreta": {
     "1": {
       "golesUrreta": 3,
@@ -259,7 +259,11 @@
         { "local": "Isidro Fynn", "visitante": "Malvín Alto", "gl": 0, "gv": 3 }
       ],
       "4": [
-        { "local": "Urreta", "visitante": "Ombú Jrs.", "gl": 2, "gv": 1 }
+        { "local": "Urreta", "visitante": "Ombú Jrs.", "gl": 2, "gv": 1 },
+        { "local": "L. Washington", "visitante": "Las Flores", "gl": 0, "gv": 0 },
+        { "local": "Malvín Alto", "visitante": "San Francisco", "gl": 0, "gv": 6 },
+        { "local": "E. del Norte", "visitante": "Isidro Fynn", "gl": 2, "gv": 1 },
+        { "local": "Bochas", "visitante": "Yegros", "gl": 0, "gv": 3 }
       ]
     },
     "horas": {
