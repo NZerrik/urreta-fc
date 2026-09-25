@@ -227,7 +227,8 @@
       "1": { "golesUrreta": 3, "golesRival": 0, "wo": true },
       "2": { "golesUrreta": 7, "golesRival": 0 },
       "3": { "golesUrreta": 6, "golesRival": 3 },
-      "4": { "golesUrreta": 2, "golesRival": 1 }
+      "4": { "golesUrreta": 2, "golesRival": 1 },
+      "5": { "golesUrreta": 1, "golesRival": 2 }
     },
     "fechas": {
       "1": [
@@ -264,6 +265,9 @@
         { "local": "Malvín Alto", "visitante": "San Francisco", "gl": 0, "gv": 6 },
         { "local": "E. del Norte", "visitante": "Isidro Fynn", "gl": 2, "gv": 1 },
         { "local": "Bochas", "visitante": "Yegros", "gl": 0, "gv": 3 }
+      ],
+      "5": [
+        { "local": "Urreta", "visitante": "Pablán", "gl": 1, "gv": 2 }
       ]
     },
     "horas": {
