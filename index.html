@@ -1705,6 +1705,7 @@ fetch('./resultados.json?t=' + Date.now())
           }
         });
       }
+      if (data.clausura.quitas) Object.assign(QUITAS_CLAUSURA, data.clausura.quitas);
       if (data.clausura.horas) {
         Object.keys(data.clausura.horas).forEach(k => { HORAS_PARTIDO_CLAUSURA[parseInt(k)] = data.clausura.horas[k]; });
       }
@@ -2567,7 +2568,10 @@ function renderStats(torneo='apertura') {
   document.getElementById('statPTS').textContent = s.pts;
 }
 
-function computeTablaEquipos(fechaArraysList) {
+// Puntos descontados por la liga en el Clausura (resultados.json → clausura.quitas)
+const QUITAS_CLAUSURA = {};
+
+function computeTablaEquipos(fechaArraysList, quitas = {}) {
   // Auto-compute standings from one or more FIXTURE_FECHA-like arrays (sumadas para "Anual")
   const stats = {};
   fechaArraysList.forEach(fechaArr => {
@@ -2587,7 +2591,7 @@ function computeTablaEquipos(fechaArraysList) {
   });
   return Object.entries(stats).map(([nombre, s]) => ({
     nombre, ...s,
-    pts: s.g * 3 + s.e,
+    pts: s.g * 3 + s.e - (quitas[nombre] || 0),
     gd: s.gf - s.gc,
     esUrreta: nombre === 'Urreta'
   })).sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
@@ -2598,7 +2602,7 @@ function renderTabla(torneo='apertura') {
     torneo === 'clausura' ? [FIXTURE_FECHA_CLAUSURA] :
     torneo === 'anual' ? [FIXTURE_FECHA, FIXTURE_FECHA_CLAUSURA] :
     [FIXTURE_FECHA];
-  const equipos = computeTablaEquipos(fechaArraysList);
+  const equipos = computeTablaEquipos(fechaArraysList, torneo === 'apertura' ? {} : QUITAS_CLAUSURA);
   const tbody = document.getElementById('tablaBody');
   tbody.innerHTML = '';
   equipos.forEach((eq, i) => {
