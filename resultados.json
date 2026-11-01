@@ -285,7 +285,12 @@
       ],
       "6": [
         { "local": "Covicenova", "visitante": "Urreta", "gl": 0, "gv": 5 },
-        { "local": "E. del Norte", "visitante": "Yegros", "gl": 4, "gv": 2 }
+        { "local": "E. del Norte", "visitante": "Yegros", "gl": 4, "gv": 2 },
+        { "local": "L. Washington", "visitante": "3 de Abril", "gl": 0, "gv": 5 },
+        { "local": "Av. Lezica", "visitante": "D. Uruguayo", "gl": 3, "gv": 0 },
+        { "local": "Pablán", "visitante": "Isidro Fynn", "gl": 4, "gv": 0 },
+        { "local": "Ombú Jrs.", "visitante": "San Francisco", "gl": 3, "gv": 0 },
+        { "local": "Malvín Alto", "visitante": "Bochas", "gl": 3, "gv": 0 }
       ],
       "7": [
         { "local": "Urreta", "visitante": "Av. Lezica", "gl": 1, "gv": 4 },
