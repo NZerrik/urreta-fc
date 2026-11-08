@@ -230,7 +230,8 @@
       "4": { "golesUrreta": 2, "golesRival": 1 },
       "5": { "golesUrreta": 1, "golesRival": 2 },
       "6": { "golesUrreta": 5, "golesRival": 0 },
-      "7": { "golesUrreta": 1, "golesRival": 4 }
+      "7": { "golesUrreta": 1, "golesRival": 4 },
+      "8": { "golesUrreta": 3, "golesRival": 0 }
     },
     "fechas": {
       "1": [
@@ -300,6 +301,9 @@
         { "local": "Isidro Fynn", "visitante": "Covicenova", "gl": 0, "gv": 3 },
         { "local": "San Francisco", "visitante": "Pablán", "gl": 0, "gv": 8 },
         { "local": "3 de Abril", "visitante": "C. Corinto", "gl": 8, "gv": 0 }
+      ],
+      "8": [
+        { "local": "L. Washington", "visitante": "Urreta", "gl": 0, "gv": 3 }
       ]
     },
     "quitas": { "3 de Abril": 1, "L. Washington": 1 },
