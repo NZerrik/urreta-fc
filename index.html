@@ -2375,7 +2375,11 @@ function renderProximo() {
   }
   let proxClausuraIdx = -1;
   for(let i=0;i<FIXTURE_CLAUSURA.length;i++){
-    if(isProximo(i, 'clausura')){ proxClausuraIdx=i; break; }
+    // Si una fecha se adelanta, la más cercana va primero aunque tenga número mayor
+    if(!isProximo(i, 'clausura')) continue;
+    const fd = parseDate(FIXTURE_CLAUSURA[i].fecha_txt);
+    const fdProx = proxClausuraIdx >= 0 ? parseDate(FIXTURE_CLAUSURA[proxClausuraIdx].fecha_txt) : null;
+    if(proxClausuraIdx < 0 || (fd && fdProx && fd < fdProx)) proxClausuraIdx = i;
   }
   const proxMetroIdx = getProximoMetroIdx();
 
