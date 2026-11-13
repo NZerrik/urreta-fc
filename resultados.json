@@ -233,7 +233,8 @@
       "7": { "golesUrreta": 1, "golesRival": 4 },
       "8": { "golesUrreta": 3, "golesRival": 0 },
       "9": { "golesUrreta": 7, "golesRival": 0 },
-      "10": { "golesUrreta": 0, "golesRival": 4 }
+      "10": { "golesUrreta": 0, "golesRival": 4 },
+      "11": { "golesUrreta": 3, "golesRival": 0, "wo": true }
     },
     "fechas": {
       "1": [
@@ -312,6 +313,9 @@
       ],
       "10": [
         { "local": "3 de Abril", "visitante": "Urreta", "gl": 4, "gv": 0 }
+      ],
+      "11": [
+        { "local": "Urreta", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true }
       ]
     },
     "quitas": { "3 de Abril": 1, "L. Washington": 1 },
