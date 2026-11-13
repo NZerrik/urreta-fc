@@ -231,7 +231,9 @@
       "5": { "golesUrreta": 1, "golesRival": 2 },
       "6": { "golesUrreta": 5, "golesRival": 0 },
       "7": { "golesUrreta": 1, "golesRival": 4 },
-      "8": { "golesUrreta": 3, "golesRival": 0 }
+      "8": { "golesUrreta": 3, "golesRival": 0 },
+      "9": { "golesUrreta": 7, "golesRival": 0 },
+      "10": { "golesUrreta": 0, "golesRival": 4 }
     },
     "fechas": {
       "1": [
@@ -304,6 +306,12 @@
       ],
       "8": [
         { "local": "L. Washington", "visitante": "Urreta", "gl": 0, "gv": 3 }
+      ],
+      "9": [
+        { "local": "Urreta", "visitante": "C. Corinto", "gl": 7, "gv": 0 }
+      ],
+      "10": [
+        { "local": "3 de Abril", "visitante": "Urreta", "gl": 4, "gv": 0 }
       ]
     },
     "quitas": { "3 de Abril": 1, "L. Washington": 1 },
