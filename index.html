@@ -844,6 +844,105 @@
 
   .modal-overlay.active { display: flex; }
 
+  /* ===== VIDEO DEL PARTIDO ===== */
+  .video-strip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 88px;
+    padding: 12px 16px;
+    border: none;
+    border-top: 1px solid var(--gris-borde);
+    background: #000 center / cover no-repeat;
+    color: var(--blanco);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .video-strip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(11,18,32,0.95) 0%, rgba(11,18,32,0.75) 45%, rgba(240,112,32,0.25) 100%);
+    transition: opacity 0.2s;
+  }
+  .video-strip:hover::before { opacity: 0.8; }
+  .video-strip > * { position: relative; }
+  .video-play {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--naranja);
+    box-shadow: 0 0 0 0 rgba(240,112,32,0.6);
+    animation: video-pulse 2s infinite;
+    transition: transform 0.2s;
+  }
+  .video-strip:hover .video-play { transform: scale(1.1); }
+  .video-play svg { width: 18px; height: 18px; margin-left: 3px; fill: #fff; }
+  @keyframes video-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(240,112,32,0.6); }
+    70%  { box-shadow: 0 0 0 14px rgba(240,112,32,0); }
+    100% { box-shadow: 0 0 0 0 rgba(240,112,32,0); }
+  }
+  .video-texto { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .video-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .video-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--naranja-claro);
+    text-transform: uppercase;
+  }
+  .video-chip {
+    margin-left: auto;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: #FF0000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  #modalVideo { background: rgba(0,0,0,0.88); }
+  .modal-video {
+    position: relative;
+    width: min(960px, 94vw);
+    animation: modal-in 0.2s ease;
+  }
+  .modal-video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--naranja);
+    background: #000;
+  }
+  .modal-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .modal-video-cerrar {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--gris-borde);
+    background: var(--gris-oscuro);
+    color: var(--blanco);
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
   .modal {
     background: var(--gris-oscuro);
     border: 1px solid var(--naranja);
@@ -1371,6 +1470,14 @@
   </div>
 </div>
 
+<!-- MODAL VIDEO -->
+<div class="modal-overlay" id="modalVideo" onclick="if(event.target === this) cerrarVideo()">
+  <div class="modal-video">
+    <button class="modal-video-cerrar" onclick="cerrarVideo()" aria-label="Cerrar video">✕</button>
+    <div class="modal-video-frame" id="modalVideoFrame"></div>
+  </div>
+</div>
+
 <!-- MODAL RESULTADO -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -1628,6 +1735,44 @@ if (!resultados) {
 // Resultados de Urreta en el Clausura (sin defaults, arranca vacío)
 let resultadosClausura = JSON.parse(localStorage.getItem('urreta_resultados_clausura') || 'null') || {};
 
+// ====== VIDEOS DE PARTIDOS ======
+// Links de YouTube por número de fecha (resultados.json → videos / clausura.videos; metro.json → video)
+const VIDEOS = { apertura: {}, clausura: {} };
+
+function youtubeId(url) {
+  if (!url) return null;
+  const m = String(url).match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
+  return m ? m[1] : (/^[\w-]{11}$/.test(url) ? url : null);
+}
+
+function videoStripHtml(url) {
+  const id = youtubeId(url);
+  if (!id) return '';
+  return `<button class="video-strip" style="background-image:url('https://i.ytimg.com/vi/${id}/hqdefault.jpg')" onclick="abrirVideo('${id}')">
+    <span class="video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+    <span class="video-texto">
+      <span class="video-titulo">Ver el partido</span>
+      <span class="video-sub">Video completo</span>
+    </span>
+    <span class="video-chip">▶ YouTube</span>
+  </button>`;
+}
+
+function abrirVideo(id) {
+  document.getElementById('modalVideoFrame').innerHTML =
+    `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="Video del partido" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  document.getElementById('modalVideo').classList.add('active');
+}
+
+function cerrarVideo() {
+  document.getElementById('modalVideo').classList.remove('active');
+  document.getElementById('modalVideoFrame').innerHTML = ''; // corta la reproducción
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('modalVideo').classList.contains('active')) cerrarVideo();
+});
+
 // Cargar desde resultados.json (fuente oficial, se actualiza con el bot)
 fetch('./resultados.json?t=' + Date.now())
   .then(r => r.json())
@@ -1659,6 +1804,7 @@ fetch('./resultados.json?t=' + Date.now())
     if (data.horas) {
       Object.keys(data.horas).forEach(k => { HORAS_PARTIDO[parseInt(k)] = data.horas[k]; });
     }
+    if (data.videos) Object.assign(VIDEOS.apertura, data.videos);
     // Merge fecha_txt overrides
     if (data.fechas_txt) {
       Object.keys(data.fechas_txt).forEach(k => {
@@ -1706,6 +1852,7 @@ fetch('./resultados.json?t=' + Date.now())
         });
       }
       if (data.clausura.quitas) Object.assign(QUITAS_CLAUSURA, data.clausura.quitas);
+      if (data.clausura.videos) Object.assign(VIDEOS.clausura, data.clausura.videos);
       // Localía confirmada antes de jugarse (true = Urreta local)
       if (data.clausura.localia) {
         Object.keys(data.clausura.localia).forEach(k => {
@@ -2036,7 +2183,14 @@ function switchLigaTorneo(t) {
 // automática (el partido realmente más próximo entre todos los torneos).
 function mostrarProximoDe(torneo) {
   const td = torneoData(torneo);
-  const idx = td.FIX.findIndex((p, i) => !p.libre && !td.res[i + 1]);
+  // El pendiente con fecha más cercana (una fecha adelantada va antes que una de número menor)
+  let idx = -1;
+  td.FIX.forEach((p, i) => {
+    if (p.libre || td.res[i + 1]) return;
+    if (idx < 0) { idx = i; return; }
+    const fd = parseDate(p.fecha_txt), fdIdx = parseDate(td.FIX[idx].fecha_txt);
+    if (fd && fdIdx && fd < fdIdx) idx = i;
+  });
   const sec = document.getElementById('proximoSection');
   const secCd = document.getElementById('countdownSection');
   if (idx >= 0) {
@@ -2527,6 +2681,7 @@ function renderFixture(torneo='apertura') {
         </div>
         ${scoreHtml}
       </div>
+      ${videoStripHtml(VIDEOS[torneo]?.[fechaNum])}
       <button class="btn-ver-todos" onclick="toggleTodos(this)">
         ⚽ Ver todos los partidos
         <span class="chevron">▾</span>
@@ -2743,7 +2898,8 @@ function renderFixtureMetro() {
         </div>
         ${scoreHtml}
       </div>
-      ${p.cancha ? `<div style="font-size:0.8rem;color:#aaa;padding:6px 16px 12px;">&#128205; <a href="${p.cancha_maps}" target="_blank" style="color:var(--naranja-claro);text-decoration:none;font-weight:600;">${p.cancha}</a></div>` : ''}`;
+      ${p.cancha ? `<div style="font-size:0.8rem;color:#aaa;padding:6px 16px 12px;">&#128205; <a href="${p.cancha_maps}" target="_blank" style="color:var(--naranja-claro);text-decoration:none;font-weight:600;">${p.cancha}</a></div>` : ''}
+      ${videoStripHtml(p.video)}`;
     grid.appendChild(card);
   });
 }
