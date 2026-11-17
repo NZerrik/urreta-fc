@@ -234,7 +234,8 @@
       "8": { "golesUrreta": 3, "golesRival": 0 },
       "9": { "golesUrreta": 7, "golesRival": 0 },
       "10": { "golesUrreta": 0, "golesRival": 4 },
-      "11": { "golesUrreta": 3, "golesRival": 0, "wo": true }
+      "11": { "golesUrreta": 3, "golesRival": 0, "wo": true },
+      "13": { "golesUrreta": 6, "golesRival": 0 }
     },
     "fechas": {
       "1": [
@@ -316,6 +317,9 @@
       ],
       "11": [
         { "local": "Urreta", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true }
+      ],
+      "13": [
+        { "local": "Urreta", "visitante": "Isidro Fynn", "gl": 6, "gv": 0 }
       ]
     },
     "quitas": { "3 de Abril": 1, "L. Washington": 1 },
@@ -330,6 +334,7 @@
       "8": 18.5,
       "9": 19.25,
       "10": 14.5,
+      "12": 15.5,
       "13": 18.75
     },
     "fechas_txt": {
