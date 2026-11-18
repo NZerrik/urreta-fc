@@ -307,13 +307,20 @@
         { "local": "3 de Abril", "visitante": "C. Corinto", "gl": 8, "gv": 0 }
       ],
       "8": [
-        { "local": "L. Washington", "visitante": "Urreta", "gl": 0, "gv": 3 }
+        { "local": "L. Washington", "visitante": "Urreta", "gl": 0, "gv": 3 },
+        { "local": "3 de Abril", "visitante": "Las Flores", "gl": 3, "gv": 1 },
+        { "local": "C. Corinto", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true },
+        { "local": "Covicenova", "visitante": "San Francisco", "gl": 5, "gv": 0 }
       ],
       "9": [
-        { "local": "Urreta", "visitante": "C. Corinto", "gl": 7, "gv": 0 }
+        { "local": "Urreta", "visitante": "C. Corinto", "gl": 7, "gv": 0 },
+        { "local": "Las Flores", "visitante": "E. del Norte", "gl": 3, "gv": 2 },
+        { "local": "D. Uruguayo", "visitante": "3 de Abril", "gl": 0, "gv": 3, "wo": true }
       ],
       "10": [
-        { "local": "3 de Abril", "visitante": "Urreta", "gl": 4, "gv": 0 }
+        { "local": "3 de Abril", "visitante": "Urreta", "gl": 4, "gv": 0 },
+        { "local": "D. Uruguayo", "visitante": "Las Flores", "gl": 0, "gv": 3, "wo": true },
+        { "local": "C. Corinto", "visitante": "Isidro Fynn", "gl": 0, "gv": 2 }
       ],
       "11": [
         { "local": "Urreta", "visitante": "D. Uruguayo", "gl": 3, "gv": 0, "wo": true }
